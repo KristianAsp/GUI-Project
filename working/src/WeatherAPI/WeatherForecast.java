@@ -13,6 +13,7 @@ public class WeatherForecast{
 	public class Forecast{
 		public String lowTemp;
 		public String highTemp;
+		public String date;
 	}
 
 	public WeatherForecast(String city){
@@ -35,10 +36,12 @@ public class WeatherForecast{
 				// get temp forecast				
 				String lowString = getValueForKey(weatherForecast, "low");
 				String highString = getValueForKey(weatherForecast, "high");
+				String dateString = getValueForKey(weatherForecast, "date");
 				
 				Forecast fore = new Forecast();
 				fore.lowTemp = lowString;
 				fore.highTemp = highString;
+				fore.date = dateString;
 				weatherForecastList.add(fore);
 				
 				// move to end of this forecast

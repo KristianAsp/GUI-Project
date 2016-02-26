@@ -23,31 +23,48 @@ import javafx.stage.Stage;
  */
 public class FXMLController extends Application implements Initializable{
 
-    private static Stage theStage = new Stage();
+    //private static Stage theStage = new Stage();
     private Scene scene1;
     WeatherForecast weather;
     WeatherCondition condition;
     
     @FXML Label tempField = new Label();
-    @FXML Label textLabel = new Label();
+    @FXML Label curCondition = new Label();
     @FXML Label currDate = new Label();
     @FXML Label feelsLike = new Label();
     @FXML Pane menu;
+
+
     @FXML Button button;
-   
-    
+    @FXML Button menuButton;
+    @FXML Button dragMenu;
+
+
+
+
+
     public void initialize(URL url, ResourceBundle rb) {
         weather = new WeatherForecast("44418");
         condition = new WeatherCondition("44418");
+
         tempField.setText("" + condition.weatherConditionList.get(0).currentTemp + "°C");
-        textLabel.setText(condition.weatherConditionList.get(0).textDesc);
-        currDate.setText(condition.weatherConditionList.get(0).currentDate);
+        curCondition.setText(condition.weatherConditionList.get(0).textDesc);
+        if(curCondition.getText().equals("Unknown")){
+            curCondition.setText("Partly Cloudy");
+        }
+        currDate.setText(weather.weatherForecastList.get(0).date);
         feelsLike.setText("Feels like: " + condition.weatherConditionList.get(0).feelsLike  + "°C");
         menu.setVisible(false); 
     }
     
     public void callMenu(){
         menu.setVisible(true);
+        button.setVisible(false);
+    }
+
+    public void closeMenu(){
+        menu.setVisible(false);
+        button.setVisible(true);
     }
     
     public static void main(String[] args) {
@@ -55,12 +72,12 @@ public class FXMLController extends Application implements Initializable{
     }
    
     public void start(Stage primaryStage) throws Exception{
-        theStage = primaryStage;
+        //theStage = primaryStage;
         Parent root = FXMLLoader.load(getClass().getResource("FXML.fxml"));
         scene1 = new Scene(root);
-        
-        theStage.setScene(scene1);
-        theStage.show();
+
+        primaryStage.setScene(scene1);
+        primaryStage.show();
     }
     
 }

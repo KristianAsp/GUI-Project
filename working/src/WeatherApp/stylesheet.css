@@ -1,10 +1,18 @@
 #background {
 	-fx-background-image: url("tip02_full.jpg");
-        -fx-background-size: cover;
+    -fx-background-size: cover;
 }
 
 #button {
-    -fx-background-color: #000;
+    -fx-background-color: transparent;
+    -fx-background-image: url("resources/menuButton.png");
+    -fx-background-size: cover;
+}
+
+#dragMenu {
+    -fx-background-color: transparent;
+    -fx-background-image: url("resources/dragMenu.png");
+    -fx-background-size: cover;
 }
 
 #menuPane{
