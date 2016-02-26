@@ -12,7 +12,7 @@
 #dragMenu {
     -fx-background-color: transparent;
     -fx-background-image: url("resources/dragMenu.png");
-    -fx-background-size: cover;
+    -fx-background-size: contain;
 }
 
 #menuPane{
