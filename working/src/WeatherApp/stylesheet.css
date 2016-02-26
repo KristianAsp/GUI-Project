@@ -1,0 +1,12 @@
+#background {
+	-fx-background-image: url("tip02_full.jpg");
+        -fx-background-size: cover;
+}
+
+#button {
+    -fx-background-color: #000;
+}
+
+#menuPane{
+    -fx-background-color: rgba(0,0,0,0.5);
+}

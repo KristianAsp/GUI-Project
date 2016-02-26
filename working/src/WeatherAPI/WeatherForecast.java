@@ -1,29 +1,27 @@
+package WeatherAPI;
+
 import java.net.*;
 import java.util.regex.*;
 import java.util.ArrayList;
 import java.io.*;
 
-public class WeatherAPI
-{
-	static String theWeatherRSS;
-	static String theCity;
-	static ArrayList<Forecast> weatherForecastList;
+public class WeatherForecast{
+	String theWeatherRSS;
+	String theCity;
+	public ArrayList<Forecast> weatherForecastList;
 	
-	public class Forecast
-	{
-		String lowTemp;
-		String highTemp;
+	public class Forecast{
+		public String lowTemp;
+		public String highTemp;
 	}
 
-	public WeatherAPI(String city)
-	{
+	public WeatherForecast(String city){
 		theCity = city;
 		theWeatherRSS = getWeatherAsRSS(city);
 		parseWeather(theWeatherRSS);
 	}
 
-	void parseWeather(String weatherHTML)
-	{
+	void parseWeather(String weatherHTML){
 		weatherForecastList = new ArrayList<Forecast>();
 		int startIndex = 0;
 		while(startIndex != -1)
@@ -49,8 +47,7 @@ public class WeatherAPI
 		}
 	}
 
-	String getValueForKey(String theString, String keyString)
-	{
+	String getValueForKey(String theString, String keyString){
 		int startIndex = theString.indexOf(keyString);
 		startIndex = theString.indexOf("\"", startIndex);
 		int endIndex = theString.indexOf("\"", startIndex+1);
@@ -58,8 +55,7 @@ public class WeatherAPI
 		return resultString;
 	}
 
-	String getWeatherAsRSS(String city)
-	{
+	String getWeatherAsRSS(String city){
 		try{
 			/*
 			Adapted from: http://stackoverflow.com/questions/1381617/simplest-way-to-correctly-load-html-from-web-page-into-a-string-in-java
