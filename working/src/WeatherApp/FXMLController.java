@@ -48,12 +48,9 @@ public class FXMLController extends Application implements Initializable{
         condition = new WeatherCondition("44418");
 
         tempField.setText("" + condition.weatherConditionList.get(0).currentTemp + "°C");
-        curCondition.setText(condition.weatherConditionList.get(0).textDesc);
-        if(curCondition.getText().equals("Unknown")){
-            curCondition.setText("Partly Cloudy");
-        }
         currDate.setText(weather.weatherForecastList.get(0).date);
         feelsLike.setText("Feels like: " + condition.weatherConditionList.get(0).feelsLike  + "°C");
+        curCondition.setText("Stargazing Conditions: Good");
         menu.setVisible(false); 
     }
     

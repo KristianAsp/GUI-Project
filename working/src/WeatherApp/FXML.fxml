@@ -79,6 +79,6 @@
          <children>
             <Button fx:id="menuButton" layoutX="78.0" layoutY="7.0" mnemonicParsing="false" onAction="#closeMenu" opacity="0.5" prefHeight="27.0" prefWidth="39.0" text="Button" />
          </children></Pane>
-      <Button fx:id="dragMenu" layoutX="132.0" layoutY="439.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="40.0" stylesheets="@stylesheet.css" />
+      <Button id="dragMenu" fx:id="dragMenu" layoutX="132.0" layoutY="439.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="40.0" stylesheets="@stylesheet.css" />
    </children>
 </AnchorPane>
