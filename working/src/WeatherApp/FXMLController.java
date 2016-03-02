@@ -3,9 +3,13 @@ package WeatherApp;
 import WeatherAPI.WeatherCondition;
 import WeatherAPI.WeatherForecast;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.ResourceBundle;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
+
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -13,7 +17,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 
@@ -38,9 +45,70 @@ public class FXMLController extends Application implements Initializable{
     @FXML Button button;
     @FXML Button menuButton;
     @FXML Button dragMenu;
+    @FXML ImageView circle;
 
 
+    public double rotate = 0;
+    public double xValue;
+    public String currentHour = new SimpleDateFormat("HH").format(Calendar.getInstance().getTime());
 
+
+    //public List<String> hours = new {"00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00"}
+
+    public void setxValue(){
+        circle.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                xValue = event.getX();
+            }
+        });
+    }
+
+    public void dragCircle(){
+        circle.setOnMouseDragged(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if(event.getX() > xValue){
+                    //xValue = event.getX();
+                    dragCircleRight();
+                    wheelTime();
+
+                }
+                else if(event.getX() < xValue){
+                    //xValue = event.getX();
+                    dragCircleLeft();
+                    wheelTime();
+                }
+            }
+        });
+    }
+
+    public void dragCircleRight(){
+        System.out.println("right");
+        circle.setRotate(rotate);
+        rotate += 1;
+        if(rotate == 360 || rotate == -360){
+            rotate = 0;
+        }
+    }
+
+    public void dragCircleLeft(){
+        System.out.println("left");
+        circle.setRotate(rotate);
+        rotate -= 1;
+        if(rotate == 360 || rotate == -360){
+            rotate = 0;
+        }
+    }
+
+    public void wheelTime(){
+        int currentHour = (int)Math.round(circle.getRotate() / -15);
+        System.out.println(currentHour);
+        updateValues();
+    }
+    public void updateValues(){
+
+    }
 
 
     public void initialize(URL url, ResourceBundle rb) {
@@ -51,8 +119,10 @@ public class FXMLController extends Application implements Initializable{
         currDate.setText(weather.weatherForecastList.get(0).date);
         feelsLike.setText("Feels like: " + condition.weatherConditionList.get(0).feelsLike  + "°C");
         curCondition.setText("Stargazing Conditions: Good");
-        menu.setVisible(false); 
-    }
+        menu.setVisible(false);
+        circle.setRotate(-15*Double.parseDouble(currentHour));
+        rotate = -15*Double.parseDouble(currentHour);
+        }
     
     public void callMenu(){
         menu.setVisible(true);

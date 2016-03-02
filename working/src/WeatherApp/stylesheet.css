@@ -15,6 +15,12 @@
     -fx-background-size: cover;
 }
 
+#circle{
+    -fx-background-color: transparent;
+    -fx-background-image: url("resources/wheelOfHours.png");
+    -fx-background-size: cover;
+}
+
 #menuPane{
     -fx-background-color: rgba(0,0,0,0.5);
 }
