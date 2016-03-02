@@ -2,14 +2,18 @@ package WeatherApp;
 
 import WeatherAPI.WeatherCondition;
 import WeatherAPI.WeatherForecast;
+import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 
 import javafx.event.EventHandler;
+import javafx.scene.input.KeyEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -18,9 +22,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 
@@ -30,7 +36,7 @@ import javafx.stage.Stage;
  */
 public class FXMLController extends Application implements Initializable{
 
-    //private static Stage theStage = new Stage();
+    private static Stage theStage = new Stage();
     private Scene scene1;
     WeatherForecast weather;
     WeatherCondition condition;
@@ -46,6 +52,7 @@ public class FXMLController extends Application implements Initializable{
     @FXML Button menuButton;
     @FXML Button dragMenu;
     @FXML ImageView circle;
+    @FXML AnchorPane backgroundPane = new AnchorPane();
 
 
     public double rotate = 0;
@@ -102,14 +109,20 @@ public class FXMLController extends Application implements Initializable{
     }
 
     public void wheelTime(){
-        int currentHour = (int)Math.round(circle.getRotate() / -15);
+        int currentHour;
+                
+        if((int)Math.round(circle.getRotate() / -15) >= 0){
+            currentHour = (int)Math.round(circle.getRotate() / -15);
+        }
+        else{
+            currentHour = 24 - (int)Math.round(circle.getRotate() / 15);
+        }
         System.out.println(currentHour);
         updateValues();
     }
     public void updateValues(){
-
+        System.out.println("Updating values");
     }
-
 
     public void initialize(URL url, ResourceBundle rb) {
         weather = new WeatherForecast("44418");
@@ -120,8 +133,9 @@ public class FXMLController extends Application implements Initializable{
         feelsLike.setText("Feels like: " + condition.weatherConditionList.get(0).feelsLike  + "°C");
         curCondition.setText("Stargazing Conditions: Good");
         menu.setVisible(false);
-        circle.setRotate(-15*Double.parseDouble(currentHour));
-        rotate = -15*Double.parseDouble(currentHour);
+        circle.setRotate(-15 * Double.parseDouble(currentHour));
+        rotate = -15 * Double.parseDouble(currentHour);
+        backgroundPane.requestFocus(); 
         }
     
     public void callMenu(){
@@ -134,17 +148,57 @@ public class FXMLController extends Application implements Initializable{
         button.setVisible(true);
     }
     
+    public void switchScreen() throws IOException{
+        backgroundPane.setOnKeyPressed(new EventHandler<KeyEvent>(){
+            @Override
+            public void handle(KeyEvent event){
+                if(event.getCode() == KeyCode.ENTER){
+                    try {
+                        
+                        Parent root = FXMLLoader.load(getClass().getResource("FXML2.fxml"));
+                        scene1 = new Scene(root);
+        
+                        theStage.setScene(scene1);
+                        theStage.show();
+                    } catch (IOException ex) {
+                        Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        });
+        
+    }
+    
+    public void switchScreen2() throws IOException{
+        backgroundPane.setOnKeyPressed(new EventHandler<KeyEvent>(){
+            @Override
+            public void handle(KeyEvent event){
+                if(event.getCode() == KeyCode.ENTER){
+                    try {
+                        Parent root = FXMLLoader.load(getClass().getResource("FXML.fxml"));
+                        scene1= new Scene(root);
+        
+                        theStage.setScene(scene1);
+                        theStage.show();
+                    } catch (IOException ex) {
+                        Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        });
+        
+    }
+    
     public static void main(String[] args) {
         launch(args);
     }
    
     public void start(Stage primaryStage) throws Exception{
-        //theStage = primaryStage;
+        theStage = primaryStage;
         Parent root = FXMLLoader.load(getClass().getResource("FXML.fxml"));
         scene1 = new Scene(root);
 
         primaryStage.setScene(scene1);
         primaryStage.show();
     }
-    
 }
