@@ -135,6 +135,7 @@ public class FXMLController extends Application implements Initializable{
         menu.setVisible(false);
         circle.setRotate(-15 * Double.parseDouble(currentHour));
         rotate = -15 * Double.parseDouble(currentHour);
+        button.setFocusTraversable(false);
         backgroundPane.requestFocus(); 
         }
     
@@ -147,46 +148,34 @@ public class FXMLController extends Application implements Initializable{
         menu.setVisible(false);
         button.setVisible(true);
     }
+   
     
-    public void switchScreen() throws IOException{
-        backgroundPane.setOnKeyPressed(new EventHandler<KeyEvent>(){
-            @Override
-            public void handle(KeyEvent event){
-                if(event.getCode() == KeyCode.ENTER){
-                    try {
-                        
-                        Parent root = FXMLLoader.load(getClass().getResource("FXML2.fxml"));
-                        scene1 = new Scene(root);
-        
-                        theStage.setScene(scene1);
-                        theStage.show();
-                    } catch (IOException ex) {
-                        Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
+    public void switchScreen(KeyEvent event) throws IOException{
+        if(event.getCode() == KeyCode.ENTER){
+            try {
+
+                Parent root = FXMLLoader.load(getClass().getResource("FXML2.fxml"));
+                scene1 = new Scene(root);
+                theStage.setScene(scene1);
+                theStage.show();
+            } catch (IOException ex) {
+                Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
             }
-        });
-        
+        }
     }
     
-    public void switchScreen2() throws IOException{
-        backgroundPane.setOnKeyPressed(new EventHandler<KeyEvent>(){
-            @Override
-            public void handle(KeyEvent event){
-                if(event.getCode() == KeyCode.ENTER){
-                    try {
-                        Parent root = FXMLLoader.load(getClass().getResource("FXML.fxml"));
-                        scene1= new Scene(root);
-        
-                        theStage.setScene(scene1);
-                        theStage.show();
-                    } catch (IOException ex) {
-                        Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+    public void switchScreen2(KeyEvent event) throws IOException{
+        if(event.getCode() == KeyCode.ENTER){
+                try {
+
+                    Parent root = FXMLLoader.load(getClass().getResource("FXML.fxml"));
+                    scene1 = new Scene(root);
+                    theStage.setScene(scene1);
+                    theStage.show();
+                } catch (IOException ex) {
+                    Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-        });
-        
     }
     
     public static void main(String[] args) {
