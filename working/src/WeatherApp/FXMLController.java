@@ -36,7 +36,7 @@ import javafx.stage.Stage;
  */
 public class FXMLController extends Application implements Initializable{
 
-    private static Stage theStage = new Stage();
+    private static Stage theStage;
     private Scene scene1;
     WeatherForecast weather;
     WeatherCondition condition;
@@ -62,26 +62,22 @@ public class FXMLController extends Application implements Initializable{
 
     //public List<String> hours = new {"00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00"}
 
-    public void setxValue(){
-        circle.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
+    public void setxValue(MouseEvent event){
+                System.out.println(event.getX());
                 xValue = event.getX();
-            }
-        });
     }
 
     public void dragCircle(){
         circle.setOnMouseDragged(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                if(event.getX() > xValue){
+                if(event.getX() > (xValue + 20)){
                     //xValue = event.getX();
                     dragCircleRight();
                     wheelTime();
 
                 }
-                else if(event.getX() < xValue){
+                else if(event.getX() < (xValue - 20)){
                     //xValue = event.getX();
                     dragCircleLeft();
                     wheelTime();
