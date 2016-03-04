@@ -53,13 +53,13 @@ public class FXMLController extends Application implements Initializable{
     @FXML Button menuButton;
     @FXML Button dragMenu;
     @FXML ImageView circle;
-    @FXML AnchorPane backgroundPane = new AnchorPane();
+    @FXML AnchorPane backgroundPane;
+    @FXML AnchorPane backgroundPane2;
     @FXML Pane infoPane;
 
 
     public double rotate = 0;
     public double translate = 0;
-    public double translation = 0;
     Thread th;
 
     public double xValue;
@@ -100,16 +100,15 @@ public class FXMLController extends Application implements Initializable{
                 scene1 = new Scene(root);
                 theStage.setScene(scene1);
                 theStage.show();
+                scene1.getRoot().requestFocus();
             } catch (IOException ex) {
                 Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
     
-    public void handleKeysAgain(){
-        backgroundPane.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>(){
-            @Override
-            public void handle(KeyEvent event){
+    public void handleKeysAgain(KeyEvent event){
+
                 if(event.getCode() == KeyCode.S){
                     System.out.println("left");
                     dragCircleLeft();
@@ -126,15 +125,13 @@ public class FXMLController extends Application implements Initializable{
                         scene1 = new Scene(root);
                         theStage.setScene(scene1);
                         theStage.show();
+                        scene1.getRoot().requestFocus();
                     } catch (IOException ex) {
                         Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
-            }
-        });
         
         System.out.println("it's working ");
-        
     }
 
     public void dragCircleRight(){
@@ -216,7 +213,7 @@ public class FXMLController extends Application implements Initializable{
         rotate = -15 * Double.parseDouble(currentHour);
         button.setFocusTraversable(false);
         dragMenu.setFocusTraversable(false);
-        backgroundPane.requestFocus();        
+        //circle.setRotate(3);
     }
     
     public void callMenu(){
