@@ -21,6 +21,19 @@
     -fx-background-size: cover;
 }
 
-#menuPane{
+#menuPane, #infoPane{
     -fx-background-color: rgba(0,0,0,0.5);
+}
+
+.accordion .titled-pane .title{
+    -fx-background-color: transparent;
+    -fx-text-fill: #fff;
+}   
+
+.accordion .titled-pane > *.content{
+    -fx-background-color: transparent;
+}
+
+.accordion{
+    -fx-box-border: transparent;
 }

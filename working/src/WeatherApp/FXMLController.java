@@ -11,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
+import javafx.application.Platform;
 
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
@@ -53,43 +54,80 @@ public class FXMLController extends Application implements Initializable{
     @FXML Button dragMenu;
     @FXML ImageView circle;
     @FXML AnchorPane backgroundPane = new AnchorPane();
+    @FXML Pane infoPane;
 
 
     public double rotate = 0;
+    public double translate = 0;
+    public double translation = 0;
+    Thread th;
+
     public double xValue;
     public String currentHour = new SimpleDateFormat("HH").format(Calendar.getInstance().getTime());
-
-
-    //public List<String> hours = new {"00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00"}
-
+    
     public void setxValue(MouseEvent event){
                 System.out.println(event.getX());
                 xValue = event.getX();
     }
 
-    public void dragCircle(){
-        circle.setOnMouseDragged(new EventHandler<MouseEvent>() {
+    public void handleKeys(KeyEvent event){
+        if(event.getCode() == KeyCode.S){
+            System.out.println("left");
+            dragCircleLeft();
+            wheelTime();
+        }
+        else if(event.getCode() == KeyCode.A){
+            System.out.println("right");
+            dragCircleRight();
+            wheelTime();
+        }
+        else if(event.getCode() == KeyCode.ENTER){
+            try {
+                Parent root = FXMLLoader.load(getClass().getResource("FXML2.fxml"));
+                scene1 = new Scene(root);
+                theStage.setScene(scene1);
+                theStage.show();
+            } catch (IOException ex) {
+                Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    
+    public void handleKeysAgain(){
+        backgroundPane.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>(){
             @Override
-            public void handle(MouseEvent event) {
-                if(event.getX() > (xValue + 20)){
-                    //xValue = event.getX();
-                    dragCircleRight();
-                    wheelTime();
-
-                }
-                else if(event.getX() < (xValue - 20)){
-                    //xValue = event.getX();
+            public void handle(KeyEvent event){
+                if(event.getCode() == KeyCode.S){
+                    System.out.println("left");
                     dragCircleLeft();
                     wheelTime();
                 }
+                else if(event.getCode() == KeyCode.A){
+                    System.out.println("right");
+                    dragCircleRight();
+                    wheelTime();
+                }
+                else if(event.getCode() == KeyCode.ENTER){
+                    try {
+                        Parent root = FXMLLoader.load(getClass().getResource("FXML.fxml"));
+                        scene1 = new Scene(root);
+                        theStage.setScene(scene1);
+                        theStage.show();
+                    } catch (IOException ex) {
+                        Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
             }
         });
+        
+        System.out.println("it's working ");
+        
     }
 
     public void dragCircleRight(){
         System.out.println("right");
+        rotate += 15;
         circle.setRotate(rotate);
-        rotate += 1;
         if(rotate == 360 || rotate == -360){
             rotate = 0;
         }
@@ -97,13 +135,45 @@ public class FXMLController extends Application implements Initializable{
 
     public void dragCircleLeft(){
         System.out.println("left");
+        rotate -= 15;
         circle.setRotate(rotate);
-        rotate -= 1;
         if(rotate == 360 || rotate == -360){
             rotate = 0;
         }
     }
 
+    public void dragInfoPane() throws InterruptedException{
+        System.out.println("dragging pane");
+        th = new Thread(){
+            @Override
+            public void run(){
+        if(translate == 0){
+            while(translate > -430){
+                translate -= 3.5;
+                movePanel();
+                infoPane.setTranslateY(translate);
+                System.out.println(translate);
+                try { 
+                    Thread.sleep(1);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        else{
+            infoPane.setTranslateY(0);
+            translate = 0;
+        }
+    }
+                };
+        th.start();
+    }
+    
+    public void movePanel(){
+        infoPane.setTranslateY(translate);
+    }
+ 
+    
     public void wheelTime(){
         int currentHour;
                 
@@ -132,8 +202,9 @@ public class FXMLController extends Application implements Initializable{
         circle.setRotate(-15 * Double.parseDouble(currentHour));
         rotate = -15 * Double.parseDouble(currentHour);
         button.setFocusTraversable(false);
-        backgroundPane.requestFocus(); 
-        }
+        dragMenu.setFocusTraversable(false);
+        backgroundPane.requestFocus();        
+    }
     
     public void callMenu(){
         menu.setVisible(true);
@@ -143,21 +214,6 @@ public class FXMLController extends Application implements Initializable{
     public void closeMenu(){
         menu.setVisible(false);
         button.setVisible(true);
-    }
-   
-    
-    public void switchScreen(KeyEvent event) throws IOException{
-        if(event.getCode() == KeyCode.ENTER){
-            try {
-
-                Parent root = FXMLLoader.load(getClass().getResource("FXML2.fxml"));
-                scene1 = new Scene(root);
-                theStage.setScene(scene1);
-                theStage.show();
-            } catch (IOException ex) {
-                Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
     }
     
     public void switchScreen2(KeyEvent event) throws IOException{
