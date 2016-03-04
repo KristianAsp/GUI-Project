@@ -64,6 +64,19 @@ public class FXMLController extends Application implements Initializable{
 
     public double xValue;
     public String currentHour = new SimpleDateFormat("HH").format(Calendar.getInstance().getTime());
+	
+	public static void main(String[] args) {
+        launch(args);
+    }
+   
+    public void start(Stage primaryStage) throws Exception{
+        theStage = primaryStage;
+        Parent root = FXMLLoader.load(getClass().getResource("FXML.fxml"));
+        scene1 = new Scene(root);
+
+        primaryStage.setScene(scene1);
+        primaryStage.show();
+    }
     
     public void setxValue(MouseEvent event){
                 System.out.println(event.getX());
@@ -230,16 +243,4 @@ public class FXMLController extends Application implements Initializable{
             }
     }
     
-    public static void main(String[] args) {
-        launch(args);
-    }
-   
-    public void start(Stage primaryStage) throws Exception{
-        theStage = primaryStage;
-        Parent root = FXMLLoader.load(getClass().getResource("FXML.fxml"));
-        scene1 = new Scene(root);
-
-        primaryStage.setScene(scene1);
-        primaryStage.show();
-    }
 }
