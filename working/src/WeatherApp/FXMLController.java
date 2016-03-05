@@ -11,10 +11,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
-import javafx.application.Platform;
-
-import javafx.event.EventHandler;
-import javafx.scene.input.KeyEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -215,12 +211,12 @@ public class FXMLController extends Application implements Initializable{
         dragMenu.setFocusTraversable(false);
         //circle.setRotate(3);
     }
-    
+    //TODO fix button layout and style
     public void callMenu(){
         menu.setVisible(true);
         button.setVisible(false);
     }
-
+    //TODO fix button layout and style  
     public void closeMenu(){
         menu.setVisible(false);
         button.setVisible(true);
