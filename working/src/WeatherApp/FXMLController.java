@@ -43,7 +43,8 @@ public class FXMLController extends Application implements Initializable{
     @FXML Label currDate = new Label();
     @FXML Label feelsLike = new Label();
     @FXML Pane menu;
-
+    
+    private boolean menuToggleOpen;
 
     @FXML Button button;
     @FXML Button menuButton;
@@ -199,7 +200,7 @@ public class FXMLController extends Application implements Initializable{
     public void initialize(URL url, ResourceBundle rb) {
         weather = new WeatherForecast("44418");
         condition = new WeatherCondition("44418");
-
+        menuToggleOpen = false;
         tempField.setText("" + condition.weatherConditionList.get(0).currentTemp + "°C");
         currDate.setText(weather.weatherForecastList.get(0).date);
         feelsLike.setText("Feels like: " + condition.weatherConditionList.get(0).feelsLike  + "°C");
@@ -212,16 +213,24 @@ public class FXMLController extends Application implements Initializable{
         //circle.setRotate(3);
     }
     //TODO fix button layout and style
-    public void callMenu(){
-        menu.setVisible(true);
-        button.setVisible(false);
+    public void toggleMenu(){
+        if(menuToggleOpen){
+            menu.setVisible(false);
+            menuToggleOpen = false;
+        }
+        else{
+            menu.setVisible(true);
+            menuToggleOpen = true;
+            button.toFront();
+        }
     }
-    //TODO fix button layout and style  
+    /*
     public void closeMenu(){
         menu.setVisible(false);
-        button.setVisible(true);
+        menuToggleOpen = false;
+        //button.setVisible(true);
     }
-    
+    */
     public void switchScreen2(KeyEvent event) throws IOException{
         if(event.getCode() == KeyCode.ENTER){
                 try {
