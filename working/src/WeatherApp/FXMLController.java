@@ -11,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -38,6 +39,7 @@ public class FXMLController extends Application implements Initializable{
     WeatherForecast weather;
     WeatherCondition condition;
     
+    @FXML Label location = new Label();
     @FXML Label tempField = new Label();
     @FXML Label curCondition = new Label();
     @FXML Label currDate = new Label();
@@ -84,12 +86,10 @@ public class FXMLController extends Application implements Initializable{
         if(event.getCode() == KeyCode.S){
             System.out.println("left");
             dragCircleLeft();
-            wheelTime();
         }
         else if(event.getCode() == KeyCode.A){
             System.out.println("right");
             dragCircleRight();
-            wheelTime();
         }
         else if(event.getCode() == KeyCode.ENTER){
             try {
@@ -132,21 +132,61 @@ public class FXMLController extends Application implements Initializable{
     }
 
     public void dragCircleRight(){
-        System.out.println("right");
-        rotate += 15;
-        circle.setRotate(rotate);
-        if(rotate == 360 || rotate == -360){
-            rotate = 0;
-        }
+        th = new Thread(){
+            @Override
+            public void run(){
+                int innerRotation = 0;
+                while(innerRotation < 15){
+                    try {
+                        Thread.sleep(10);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
+                    rotate += 1;
+                    Platform.runLater(() -> circle.setRotate(rotate));
+                    innerRotation += 1;
+                    
+                    if(rotate == 360 || rotate == -360){
+                        rotate = 0;
+                    }
+                }
+                wheelTime();
+            }
+        };
+        th.start();
     }
 
     public void dragCircleLeft(){
-        System.out.println("left");
+        th = new Thread(){
+            @Override
+            public void run(){
+                int innerRotation = 0;
+                while(innerRotation < 15){
+                    try {
+                        Thread.sleep(10);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
+                    rotate -= 1;
+                    Platform.runLater(() -> circle.setRotate(rotate));
+                    innerRotation += 1;
+                    
+                    if(rotate == 360 || rotate == -360){
+                        rotate = 0;
+                    }
+                }
+                wheelTime();
+            }
+        };
+        th.start();
+        /*System.out.println("left");
         rotate -= 15;
         circle.setRotate(rotate);
         if(rotate == 360 || rotate == -360){
             rotate = 0;
-        }
+        }*/
     }
 
     public void dragInfoPane() throws InterruptedException{
@@ -185,10 +225,10 @@ public class FXMLController extends Application implements Initializable{
         int currentHour;
                 
         if((int)Math.round(circle.getRotate() / -15) >= 0){
-            currentHour = (int)Math.round(circle.getRotate() / -15);
+            currentHour = ((int)Math.round(circle.getRotate() / -15));
         }
         else{
-            currentHour = 24 - (int)Math.round(circle.getRotate() / 15);
+            currentHour = (24 - (int)Math.round(circle.getRotate() / 15));
         }
         System.out.println(currentHour);
         updateValues();
@@ -210,6 +250,7 @@ public class FXMLController extends Application implements Initializable{
         rotate = -15 * Double.parseDouble(currentHour);
         button.setFocusTraversable(false);
         dragMenu.setFocusTraversable(false);
+        theStage.setResizable(false);
         //circle.setRotate(3);
     }
     //Method to toggle the side menu open/close
@@ -221,7 +262,7 @@ public class FXMLController extends Application implements Initializable{
         else{
             menu.setVisible(true);
             menuToggleOpen = true;
-            button.toFront();
+            button.setVisible(false);
         }
     }
     
@@ -237,6 +278,36 @@ public class FXMLController extends Application implements Initializable{
                     Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
+    }
+    
+    public void switchDay(MouseEvent e){
+        
+        if(xValue < e.getX()){
+            dragLeft();
+        }
+        else if(xValue > e.getX()){
+            dragRight();
+        }
+    }
+    
+    public void dragLeft(){
+        System.out.println("going left");
+        location.setTranslateX(320-location.getLayoutX());
+        currDate.setTranslateX(320-currDate.getLayoutX());
+        tempField.setTranslateX(320-tempField.getLayoutX());
+        feelsLike.setTranslateX(320-feelsLike.getLayoutX());
+        curCondition.setTranslateX(320-curCondition.getLayoutX());
+        
+    }
+    
+    public void dragRight(){
+        System.out.println("going right");
+        location.setTranslateX(location.getLayoutX()-400);
+        currDate.setTranslateX(currDate.getLayoutX()-400);
+        tempField.setTranslateX(tempField.getLayoutX()-400);
+        feelsLike.setTranslateX(feelsLike.getLayoutX()-400);
+        curCondition.setTranslateX(curCondition.getLayoutX()-400);
+       
     }
     
 }

@@ -22,7 +22,7 @@
 }
 
 #menuPane, #infoPane{
-    -fx-background-color: rgba(0,0,0,0.5);
+    -fx-background-color: rgba(0,0,0,0.7);
 }
 
 .accordion .titled-pane .title{
