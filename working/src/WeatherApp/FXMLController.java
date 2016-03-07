@@ -262,7 +262,7 @@ public class FXMLController extends Application implements Initializable{
         else{
             menu.setVisible(true);
             menuToggleOpen = true;
-            button.setVisible(false);
+            button.toFront();
         }
     }
     
