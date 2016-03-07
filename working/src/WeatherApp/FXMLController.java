@@ -2,6 +2,7 @@ package WeatherApp;
 
 import WeatherAPI.WeatherCondition;
 import WeatherAPI.WeatherForecast;
+import WeatherAPI.WeatherForecastNew;
 import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -9,9 +10,11 @@ import java.util.Calendar;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -262,8 +265,14 @@ public class FXMLController extends Application implements Initializable{
         else{
             menu.setVisible(true);
             menuToggleOpen = true;
-            button.toFront();
+            button.toFront(); 
         }
+    }
+    //Handle menu button click
+    public void handleMenuButtonClick(ActionEvent e) throws IOException{
+        String [] seg = e.getSource().toString().split(Pattern.quote("'"));
+        System.out.println(seg[seg.length-1]);
+        WeatherForecastNew wforeNew = new WeatherForecastNew(seg[seg.length-1]);
     }
     
     public void switchScreen2(KeyEvent event) throws IOException{

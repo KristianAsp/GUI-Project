@@ -54,11 +54,11 @@
          <children>
             <Pane id="subMenu" layoutX="5.0" layoutY="49.0" prefHeight="257.0" prefWidth="130.0" stylesheets="@stylesheet.css">
                <children>
-                  <Button layoutX="4.0" layoutY="-1.0" minWidth="-Infinity" mnemonicParsing="false" prefHeight="28.0" prefWidth="120.0" styleClass="menuButton" stylesheets="@stylesheet.css" />
-                  <Button layoutX="3.0" layoutY="49.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="120.0" styleClass="menuButton" stylesheets="@stylesheet.css" />
-                  <Button layoutX="5.0" layoutY="99.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="120.0" styleClass="menuButton" stylesheets="@stylesheet.css" />
-                  <Button layoutX="4.0" layoutY="153.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="120.0" styleClass="menuButton" stylesheets="@stylesheet.css" />
-                  <Button layoutX="5.0" layoutY="202.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="120.0" styleClass="menuButton" stylesheets="@stylesheet.css" />
+                  <Button layoutX="4.0" layoutY="-1.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="120.0" styleClass="menuButton" stylesheets="@stylesheet.css" text="London" onAction="#handleMenuButtonClick"/>
+                  <Button layoutX="3.0" layoutY="49.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="120.0" styleClass="menuButton" stylesheets="@stylesheet.css" text="Paris" onAction="#handleMenuButtonClick"/>
+                  <Button layoutX="5.0" layoutY="99.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="120.0" styleClass="menuButton" stylesheets="@stylesheet.css" text="Berlin" onAction="#handleMenuButtonClick"/>
+                  <Button layoutX="4.0" layoutY="153.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="120.0" styleClass="menuButton" stylesheets="@stylesheet.css" text="Madrid" onAction="#handleMenuButtonClick"/>
+                  <Button layoutX="5.0" layoutY="202.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="120.0" styleClass="menuButton" stylesheets="@stylesheet.css" text="Rome" onAction="#handleMenuButtonClick"/>
                </children>
             </Pane>
          </children></Pane>
