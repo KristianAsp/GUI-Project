@@ -1,0 +1,20 @@
+Monday
+7
+-2
+Clear
+74
+Tuesday
+9
+7
+Overcast
+70
+Wednesday
+7
+3
+Rain
+83
+Thursday
+11
+6
+Partly Cloudy
+68

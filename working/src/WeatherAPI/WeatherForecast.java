@@ -1,89 +1,92 @@
-package WeatherAPI;
 
-import java.net.*;
-import java.util.regex.*;
-import java.util.ArrayList;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-public class WeatherForecast{
-	String theWeatherRSS;
-	String theCity;
-	public ArrayList<Forecast> weatherForecastList;
-	
-	public class Forecast{
-		public String lowTemp;
-		public String highTemp;
-		public String date;
-	}
-
-	public WeatherForecast(String city){
-		theCity = city;
-		theWeatherRSS = getWeatherAsRSS(city);
-		parseWeather(theWeatherRSS);
-	}
-
-	void parseWeather(String weatherHTML){
-		weatherForecastList = new ArrayList<Forecast>();
-		int startIndex = 0;
-		while(startIndex != -1)
-		{
-			startIndex = weatherHTML.indexOf("<yweather:forecast", startIndex);
-			if(startIndex != -1)
-			{ // found a weather forecast
-				int endIndex = weatherHTML.indexOf(">", startIndex);
-				String weatherForecast = weatherHTML.substring(startIndex, endIndex+1);
-
-				// get temp forecast				
-				String lowString = getValueForKey(weatherForecast, "low");
-				String highString = getValueForKey(weatherForecast, "high");
-				String dateString = getValueForKey(weatherForecast, "date");
-				
-				Forecast fore = new Forecast();
-				fore.lowTemp = lowString;
-				fore.highTemp = highString;
-				fore.date = dateString;
-				weatherForecastList.add(fore);
-				
-				// move to end of this forecast
-				startIndex = endIndex;
-			}
-		}
-	}
-
-	String getValueForKey(String theString, String keyString){
-		int startIndex = theString.indexOf(keyString);
-		startIndex = theString.indexOf("\"", startIndex);
-		int endIndex = theString.indexOf("\"", startIndex+1);
-		String resultString = theString.substring(startIndex+1, endIndex);
-		return resultString;
-	}
-
-	String getWeatherAsRSS(String city){
-		try{
-			/*
-			Adapted from: http://stackoverflow.com/questions/1381617/simplest-way-to-correctly-load-html-from-web-page-into-a-string-in-java
-			Answer provided by: erickson
-			*/
-			URL url = new URL("http://weather.yahooapis.com/forecastrss?w="+city+"&u=c");
-			URLConnection con = url.openConnection();
-			Pattern p = Pattern.compile("text/html;\\s+charset=([^\\s]+)\\s*");
-			Matcher m = p.matcher(con.getContentType());
-			/* If Content-Type doesn't match this pre-conception, choose default and 
-			 * hope for the best. */
-			String charset = m.matches() ? m.group(1) : "ISO-8859-1";
-			Reader r = new InputStreamReader(con.getInputStream(), charset);
-			StringBuilder buf = new StringBuilder();
-			while (true) {
-			  int ch = r.read();
-			  if (ch < 0)
-				break;
-			  buf.append((char) ch);
-			}
-			String str = buf.toString();
-			return(str);
-		}
-		catch(Exception e) {System.err.println("Weather API Exception: "+e);}
-		return null;
-	}
-
+/**
+ *
+ * @author Petter
+ */
+public class WeatherForecast {
+    private String city;
+    private String temp;
+    private String feelsLike;
+    private String visibility;
+    private String humidity;
+    private String iconURL;
+    private String [] forecast = new String[20];
+    private final String currentFile = "currentWeatherInfo.txt";
+    private final String forecastFile = "comingDaysWeatherInfo.txt";
+    
+    public static void main(String[] args){
+        WeatherForecast wf = new WeatherForecast("dd");
+        System.out.println(wf.getCity());
+        System.out.println(wf.getTemp());
+        System.out.println(wf.getFeelsLike());
+        System.out.println(wf.getVisibility());
+        System.out.println(wf.getHumidity());
+        System.out.println(wf.getForecast()[0]);
+    }
+    
+    public WeatherForecast(String city){
+        try{
+            Process p = Runtime.getRuntime().exec("python weather.py");
+            while(p.isAlive()){
+                //Wait til process is done
+            }
+        } 
+        catch (IOException e){
+            System.exit(0);
+        }
+           
+        try{
+            BufferedReader rd = new BufferedReader(new FileReader(currentFile));
+            city = rd.readLine();
+            temp = rd.readLine();
+            humidity = rd.readLine();
+            visibility = rd.readLine();
+            feelsLike = rd.readLine();
+            iconURL = rd.readLine();
+            rd.close();
+            
+            String line;
+            int count = 0;
+            rd = new BufferedReader(new FileReader(forecastFile));
+            while((line = rd.readLine()) !=null) {
+                forecast[count] = line;
+                count++;
+            }
+        }
+        catch(IOException e)
+        {
+            System.out.println("Not able to obtain the information from the files");
+            System.exit(0);
+        }
+    }
+    
+    public String getCity() {
+        return city;
+    }
+    
+    public String getTemp() {
+        return temp;
+    }
+    
+    public String getFeelsLike() {
+        return feelsLike;
+    }
+    
+    public String getVisibility() {
+        return visibility;
+    }
+    
+    public String getHumidity() {
+        return humidity;
+    }
+    
+    public String[] getForecast() {
+        return forecast;
+    }
 }

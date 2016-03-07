@@ -8,23 +8,33 @@ infoStream = urllib2.urlopen('http://api.wunderground.com/api/57d979bd71526100/g
 json_string = infoStream.read()
 parsed_json = json.loads(json_string)
 
+#Getting the weather for the next 4 days and writing it to the 'comingDaysWeatherInfo.text' file.
+for x in range(0,4):
+	day = parsed_json['forecast']['simpleforecast']['forecastday'][x]['date']['weekday']
+	htemp = parsed_json['forecast']['simpleforecast']['forecastday'][x]['high']['celsius']
+	ltemp = parsed_json['forecast']['simpleforecast']['forecastday'][x]['low']['celsius']
+	cond = parsed_json['forecast']['simpleforecast']['forecastday'][x]['conditions']
+	hum = parsed_json['forecast']['simpleforecast']['forecastday'][x]['avehumidity']
+	target.write(day)s
+	target.write("\n")
+	target.write(htemp)
+	target.write("\n")
+	target.write(ltemp)
+	target.write("\n")
+	target.write(cond)
+	target.write("\n")
+	target.write(str(hum))
+	target.write("\n")
+
+target.close();
+
 #Getting location and current weather conditions
 location = parsed_json['location']['city']
 c_temp_c = parsed_json['current_observation']['temp_c']
 c_humidity = parsed_json['current_observation']['relative_humidity']
 c_visibility = parsed_json['current_observation']['visibility_km']
 c_feelsLike = parsed_json['current_observation']['feelslike_c']
-
-#Getting the weather for the next 4 days and writing it to the 'comingDaysWeatherInfo.text' file.
-for x in range(0,6,2):
-	day = parsed_json['forecast']['txt_forecast']['forecastday'][x]['title']
-	weather = parsed_json['forecast']['txt_forecast']['forecastday'][x]['fcttext']
-	target.write(day)
-	target.write("\n")
-	target.write(weather)
-	target.write("\n")
-
-target.close();
+icon_url = parsed_json['current_observation']['icon_url']
 
 filename = "currentWeatherInfo.txt"
 target = open(filename, 'w')
@@ -32,10 +42,12 @@ target.write(str(location))
 target.write("\n")
 target.write(str(c_temp_c))
 target.write("\n")
-target.write(c_humidity)
+target.write(str(c_humidity))
 target.write("\n")
-target.write(c_visibility)
+target.write(str(c_visibility))
 target.write("\n")
-target.write(c_feelsLike )
+target.write(str(c_feelsLike))
+target.write("\n")
+target.write(str(icon_url))
 target.close()
 infoStream.close()
