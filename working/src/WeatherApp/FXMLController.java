@@ -212,7 +212,7 @@ public class FXMLController extends Application implements Initializable{
         dragMenu.setFocusTraversable(false);
         //circle.setRotate(3);
     }
-    //TODO fix button layout and style
+    //Method to toggle the side menu open/close
     public void toggleMenu(){
         if(menuToggleOpen){
             menu.setVisible(false);
@@ -224,13 +224,7 @@ public class FXMLController extends Application implements Initializable{
             button.toFront();
         }
     }
-    /*
-    public void closeMenu(){
-        menu.setVisible(false);
-        menuToggleOpen = false;
-        //button.setVisible(true);
-    }
-    */
+    
     public void switchScreen2(KeyEvent event) throws IOException{
         if(event.getCode() == KeyCode.ENTER){
                 try {
