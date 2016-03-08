@@ -2,7 +2,6 @@ package WeatherApp;
 
 import WeatherAPI.WeatherCondition;
 import WeatherAPI.WeatherForecast;
-//import WeatherAPI.WeatherForecastNew;
 import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -247,7 +246,7 @@ public class FXMLController extends Application implements Initializable{
         condition = new WeatherCondition("44418");
         menuToggleOpen = false;
         tempField.setText("" + condition.weatherConditionList.get(0).currentTemp + "°C");
-        //currDate.setText(weather.weatherForecastList.get(0).date);
+        currDate.setText(weather.getCurrentDate());
         feelsLike.setText("Feels like: " + condition.weatherConditionList.get(0).feelsLike  + "°C");
         curCondition.setText("Stargazing Conditions: Good");
         menu.setVisible(false);

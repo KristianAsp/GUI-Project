@@ -90,4 +90,8 @@ public class WeatherForecast {
     public String[] getForecast() {
         return forecast;
     }
+    //May need to get current date
+    public String getCurrentDate(){
+        return "";
+    }
 }
