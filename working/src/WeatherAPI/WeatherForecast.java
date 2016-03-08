@@ -18,8 +18,8 @@ public class WeatherForecast {
     private String humidity;
     private String iconURL;
     private String [] forecast = new String[20];
-    private final String currentFile = "currentWeatherInfo.txt";
-    private final String forecastFile = "comingDaysWeatherInfo.txt";
+    private final String currentFile = "WeatherAPI/currentWeatherInfo.txt";
+    private final String forecastFile = "WeatherAPI/comingDaysWeatherInfo.txt";
     
     public static void main(String[] args){
         WeatherForecast wf = new WeatherForecast("dd");
