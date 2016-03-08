@@ -2,7 +2,7 @@ package WeatherApp;
 
 import WeatherAPI.WeatherCondition;
 import WeatherAPI.WeatherForecast;
-import WeatherAPI.WeatherForecastNew;
+//import WeatherAPI.WeatherForecastNew;
 import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -71,6 +71,7 @@ public class FXMLController extends Application implements Initializable{
         launch(args);
     }
    
+    @Override
     public void start(Stage primaryStage) throws Exception{
         theStage = primaryStage;
         Parent root = FXMLLoader.load(getClass().getResource("FXML.fxml"));
@@ -240,12 +241,13 @@ public class FXMLController extends Application implements Initializable{
         System.out.println("Updating values");
     }
 
+    @Override
     public void initialize(URL url, ResourceBundle rb) {
         weather = new WeatherForecast("44418");
         condition = new WeatherCondition("44418");
         menuToggleOpen = false;
         tempField.setText("" + condition.weatherConditionList.get(0).currentTemp + "°C");
-        currDate.setText(weather.weatherForecastList.get(0).date);
+        //currDate.setText(weather.weatherForecastList.get(0).date);
         feelsLike.setText("Feels like: " + condition.weatherConditionList.get(0).feelsLike  + "°C");
         curCondition.setText("Stargazing Conditions: Good");
         menu.setVisible(false);
@@ -272,7 +274,7 @@ public class FXMLController extends Application implements Initializable{
     public void handleMenuButtonClick(ActionEvent e) throws IOException{
         String [] seg = e.getSource().toString().split(Pattern.quote("'"));
         System.out.println(seg[seg.length-1]);
-        WeatherForecastNew wforeNew = new WeatherForecastNew(seg[seg.length-1]);
+        WeatherForecast wforeNew = new WeatherForecast(seg[seg.length-1]);
     }
     
     public void switchScreen2(KeyEvent event) throws IOException{
