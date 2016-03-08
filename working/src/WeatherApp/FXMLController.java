@@ -54,6 +54,7 @@ public class FXMLController implements Initializable{
     @FXML AnchorPane backgroundPane;
     @FXML AnchorPane backgroundPane2;
     @FXML Pane infoPane;
+    @FXML Pane labelPane;
 
 
     public double rotate = 0;
@@ -70,7 +71,7 @@ public class FXMLController implements Initializable{
                 xValue = event.getX();
     }
 
-    public void handleKeys(KeyEvent event){
+    public void handleKeys(KeyEvent event) throws InterruptedException{
         if(event.getCode() == KeyCode.S){
             System.out.println("left");
             dragCircleLeft();
@@ -89,6 +90,12 @@ public class FXMLController implements Initializable{
             } catch (IOException ex) {
                 Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }
+        else if(event.getCode() == KeyCode.K){
+            dragLeft();
+        }
+        else if(event.getCode() == KeyCode.L){
+            dragRight();
         }
     }
     
@@ -182,25 +189,25 @@ public class FXMLController implements Initializable{
         th = new Thread(){
             @Override
             public void run(){
-        if(translate == 0){
-            while(translate > -430){
-                translate -= 3.5;
-                movePanel();
-                infoPane.setTranslateY(translate);
-                System.out.println(translate);
-                try { 
-                    Thread.sleep(1);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
+                if(translate == 0){
+                    while(translate > -430){
+                        translate -= 3.5;
+                        movePanel();
+                        infoPane.setTranslateY(translate);
+                        System.out.println(translate);
+                        try { 
+                            Thread.sleep(1);
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                }
+                else{
+                    infoPane.setTranslateY(0);
+                    translate = 0;
                 }
             }
-        }
-        else{
-            infoPane.setTranslateY(0);
-            translate = 0;
-        }
-    }
-                };
+        };
         th.start();
     }
     
@@ -253,7 +260,7 @@ public class FXMLController implements Initializable{
         else{
             menu.setVisible(true);
             menuToggleOpen = true;
-            button.toFront(); 
+            button.setVisible(false);
         }
     }
     //Handle menu button click
@@ -279,33 +286,51 @@ public class FXMLController implements Initializable{
             }
     }
     
-    public void switchDay(MouseEvent e){
-        
-        if(xValue < e.getX()){
-            dragLeft();
-        }
-        else if(xValue > e.getX()){
-            dragRight();
-        }
-    }
-    
-    public void dragLeft(){
+    public void dragLeft()  throws InterruptedException{
         System.out.println("going left");
-        location.setTranslateX(320-location.getLayoutX());
-        currDate.setTranslateX(320-currDate.getLayoutX());
-        tempField.setTranslateX(320-tempField.getLayoutX());
-        feelsLike.setTranslateX(320-feelsLike.getLayoutX());
-        curCondition.setTranslateX(320-curCondition.getLayoutX());
-        
+                th = new Thread(){
+                @Override
+                public void run(){
+                    double originalPos = labelPane.getLayoutX();
+                    labelPane.getTranslateX();
+                    boolean atPosition = false;
+                    double translate = 10.9;
+                    //double x = labelPane.getLayoutX() + labelPane.getTranslateX();
+
+                    while(!atPosition){
+                        labelPane.setTranslateX(translate);
+                        translate += 10.9;
+                        
+                        System.out.println("Original position: " + originalPos);
+                        double x = labelPane.getLayoutX() + labelPane.getTranslateX();
+                        System.out.println("Position of label pane: " + x);
+
+
+                        if(x == originalPos)
+                            atPosition = true;
+                        if(x > 320){
+                            labelPane.setLayoutX(0 - labelPane.getWidth());
+                            System.out.println("Greater than 320");
+                        }
+                        try {
+                            Thread.sleep(100);
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+
+                }
+            };
+        th.start();        
     }
     
     public void dragRight(){
         System.out.println("going right");
-        location.setTranslateX(location.getLayoutX()-400);
-        currDate.setTranslateX(currDate.getLayoutX()-400);
-        tempField.setTranslateX(tempField.getLayoutX()-400);
-        feelsLike.setTranslateX(feelsLike.getLayoutX()-400);
-        curCondition.setTranslateX(curCondition.getLayoutX()-400);
+        location.setTranslateX(-location.getLayoutX()*2);
+        currDate.setTranslateX(-currDate.getLayoutX()*2);
+        tempField.setTranslateX(-tempField.getLayoutX()*2);
+        feelsLike.setTranslateX(-feelsLike.getLayoutX()*2);
+        curCondition.setTranslateX(-curCondition.getLayoutX()*2);
        
     }
     
