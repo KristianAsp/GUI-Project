@@ -2,7 +2,7 @@ import urllib2
 import json
 from sys import argv
 
-city = argv
+script, city = argv
 if city =="London":
 	url = 'http://api.wunderground.com/api/57d979bd71526100/geolookup/conditions/forecast/q/England/London.json'
 elif city =="Rome":
