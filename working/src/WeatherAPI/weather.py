@@ -15,7 +15,7 @@ for x in range(0,4):
 	ltemp = parsed_json['forecast']['simpleforecast']['forecastday'][x]['low']['celsius']
 	cond = parsed_json['forecast']['simpleforecast']['forecastday'][x]['conditions']
 	hum = parsed_json['forecast']['simpleforecast']['forecastday'][x]['avehumidity']
-	target.write(day)s
+	target.write(day)
 	target.write("\n")
 	target.write(htemp)
 	target.write("\n")
