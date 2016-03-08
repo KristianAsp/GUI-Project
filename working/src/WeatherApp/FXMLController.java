@@ -262,7 +262,7 @@ public class FXMLController implements Initializable{
         System.out.println(seg[seg.length-1]);
         WeatherForecast weatherfore = new WeatherForecast(seg[seg.length-1]);
         //call updateGUI method -- args weatherfore
-        
+         
     }
     
     public void switchScreen2(KeyEvent event) throws IOException{
