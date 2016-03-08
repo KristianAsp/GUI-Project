@@ -1,6 +1,6 @@
 package WeatherApp;
 
-import WeatherAPI.WeatherCondition;
+
 import WeatherAPI.WeatherForecast;
 import static WeatherApp.Main.scene1;
 import static WeatherApp.Main.theStage;
@@ -36,7 +36,6 @@ import javafx.scene.layout.Pane;
 public class FXMLController implements Initializable{
 
     WeatherForecast weather;
-    WeatherCondition condition;
     
     @FXML Label location = new Label();
     @FXML Label tempField = new Label();
@@ -235,13 +234,13 @@ public class FXMLController implements Initializable{
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        weather = new WeatherForecast("44418");
-        condition = new WeatherCondition("44418");
+        //weather = new WeatherForecast("44418");
+        //condition = new WeatherCondition("44418");
         menuToggleOpen = false;
-        tempField.setText("" + condition.weatherConditionList.get(0).currentTemp + "°C");
-        currDate.setText(weather.getCurrentDate());
-        feelsLike.setText("Feels like: " + condition.weatherConditionList.get(0).feelsLike  + "°C");
-        curCondition.setText("Stargazing Conditions: Good");
+        //tempField.setText("" + condition.weatherConditionList.get(0).currentTemp + "°C");
+        //currDate.setText(weather.getCurrentDate());
+        //feelsLike.setText("Feels like: " + condition.weatherConditionList.get(0).feelsLike  + "°C");
+        //curCondition.setText("Stargazing Conditions: Good");
         menu.setVisible(false);
         circle.setRotate(-15 * Double.parseDouble(currentHour));
         rotate = -15 * Double.parseDouble(currentHour);
@@ -269,7 +268,7 @@ public class FXMLController implements Initializable{
         System.out.println(seg[seg.length-1]);
         WeatherForecast weatherfore = new WeatherForecast(seg[seg.length-1]);
         //call updateGUI method -- args weatherfore
-        
+         
     }
     
     public void switchScreen2(KeyEvent event) throws IOException{
