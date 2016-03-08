@@ -58,7 +58,10 @@ public class FXMLController implements Initializable{
 
     public double rotate = 0;
     public double translate = 0;
+    public double translate2 = 0;
+    public int rotations = 0;
     Thread th;
+    public int setBack;
 
     public double xValue;
     public String currentHour = new SimpleDateFormat("HH").format(Calendar.getInstance().getTime());
@@ -192,7 +195,7 @@ public class FXMLController implements Initializable{
                     while(translate > -430){
                         translate -= 3.5;
                         movePanel();
-                        infoPane.setTranslateY(translate);
+                        Platform.runLater(() -> infoPane.setTranslateY(translate));
                         System.out.println(translate);
                         try { 
                             Thread.sleep(1);
@@ -211,7 +214,7 @@ public class FXMLController implements Initializable{
     }
     
     public void movePanel(){
-        infoPane.setTranslateY(translate);
+        Platform.runLater(() -> infoPane.setTranslateY(translate));
     }
  
     
@@ -290,29 +293,35 @@ public class FXMLController implements Initializable{
                 th = new Thread(){
                 @Override
                 public void run(){
-                    double originalPos = labelPane.getLayoutX();
-                    labelPane.getTranslateX();
+                    double originalPos = 109;
                     boolean atPosition = false;
-                    double translate = 10.9;
+                    labelPane.setTranslateX(0);
                     //double x = labelPane.getLayoutX() + labelPane.getTranslateX();
 
                     while(!atPosition){
-                        labelPane.setTranslateX(translate);
-                        translate += 10.9;
+                        translate2 += 1.09;
+                        Platform.runLater(() -> labelPane.setTranslateX(translate2));
                         
                         System.out.println("Original position: " + originalPos);
                         double x = labelPane.getLayoutX() + labelPane.getTranslateX();
                         System.out.println("Position of label pane: " + x);
 
 
-                        if(x == originalPos)
+                        if(x > originalPos && x < originalPos + 1) {
                             atPosition = true;
+
+                        }
                         if(x > 320){
-                            labelPane.setLayoutX(0 - labelPane.getWidth());
+                            rotations++;
+                            setBack = -350;
+                            if(rotations > 1){
+                                setBack -= 100;
+                            }
+                            Platform.runLater(() -> labelPane.setLayoutX(setBack * rotations));
                             System.out.println("Greater than 320");
                         }
                         try {
-                            Thread.sleep(100);
+                            Thread.sleep(8);
                         } catch (InterruptedException ex) {
                             Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
                         }

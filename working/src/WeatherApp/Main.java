@@ -7,10 +7,14 @@ package WeatherApp;
 
 import javafx.application.Application;
 import static javafx.application.Application.launch;
+
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 /**
  *
@@ -36,5 +40,13 @@ public class Main extends Application{
         primaryStage.setScene(scene1);
         primaryStage.show();
         System.out.println("Showing gui");
+
+        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent e) {
+                Platform.exit();
+                System.exit(0);
+            }
+        });
     }
 }
