@@ -2,6 +2,8 @@ package WeatherApp;
 
 import WeatherAPI.WeatherCondition;
 import WeatherAPI.WeatherForecast;
+import static WeatherApp.Main.scene1;
+import static WeatherApp.Main.theStage;
 import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -10,8 +12,6 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
-import javafx.application.Application;
-import static javafx.application.Application.launch;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -27,17 +27,14 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 
 
 /**
  *
  * @author cintia
  */
-public class FXMLController extends Application implements Initializable{
+public class FXMLController implements Initializable{
 
-    private static Stage theStage;
-    private Scene scene1;
     WeatherForecast weather;
     WeatherCondition condition;
     
@@ -66,19 +63,7 @@ public class FXMLController extends Application implements Initializable{
     public double xValue;
     public String currentHour = new SimpleDateFormat("HH").format(Calendar.getInstance().getTime());
 	
-	public static void main(String[] args) {
-        launch(args);
-    }
-   
-    @Override
-    public void start(Stage primaryStage) throws Exception{
-        theStage = primaryStage;
-        Parent root = FXMLLoader.load(getClass().getResource("FXML.fxml"));
-        scene1 = new Scene(root);
-
-        primaryStage.setScene(scene1);
-        primaryStage.show();
-    }
+	
     
     public void setxValue(MouseEvent event){
                 System.out.println(event.getX());
@@ -242,6 +227,7 @@ public class FXMLController extends Application implements Initializable{
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
         weather = new WeatherForecast("44418");
         condition = new WeatherCondition("44418");
         menuToggleOpen = false;
@@ -256,6 +242,7 @@ public class FXMLController extends Application implements Initializable{
         dragMenu.setFocusTraversable(false);
         theStage.setResizable(false);
         //circle.setRotate(3);
+        
     }
     //Method to toggle the side menu open/close
     public void toggleMenu(){
@@ -273,7 +260,9 @@ public class FXMLController extends Application implements Initializable{
     public void handleMenuButtonClick(ActionEvent e) throws IOException{
         String [] seg = e.getSource().toString().split(Pattern.quote("'"));
         System.out.println(seg[seg.length-1]);
-        WeatherForecast wforeNew = new WeatherForecast(seg[seg.length-1]);
+        WeatherForecast weatherfore = new WeatherForecast(seg[seg.length-1]);
+        //call updateGUI method -- args weatherfore
+        
     }
     
     public void switchScreen2(KeyEvent event) throws IOException{
