@@ -302,7 +302,7 @@ public class FXMLController implements Initializable {
         //curCondition.setText("Stargazing Conditions: Good");
         setUpMenu();
         activeCity = "London";
-        updateValues();
+        //updateValues();
         menuToggleOpen = false;
         circle.setRotate(-15 * Double.parseDouble(currentHour));
         rotate = -15 * Double.parseDouble(currentHour);
@@ -369,9 +369,8 @@ public class FXMLController implements Initializable {
     public void handleMenuButtonClick(ActionEvent e) throws IOException{
         String [] seg = e.getSource().toString().split(Pattern.quote("'"));
         activeCity = seg[seg.length-1];
-        updateValues();
+        //updateValues();
         //call updateGUI method -- args weatherfore
-   
     }
 
     public void switchScreen2(KeyEvent event) throws IOException {
