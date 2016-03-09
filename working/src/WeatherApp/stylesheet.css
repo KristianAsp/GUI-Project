@@ -1,5 +1,5 @@
 #background {
-	-fx-background-image: url("tip02_full.jpg");
+    -fx-background-image: url("tip02_full.jpg");
     -fx-background-size: cover;
 }
 
@@ -7,6 +7,13 @@
     -fx-background-color: transparent;
     -fx-background-image: url("resources/menuButton.png");
     -fx-background-size: cover;
+}
+
+#closeMenuButton{
+    -fx-background-color: transparent;
+    -fx-background-image: url("resources/closeButton.png");
+    -fx-background-size: cover;
+    -fx-opacity: 0.8;
 }
 
 #dragMenu {
@@ -21,7 +28,7 @@
     -fx-background-size: cover;
 }
 
-#menuPane, #infoPane{
+#infoPane{
     -fx-background-color: rgba(0,0,0,0.7);
 }
 
@@ -38,8 +45,13 @@
     -fx-box-border: transparent;
 }
 
+#menuPane, #subMenu{
+    //-fx-background-color:transparent;
+    -fx-background-color:black;
+    -fx-opacity:0.8;    
+}
+
 #subMenu{
-    -fx-background-color:transparent;
     -fx-background-size: 130 250;
 }
 

@@ -57,6 +57,7 @@
       </Rectangle>
       <Pane id="menuPane" fx:id="menu" layoutX="-1.0" prefHeight="306.0" prefWidth="140.0" stylesheets="@stylesheet.css">
          <children>
+             <Button id="closeMenuButton" fx:id="closeMenuButton" layoutX="95.0" layoutY="15.0" mnemonicParsing="false" onAction="#toggleMenu" prefHeight="25.0" prefWidth="40.0" stylesheets="@stylesheet.css" text="" />
             <Pane id="subMenu" layoutX="5.0" layoutY="49.0" prefHeight="257.0" prefWidth="130.0" stylesheets="@stylesheet.css">
                <children>
                   <Button layoutX="4.0" layoutY="-1.0" mnemonicParsing="false" onAction="#handleMenuButtonClick" prefHeight="28.0" prefWidth="120.0" styleClass="menuButton" stylesheets="@stylesheet.css" text="London" />

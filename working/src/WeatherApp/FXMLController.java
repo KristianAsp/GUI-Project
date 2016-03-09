@@ -54,6 +54,8 @@ public class FXMLController implements Initializable {
     Button button;
     @FXML
     Button menuButton;
+    @FXML 
+    Button closeMenuButton;
     @FXML
     Button dragMenu;
     @FXML
@@ -345,6 +347,8 @@ public class FXMLController implements Initializable {
             parallelTransition.play();
             menuToggleOpen = false;
             menu.toBack();
+            button.setVisible(true);
+            closeMenuButton.setVisible(false);
         } //otherwise open the menu
         else{
             fadeTransition.setFromValue(0.0f);
@@ -361,7 +365,9 @@ public class FXMLController implements Initializable {
             parallelTransition.play();
             menuToggleOpen = true;
             menu.toFront();
-            button.toFront();
+            closeMenuButton.toFront();
+            closeMenuButton.setVisible(true);
+            button.setVisible(false);
         }
     }
 
