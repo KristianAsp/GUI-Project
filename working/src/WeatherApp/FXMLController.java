@@ -300,18 +300,10 @@ public class FXMLController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
-
-        //weather = new WeatherForecast("44418");
-        //condition = new WeatherCondition("44418");
         menuToggleOpen = false;
-        //tempField.setText("" + condition.weatherConditionList.get(0).currentTemp + "°C");
-        //currDate.setText(weather.getCurrentDate());
-        //feelsLike.setText("Feels like: " + condition.weatherConditionList.get(0).feelsLike  + "°C");
-        //curCondition.setText("Stargazing Conditions: Good");
         setUpMenu();
         activeCity = "London";
-        //updateValues();
+        updateValues();
         menuToggleOpen = false;
         circle.setRotate(-15 * Double.parseDouble(currentHour));
         rotate = -15 * Double.parseDouble(currentHour);
@@ -383,7 +375,7 @@ public class FXMLController implements Initializable {
         String [] seg = e.getSource().toString().split(Pattern.quote("'"));
         activeCity = seg[seg.length-1];
         System.out.println(activeCity);
-        //updateValues();
+        updateValues();
         //call updateGUI method -- args weatherfore
     }
 
@@ -403,93 +395,70 @@ public class FXMLController implements Initializable {
 
     public void dragLeft() throws InterruptedException {
         System.out.println("going left");
-                th = new Thread(){
-                @Override
-                public void run(){
-                    double originalPos = 109;
-                    boolean atPosition = false;
-                    setBack = 0;
-                    translate2 = 0;
-                    labelPane.setTranslateX(0);
-                    double x;
+        Thread th = new Thread() {
+            @Override
+            public void run() {
+                double originalPos = labelPane.getLayoutX();
+                int labelWidth = (int)labelPane.getWidth();
 
-                    while(!atPosition){
-                        try {
-                            Thread.sleep(1);
-                        } catch (InterruptedException ex) {
-                            Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-
-                        translate2 += 1;
-                        Platform.runLater(() -> labelPane.setTranslateX(translate2));
-                        System.out.println("Original position: " + originalPos);
-
-                        x = labelPane.getLayoutX() + labelPane.getTranslateX();
-                        System.out.println("Position of label pane: " + x);
-
-
-                        if(x == originalPos) {
-                            daysAhead--;
-                            atPosition = true;
-                            System.out.println("Its here");
-                            Platform.runLater(() -> labelPane.setTranslateX(0));
-                            Platform.runLater(() -> updateForecastValues(daysAhead));
-                        }
-                        if(x > 320){
-                            setBack = -350;
-                            if(daysAhead > 1){
-                                //setBack -= 100;
-                            }
-                            Platform.runLater(() -> labelPane.setLayoutX(setBack));
-                            //System.out.println("Greater than 320");
-                        }
+                boolean atPos = false;
+                while (!atPos) {
+                    translate++;
+                    Platform.runLater(() -> labelPane.setTranslateX(translate));
+                    try {
+                        Thread.sleep(5);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
+
+                    if(originalPos + labelPane.getTranslateX() == originalPos){
+                        atPos = true;
+                        System.out.println("Goes to if");
+                        System.out.println(labelPane.getTranslateX());
+                    }
+                    else if(originalPos + labelPane.getTranslateX() == 320){
+                        translate = (originalPos + labelWidth) * -1;
+                        System.out.println(translate);
+                        labelPane.setTranslateX(translate);
+                        System.out.println("Goes to else if");
+                    }
+
                 }
+            }
         };
         th.start();
     }
     
     public void dragRight(){
-        th = new Thread(){
+        Thread th = new Thread() {
             @Override
-            public void run(){
-                double originalPos = 109;
-                boolean atPosition = false;
-                labelPane.setTranslateX(0);
-                //double x = labelPane.getLayoutX() + labelPane.getTranslateX();
+            public void run() {
+                double originalPos = labelPane.getLayoutX();
+                int labelWidth = (int)labelPane.getWidth();
 
-                while(!atPosition){
-                    translate2 -= 1.09;
-                    Platform.runLater(() -> labelPane.setTranslateX(translate2));
-
-                    //System.out.println("Original position: " + originalPos);
-                    double x = labelPane.getLayoutX() + labelPane.getTranslateX();
-                    //System.out.println("Position of label pane: " + x);
-
-
-                    if(x > originalPos && x < originalPos + 1) {
-                        atPosition = true;
-                        labelPane.setTranslateX(0);
-                        daysAhead++;
-                        System.out.println(atPosition);
-                        Platform.runLater(() -> updateForecastValues(daysAhead));
-                    }
-                    if(x < -100){
-
-                        setBack = 500;
-                        if(daysAhead > 1){
-                            //setBack += 100;
-                        }
-                        Platform.runLater(() -> labelPane.setLayoutX(setBack));
-                        System.out.println("Less than -200");
-                    }
+                boolean atPos = false;
+                while (!atPos) {
+                    translate--;
+                    Platform.runLater(() -> labelPane.setTranslateX(translate));
                     try {
-                        Thread.sleep(2);
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
+                        Thread.sleep(5);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
-                }
 
+                    if(originalPos + labelPane.getTranslateX() == originalPos){
+                        atPos = true;
+                        System.out.println("Goes to if");
+                        System.out.println(labelPane.getTranslateX());
+                    }
+                    else if(originalPos + labelPane.getTranslateX() == -labelWidth){
+                        translate = backgroundPane.getWidth() - originalPos;
+                        System.out.println(translate);
+                        labelPane.setTranslateX(translate);
+                        System.out.println("Goes to else if");
+                    }
+
+                }
             }
         };
         th.start();
