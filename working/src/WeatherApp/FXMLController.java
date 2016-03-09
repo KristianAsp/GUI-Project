@@ -76,6 +76,7 @@ public class FXMLController implements Initializable {
     private int daysAhead = 0;
     Thread th = new Thread();
     Random rand = new Random();
+    private int n = 7;
 
     public double xValue;
     public double yValue;
@@ -320,12 +321,19 @@ public class FXMLController implements Initializable {
         dragMenu.setFocusTraversable(false);
         theStage.setResizable(false);
         addBackgrounds();
-        int n = rand.nextInt(5);
+        changeBackground();
+        //circle.setRotate(3);
+    }
+
+    public void changeBackground(){
+        int previousN = n;
+        n = rand.nextInt(5);
+        if(n == previousN){
+            changeBackground();
+        }
         String backgroundPath = backgrounds.get(n);
         System.out.println(backgroundPath);
         backgroundPane.setStyle("-fx-background-image: url('" + backgroundPath + "');");
-        //circle.setRotate(3);
-
     }
     // handle setup of the menu position and opacity and animation Objects
     public void setUpMenu() {
@@ -441,6 +449,7 @@ public class FXMLController implements Initializable {
                         atPos = true;
                         System.out.println("Goes to if");
                         System.out.println(labelPane.getTranslateX());
+                        Platform.runLater(() -> changeBackground());
                     }
                     else if(originalPos + labelPane.getTranslateX() == 320){
                         daysAhead--;
@@ -481,6 +490,7 @@ public class FXMLController implements Initializable {
                     if(originalPos + labelPane.getTranslateX() == originalPos){
                         atPos = true;
                         System.out.println("Goes to if");
+                        Platform.runLater(() -> changeBackground());
 
                     }
                     else if(originalPos + labelPane.getTranslateX() == -labelWidth){
