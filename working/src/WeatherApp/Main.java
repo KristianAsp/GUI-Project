@@ -7,7 +7,6 @@ package WeatherApp;
 
 import javafx.application.Application;
 import static javafx.application.Application.launch;
-
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -32,15 +31,11 @@ public class Main extends Application{
     @Override
     public void start(Stage primaryStage) throws Exception{
         theStage = primaryStage;
-        System.out.println("Setting the stage");
         Parent root = FXMLLoader.load(getClass().getResource("FXML.fxml"));
-        System.out.println("loaded fxml");
         scene1 = new Scene(root);
-        System.out.println("loading fxml and setting scene");
         primaryStage.setScene(scene1);
         primaryStage.show();
-        System.out.println("Showing gui");
-
+        
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent e) {
