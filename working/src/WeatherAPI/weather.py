@@ -24,7 +24,7 @@ parsed_json = json.loads(json_string)
 
 #Getting the weather for the next 4 days and writing it to the 'comingDaysWeatherInfo.text' file.
 for x in range(1,4):
-	wday = parsed_json['forecast']['simpleforecast']['forecastday'][x]['date']['weekday']
+	wday = parsed_json['forecast']['simpleforecast']['forecastday'][x]['date']['weekday_short']
 	day = parsed_json['forecast']['simpleforecast']['forecastday'][x]['date']['day']
 	month = parsed_json['forecast']['simpleforecast']['forecastday'][x]['date']['monthname_short']
 	htemp = parsed_json['forecast']['simpleforecast']['forecastday'][x]['high']['celsius']
@@ -50,7 +50,7 @@ for x in range(1,4):
 target.close();
 
 #Getting location and current weather conditions
-c_wday = parsed_json['forecast']['simpleforecast']['forecastday'][0]['date']['weekday']
+c_wday = parsed_json['forecast']['simpleforecast']['forecastday'][0]['date']['weekday_short']
 c_day = parsed_json['forecast']['simpleforecast']['forecastday'][0]['date']['day']
 c_month = parsed_json['forecast']['simpleforecast']['forecastday'][0]['date']['monthname_short']
 location = parsed_json['location']['city']
