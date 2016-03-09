@@ -22,7 +22,7 @@ infoStream = urllib2.urlopen(url)
 json_string = infoStream.read()
 parsed_json = json.loads(json_string)
 
-#Getting the weather for the next 4 days and writing it to the 'comingDaysWeatherInfo.text' file.
+#Getting the weather for the next 3 days and writing it to the 'comingDaysWeatherInfo.text' file.
 for x in range(1,4):
 	wday = parsed_json['forecast']['simpleforecast']['forecastday'][x]['date']['weekday_short']
 	day = parsed_json['forecast']['simpleforecast']['forecastday'][x]['date']['day']
@@ -31,6 +31,7 @@ for x in range(1,4):
 	ltemp = parsed_json['forecast']['simpleforecast']['forecastday'][x]['low']['celsius']
 	cond = parsed_json['forecast']['simpleforecast']['forecastday'][x]['conditions']
 	hum = parsed_json['forecast']['simpleforecast']['forecastday'][x]['avehumidity']
+        icon_url = parsed_json['forecast']['simpleforecast']['forecastday'][x]['icon_url']
 	target.write("\n")
 	target.write(wday)
 	target.write("\n")
@@ -46,6 +47,7 @@ for x in range(1,4):
 	target.write("\n")
 	target.write(str(hum))
 	target.write("\n")
+        target.write(str(icon_url))
 
 target.close();
 
@@ -59,6 +61,7 @@ c_humidity = parsed_json['current_observation']['relative_humidity']
 c_visibility = parsed_json['current_observation']['visibility_km']
 c_feelsLike = parsed_json['current_observation']['feelslike_c']
 icon_url = parsed_json['current_observation']['icon_url']
+c_cond = parsed_json['forecast']['simpleforecast']['forecastday'][0]['conditions']
 
 filename = "currentWeatherInfo.txt"
 target = open(filename, 'w')
@@ -80,5 +83,7 @@ target.write("\n")
 target.write(str(c_feelsLike))
 target.write("\n")
 target.write(str(icon_url))
+target.write("\n")
+target.write(str(c_cond))
 target.close()
 infoStream.close()

@@ -9,14 +9,14 @@ import java.io.IOException;
  * @author Petter
  */
 public class WeatherForecast {
-    private String[] current = new String[10];
+    private String[] current = new String[11];
     private String [] forecast = new String[50];
     private final String currentFile = "currentWeatherInfo.txt";
     private final String forecastFile = "comingDaysWeatherInfo.txt";
     
     public static void main(String[] args){
-        WeatherForecast wf = new WeatherForecast("Paris");
-        System.out.println(wf.getCurrent()[4]);
+        WeatherForecast wf = new WeatherForecast("London");
+        System.out.println(wf.getCurrent()[10]);
         System.out.println(wf.getForecast1()[1]);
     }
     
