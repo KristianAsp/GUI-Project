@@ -4,86 +4,52 @@ from sys import argv
 
 script, city = argv
 if city =="London":
-	url = 'http://api.wunderground.com/api/57d979bd71526100/geolookup/conditions/forecast/q/England/London.json'
+	url = 'http://api.wunderground.com/api/57d979bd71526100/hourly10day/q/England/London.json'
 elif city =="Rome":
-	url = 'http://api.wunderground.com/api/57d979bd71526100/geolookup/conditions/forecast/q/Italy/Rome.json'
+	url = 'http://api.wunderground.com/api/57d979bd71526100/hourly10day/q/Italy/Rome.json'
 elif city == "Madrid":
-	url = 'http://api.wunderground.com/api/57d979bd71526100/geolookup/conditions/forecast/q/Spain/Madrid.json'
+	url = 'http://api.wunderground.com/api/57d979bd71526100/hourly10day/q/Spain/Madrid.json'
 elif city =="Paris":
-	url = 'http://api.wunderground.com/api/57d979bd71526100/geolookup/conditions/forecast/q/France/Paris.json'
+	url = 'http://api.wunderground.com/api/57d979bd71526100/hourly10day/q/France/Paris.json'
 else:
-	url = 'http://api.wunderground.com/api/57d979bd71526100/geolookup/conditions/forecast/q/Germany/Berlin.json'
+	url = 'http://api.wunderground.com/api/57d979bd71526100/hourly10day/q/Germany/Berlin.json'
 
-	
-filename = "comingDaysWeatherInfo.txt"
-target = open(filename, 'w')
 
 infoStream = urllib2.urlopen(url)
 json_string = infoStream.read()
 parsed_json = json.loads(json_string)
 
-#Getting the weather for the next 3 days and writing it to the 'comingDaysWeatherInfo.text' file.
-for x in range(1,4):
-	wday = parsed_json['forecast']['simpleforecast']['forecastday'][x]['date']['weekday_short']
-	day = parsed_json['forecast']['simpleforecast']['forecastday'][x]['date']['day']
-	month = parsed_json['forecast']['simpleforecast']['forecastday'][x]['date']['monthname_short']
-	htemp = parsed_json['forecast']['simpleforecast']['forecastday'][x]['high']['celsius']
-	ltemp = parsed_json['forecast']['simpleforecast']['forecastday'][x]['low']['celsius']
-	cond = parsed_json['forecast']['simpleforecast']['forecastday'][x]['conditions']
-	hum = parsed_json['forecast']['simpleforecast']['forecastday'][x]['avehumidity']
-        icon_url = parsed_json['forecast']['simpleforecast']['forecastday'][x]['icon_url']
-	target.write("\n")
-	target.write(wday)
-	target.write("\n")
-	target.write(str(day))
-	target.write("\n")
-	target.write(month)
-	target.write("\n")
-	target.write(htemp)
-	target.write("\n")
-	target.write(ltemp)
-	target.write("\n")
-	target.write(cond)
-	target.write("\n")
-	target.write(str(hum))
-	target.write("\n")
-        target.write(str(icon_url))
+def write_weather( filename, start, end ):
+	target = open(filename, 'w')
+	target.write(parsed_json['hourly_forecast'][start]['FCTTIME']['weekday_name_abbrev'] + ',')
+	target.write(parsed_json['hourly_forecast'][start]['FCTTIME']['month_name_abbrev'] + ',')
+	target.write(parsed_json['hourly_forecast'][start]['FCTTIME']['mday'] + "\n")
 
-target.close();
+	for x in range(0,24):
+		target.write(parsed_json['hourly_forecast'][x]['condition'] + ',')
+		target.write(parsed_json['hourly_forecast'][x]['icon_url'] + ',')
+		target.write(parsed_json['hourly_forecast'][x]['humidity'] + ',')
+		target.write(parsed_json['hourly_forecast'][x]['feelslike']['metric'] + ',')
+		target.write(parsed_json['hourly_forecast'][x]['temp']['metric'] + "\n")
 
-#Getting location and current weather conditions
-c_wday = parsed_json['forecast']['simpleforecast']['forecastday'][0]['date']['weekday_short']
-c_day = parsed_json['forecast']['simpleforecast']['forecastday'][0]['date']['day']
-c_month = parsed_json['forecast']['simpleforecast']['forecastday'][0]['date']['monthname_short']
-location = parsed_json['location']['city']
-c_temp_c = parsed_json['current_observation']['temp_c']
-c_humidity = parsed_json['current_observation']['relative_humidity']
-c_visibility = parsed_json['current_observation']['visibility_km']
-c_feelsLike = parsed_json['current_observation']['feelslike_c']
-icon_url = parsed_json['current_observation']['icon_url']
-c_cond = parsed_json['forecast']['simpleforecast']['forecastday'][0]['conditions']
+	target.close()
 
-filename = "currentWeatherInfo.txt"
-target = open(filename, 'w')
-target.write("\n")
-target.write(c_wday)
-target.write("\n")
-target.write(str(c_day))
-target.write("\n")
-target.write(c_month)
-target.write("\n")
-target.write(location)
-target.write("\n")
-target.write(str(c_temp_c))
-target.write("\n")
-target.write(str(c_humidity))
-target.write("\n")
-target.write(str(c_visibility))
-target.write("\n")
-target.write(str(c_feelsLike))
-target.write("\n")
-target.write(str(icon_url))
-target.write("\n")
-target.write(str(c_cond))
-target.close()
+filename = "hourlyWeatherInfo0.txt"
+write_weather(filename, 0, 24)
+
+filename = "hourlyWeatherInfo1.txt"
+write_weather(filename, 24, 48)
+
+filename = "hourlyWeatherInfo2.txt"
+write_weather(filename, 48, 72)
+
+filename = "hourlyWeatherInfo3.txt"
+write_weather(filename, 72, 96)
+
+filename = "hourlyWeatherInfo4.txt"
+write_weather(filename, 96, 120)
+
+filename = "hourlyWeatherInfo5.txt"
+write_weather(filename, 120, 144)
+
 infoStream.close()
