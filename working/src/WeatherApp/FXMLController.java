@@ -77,6 +77,7 @@ public class FXMLController implements Initializable {
     public int setBack;
 
     public double xValue;
+    public double yValue;
     public String currentHour = new SimpleDateFormat("HH").format(Calendar.getInstance().getTime());
 
     private FadeTransition fadeTransition;
@@ -86,6 +87,12 @@ public class FXMLController implements Initializable {
     public void setxValue(MouseEvent event) {
         System.out.println(event.getX());
         xValue = event.getX();
+        yValue = event.getY();
+        // close menu if open and click was outside boundary
+        if(menuToggleOpen && (xValue>140 || yValue>310)){
+            //close the menu
+            toggleMenu();
+        }
     }
 
     public void handleKeys(KeyEvent event) throws InterruptedException {
@@ -375,6 +382,7 @@ public class FXMLController implements Initializable {
     public void handleMenuButtonClick(ActionEvent e) throws IOException{
         String [] seg = e.getSource().toString().split(Pattern.quote("'"));
         activeCity = seg[seg.length-1];
+        System.out.println(activeCity);
         //updateValues();
         //call updateGUI method -- args weatherfore
     }
