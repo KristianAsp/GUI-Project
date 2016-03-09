@@ -28,13 +28,9 @@ public class Main extends Application{
     @Override
     public void start(Stage primaryStage) throws Exception{
         theStage = primaryStage;
-        System.out.println("Setting the stage");
         Parent root = FXMLLoader.load(getClass().getResource("FXML.fxml"));
-        System.out.println("loaded fxml");
         scene1 = new Scene(root);
-        System.out.println("loading fxml and setting scene");
         primaryStage.setScene(scene1);
         primaryStage.show();
-        System.out.println("Showing gui");
     }
 }
