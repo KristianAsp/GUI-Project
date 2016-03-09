@@ -65,6 +65,10 @@
                   <Button layoutX="4.0" layoutY="153.0" mnemonicParsing="false" onAction="#handleMenuButtonClick" prefHeight="34.0" prefWidth="120.0" styleClass="menuButton" stylesheets="@stylesheet.css" text="Madrid" />
                   <Button layoutX="5.0" layoutY="202.0" mnemonicParsing="false" onAction="#handleMenuButtonClick" prefHeight="34.0" prefWidth="120.0" styleClass="menuButton" stylesheets="@stylesheet.css" text="Rome" />
                   <Separator layoutX="-1.0" layoutY="48.0" prefHeight="3.0" prefWidth="130.0" styleClass="sep" stylesheets="@stylesheet.css" />
+                  <Separator layoutY="94.0" prefHeight="2.0" prefWidth="130.0" styleClass="sep" />
+                  <Separator layoutY="145.0" prefHeight="3.0" prefWidth="130.0" styleClass="sep" />
+                  <Separator layoutY="196.0" prefHeight="3.0" prefWidth="130.0" styleClass="sep" />
+                  <Separator layoutY="245.0" prefHeight="3.0" prefWidth="130.0" styleClass="sep" />
                </children>
             </Pane>
          </children></Pane>
