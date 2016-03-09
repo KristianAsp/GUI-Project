@@ -7,7 +7,9 @@ import java.io.IOException;
 import java.lang.reflect.Array;
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -45,7 +47,8 @@ public class FXMLController implements Initializable {
     @FXML Label currDate = new Label();
     @FXML Label feelsLike = new Label();
     @FXML Pane menu;
-    
+
+    ArrayList<String> backgrounds = new ArrayList<>();
     private boolean menuToggleOpen;
     private String activeCity;
 
@@ -72,6 +75,7 @@ public class FXMLController implements Initializable {
     private double translate = 0;
     private int daysAhead = 0;
     Thread th = new Thread();
+    Random rand = new Random();
 
     public double xValue;
     public double yValue;
@@ -275,16 +279,16 @@ public class FXMLController implements Initializable {
             array = new String[]{weatherArray[1], weatherArray[2], weatherArray[3], weatherArray[4], weatherArray[5], weatherArray[6], weatherArray[7], weatherArray[8]};
         }
         else if(daysAhead == 2){
-            array = new String[]{weatherArray[10], weatherArray[11], weatherArray[12], weatherArray[13], weatherArray[14], weatherArray[15], weatherArray[16], weatherArray[17]};
+            array = new String[]{weatherArray[9], weatherArray[10], weatherArray[11], weatherArray[12], weatherArray[13], weatherArray[14], weatherArray[15], weatherArray[16]};
             System.out.println(array[0]);
             System.out.println(array[1]);
             System.out.println(array[2]);
             System.out.println(array[3]);
             System.out.println(array[4]);
-            System.out.println(array[5]);
+            System.out.println(weatherArray[9]);
         }
         else{
-            array = new String[]{weatherArray[19], weatherArray[20], weatherArray[21], weatherArray[22], weatherArray[23], weatherArray[24], weatherArray[25], weatherArray[26]};
+            array = new String[]{weatherArray[17], weatherArray[18], weatherArray[19], weatherArray[20], weatherArray[21], weatherArray[22], weatherArray[23], weatherArray[24]};
         }
 
         location.setText(activeCity);
@@ -315,6 +319,11 @@ public class FXMLController implements Initializable {
         button.setFocusTraversable(false);
         dragMenu.setFocusTraversable(false);
         theStage.setResizable(false);
+        addBackgrounds();
+        int n = rand.nextInt(5);
+        String backgroundPath = backgrounds.get(n);
+        System.out.println(backgroundPath);
+        backgroundPane.setStyle("-fx-background-image: url('" + backgroundPath + "');");
         //circle.setRotate(3);
 
     }
@@ -327,6 +336,15 @@ public class FXMLController implements Initializable {
         fadeTransition = new FadeTransition(Duration.millis(300), menu);
         translateTransition = new TranslateTransition(Duration.millis(300), menu);
         parallelTransition = new ParallelTransition();
+    }
+
+    public void addBackgrounds(){
+        backgrounds.add("WeatherApp/resources/1.png");
+        backgrounds.add("WeatherApp/resources/2.png");
+        backgrounds.add("WeatherApp/resources/3.png");
+        backgrounds.add("WeatherApp/resources/4.png");
+        backgrounds.add("WeatherApp/resources/5.png");
+        backgrounds.add("WeatherApp/resources/6.png");
     }
 
     //Method to toggle the side menu open/close
