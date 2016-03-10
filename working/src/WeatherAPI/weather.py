@@ -40,18 +40,18 @@ json_string4 = infoStream4.read()
 parsed_json4 = json.loads(json_string4)
 
 
-def write_weather( filename, start, end ):
+def write_weather( filename, start, end, day ):
 	target = open(filename, 'w')
-	target.write(parsed_json['hourly_forecast'][start]['FCTTIME']['weekday_name_abbrev'] + ',')
-	target.write(parsed_json['hourly_forecast'][start]['FCTTIME']['month_name_abbrev'] + ',')
-	target.write(parsed_json['hourly_forecast'][start]['FCTTIME']['mday'] + ",")
+	target.write(parsed_json4['forecast']['simpleforecast']['forecastday'][day]['date']['weekday_short'] + ',')
+	target.write(parsed_json4['forecast']['simpleforecast']['forecastday'][day]['date']['monthname_short'] + ',')
+	target.write(str(parsed_json4['forecast']['simpleforecast']['forecastday'][day]['date']['day']) + ',')
 	target.write(parsed_json2['sun_phase']['sunrise']['hour'] + ',')
 	target.write(parsed_json2['sun_phase']['sunrise']['minute'] + ',')
 	target.write(parsed_json2['sun_phase']['sunset']['hour'] + ',')
 	target.write(parsed_json2['sun_phase']['sunset']['minute'] + ',')
 	target.write(parsed_json3['current_observation']['precip_today_metric'] + ',')
-	target.write(parsed_json4['forecast']['simpleforecast']['forecastday'][0]['high']['celsius'] + ",")
-	target.write(parsed_json4['forecast']['simpleforecast']['forecastday'][0]['low']['celsius'] + "\n")
+	target.write(parsed_json4['forecast']['simpleforecast']['forecastday'][day]['high']['celsius'] + ",")
+	target.write(parsed_json4['forecast']['simpleforecast']['forecastday'][day]['low']['celsius'] + "\n")
 
 	for x in range(start,end):
 		target.write(parsed_json['hourly_forecast'][x]['condition'] + ',')
@@ -63,21 +63,21 @@ def write_weather( filename, start, end ):
 	target.close()
 
 filename = "hourlyWeatherInfo0.txt"
-write_weather(filename, 0, 24)
+write_weather(filename, 0, 24, 0)
 
 filename = "hourlyWeatherInfo1.txt"
-write_weather(filename, 25, 49)
+write_weather(filename, 25, 49, 1)
 
 filename = "hourlyWeatherInfo2.txt"
-write_weather(filename, 50, 74)
+write_weather(filename, 50, 74, 2)
 
 filename = "hourlyWeatherInfo3.txt"
-write_weather(filename, 74, 99)
+write_weather(filename, 74, 99, 3)
 
 filename = "hourlyWeatherInfo4.txt"
-write_weather(filename, 101, 125)
+write_weather(filename, 101, 125, 4)
 
 filename = "hourlyWeatherInfo5.txt"
-write_weather(filename, 126, 150)
+write_weather(filename, 126, 150, 5)
 
 infoStream.close()
