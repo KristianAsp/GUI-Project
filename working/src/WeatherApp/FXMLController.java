@@ -55,6 +55,7 @@ public class FXMLController implements Initializable {
 
     ArrayList<String> backgrounds = new ArrayList<>();
     private boolean menuToggleOpen;
+    private boolean dragMenuOpen = false;
     private String activeCity;
 
     @FXML
@@ -110,10 +111,10 @@ public class FXMLController implements Initializable {
 
     public void handleKeys(KeyEvent event) throws InterruptedException {
         //System.out.println(th.isAlive());
-        if (event.getCode() == KeyCode.S) {
+        if (event.getCode() == KeyCode.S && !th.isAlive()) {
             //System.out.println("left");
             dragCircleLeft();
-        } else if (event.getCode() == KeyCode.A) {
+        } else if (event.getCode() == KeyCode.A && !th.isAlive()) {
             //System.out.println("right");
             dragCircleRight();
         } else if (event.getCode() == KeyCode.ENTER) {
@@ -126,9 +127,9 @@ public class FXMLController implements Initializable {
             } catch (IOException ex) {
                 Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } else if (event.getCode() == KeyCode.K && daysAhead != 0 && !th.isAlive()) {
+        } else if (event.getCode() == KeyCode.K && daysAhead != 0 && !th.isAlive() && !menuToggleOpen) {
             dragLeft();
-        } else if (event.getCode() == KeyCode.L && daysAhead != 4 && !th.isAlive()) {
+        } else if (event.getCode() == KeyCode.L && daysAhead != 4 && !th.isAlive() && !menuToggleOpen) {
             dragRight();
         }
     }
@@ -233,9 +234,14 @@ public class FXMLController implements Initializable {
                             Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
+                    dragMenuOpen = true;
+                    System.out.println(dragMenuOpen);
+
                 } else {
                     Platform.runLater(() -> infoPane.setTranslateY(0));
                     translate = 0;
+                    dragMenuOpen = false;
+                    System.out.println(dragMenuOpen);
                 }
             }
         };
@@ -312,7 +318,7 @@ public class FXMLController implements Initializable {
         }
         curCondition.setText("Stargazing Conditions: " + conditions);
     }
-    public void updateCity(String city){
+    public void updateCity(){
         weather = new WeatherForecast(activeCity);
         info = weather.getHourlyWeather();
     }
@@ -414,7 +420,7 @@ public class FXMLController implements Initializable {
         String [] seg = e.getSource().toString().split(Pattern.quote("'"));
         activeCity = seg[seg.length-1];
         //System.out.println(activeCity);
-        updateCity(activeCity);
+        updateCity();
         updateForecastValues();
         //call updateGUI method -- args weatherfore
     }
