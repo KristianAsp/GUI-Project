@@ -1,5 +1,7 @@
 package WeatherApp;
 
+import WeatherAPI.Day;
+import WeatherAPI.HourWeather;
 import WeatherAPI.WeatherForecast;
 import static WeatherApp.Main.scene1;
 import static WeatherApp.Main.theStage;
@@ -14,6 +16,8 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
+
+import WeatherAPI.WeatherObject;
 import javafx.animation.FadeTransition;
 import javafx.animation.ParallelTransition;
 import javafx.animation.TranslateTransition;
@@ -26,6 +30,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -81,14 +86,19 @@ public class FXMLController implements Initializable {
     public double xValue;
     public double yValue;
     public String currentHour = new SimpleDateFormat("HH").format(Calendar.getInstance().getTime());
+    public int currentTime = Integer.parseInt(currentHour);
+    @FXML private ImageView clouds;
 
     private FadeTransition fadeTransition;
     private TranslateTransition translateTransition;
     private ParallelTransition parallelTransition;
     WeatherForecast weather = new WeatherForecast("London");
+    private WeatherObject[][] info = weather.getHourlyWeather();
+    Day dw;
+    HourWeather hw;
             
     public void setxValue(MouseEvent event) {
-        System.out.println(event.getX());
+        //System.out.println(event.getX());
         xValue = event.getX();
         yValue = event.getY();
         // close menu if open and click was outside boundary
@@ -99,12 +109,12 @@ public class FXMLController implements Initializable {
     }
 
     public void handleKeys(KeyEvent event) throws InterruptedException {
-        System.out.println(th.isAlive());
+        //System.out.println(th.isAlive());
         if (event.getCode() == KeyCode.S) {
-            System.out.println("left");
+            //System.out.println("left");
             dragCircleLeft();
         } else if (event.getCode() == KeyCode.A) {
-            System.out.println("right");
+            //System.out.println("right");
             dragCircleRight();
         } else if (event.getCode() == KeyCode.ENTER) {
             try {
@@ -118,7 +128,7 @@ public class FXMLController implements Initializable {
             }
         } else if (event.getCode() == KeyCode.K && daysAhead != 0 && !th.isAlive()) {
             dragLeft();
-        } else if (event.getCode() == KeyCode.L && daysAhead != 3 && !th.isAlive()) {
+        } else if (event.getCode() == KeyCode.L && daysAhead != 4 && !th.isAlive()) {
             dragRight();
         }
     }
@@ -126,11 +136,11 @@ public class FXMLController implements Initializable {
     public void handleKeysAgain(KeyEvent event) {
 
         if (event.getCode() == KeyCode.S) {
-            System.out.println("left");
+            //System.out.println("left");
             dragCircleLeft();
             wheelTime();
         } else if (event.getCode() == KeyCode.A) {
-            System.out.println("right");
+            //System.out.println("right");
             dragCircleRight();
             wheelTime();
         } else if (event.getCode() == KeyCode.ENTER) {
@@ -145,7 +155,7 @@ public class FXMLController implements Initializable {
             }
         }
 
-        System.out.println("it's working ");
+        //System.out.println("it's working ");
     }
 
     public void dragCircleRight() {
@@ -168,7 +178,7 @@ public class FXMLController implements Initializable {
                         rotate = 0;
                     }
                 }
-                wheelTime();
+                Platform.runLater(() -> wheelTime());
             }
         };
         th.start();
@@ -194,7 +204,7 @@ public class FXMLController implements Initializable {
                         rotate = 0;
                     }
                 }
-                wheelTime();
+                Platform.runLater(() -> wheelTime());
             }
         };
         th.start();
@@ -207,7 +217,7 @@ public class FXMLController implements Initializable {
     }
 
     public void dragInfoPane() throws InterruptedException {
-        System.out.println("dragging pane");
+        //System.out.println("dragging pane");
         th = new Thread() {
             @Override
             public void run() {
@@ -216,7 +226,7 @@ public class FXMLController implements Initializable {
                         translate -= 3.5;
                         movePanel();
                         Platform.runLater(() -> infoPane.setTranslateY(translate));
-                        System.out.println(translate);
+                        //System.out.println(translate);
                         try {
                             Thread.sleep(1);
                         } catch (InterruptedException ex) {
@@ -224,7 +234,7 @@ public class FXMLController implements Initializable {
                         }
                     }
                 } else {
-                    infoPane.setTranslateY(0);
+                    Platform.runLater(() -> infoPane.setTranslateY(0));
                     translate = 0;
                 }
             }
@@ -237,76 +247,74 @@ public class FXMLController implements Initializable {
     }
 
     public void wheelTime() {
-        int currentHour;
 
         if ((int) Math.round(circle.getRotate() / -15) >= 0) {
-            currentHour = ((int) Math.round(circle.getRotate() / -15));
+            currentTime = ((int) Math.round(circle.getRotate() / -15));
         } else {
-            currentHour = (24 - (int) Math.round(circle.getRotate() / 15));
+            currentTime = (24 - (int) Math.round(circle.getRotate() / 15));
         }
-        System.out.println(currentHour);
-        updateValues();
+        //System.out.println(currentHour);
+        updateForecastValues();
     }
-    
+
     public void updateValues() {
-        System.out.println("Updating values");
-        String[] weatherArray = weather.getCurrent();
+        dw = (Day) weather.getHourlyWeather()[0][0];
+        if(currentTime == 0){
+            hw = (HourWeather) weather.getHourlyWeather()[0][24];
+        }
+        else {
+            hw = (HourWeather) weather.getHourlyWeather()[0][currentTime];
+        }
+        clouds.setImage(new Image(hw.getIconUrl()));
+        clouds.setPreserveRatio(true);
+        clouds.setFitHeight(42);
+        clouds.setFitWidth(42);
+        //System.out.println("Updating values");
         location.setText(activeCity);
-        tempField.setText("" + weatherArray[5] + "°C");
-        currDate.setText(weatherArray[1] + " " + weatherArray[2] + ". " + weatherArray[3]);
-        feelsLike.setText("Feels like: " + weatherArray[8]  + "°C");
-        System.out.println(weatherArray[10]);
+        tempField.setText("" + hw.getTemp() + "°C");
+        currDate.setText(dw.getName() + " " + dw.getDayNumber() + ". " + dw.getMonthName());
+        feelsLike.setText("Feels like: " + hw.getFeelsLike()  + "°C");
         String conditions = "Good";
-        if(weatherArray[10].equals("Overcast") || weatherArray[10].equals("Chance of Rain")){
+        if(hw.getCondition().equals("Overcast") || hw.getCondition().equals("Chance of Rain")){
             conditions = "Poor";
         }
-        else if(weatherArray[10].equals("Clear")){
+        else if(hw.getCondition().equals("Clear")){
             conditions = "Good";
         }
         curCondition.setText("Stargazing Conditions: " + conditions);
     }
 
-    public void updateForecastValues(int daysAhead){
-        System.out.println("Hey");
-        System.out.println(daysAhead);
-
-        String[] weatherArray = weather.getForecast1();
-        String[] array;
+    public void updateForecastValues(){
         if(daysAhead == 0){
             updateValues();
             return;
         }
-        if(daysAhead == 1){
-            array = new String[]{weatherArray[1], weatherArray[2], weatherArray[3], weatherArray[4], weatherArray[5], weatherArray[6], weatherArray[7], weatherArray[8]};
-        }
-        else if(daysAhead == 2){
-            array = new String[]{weatherArray[9], weatherArray[10], weatherArray[11], weatherArray[12], weatherArray[13], weatherArray[14], weatherArray[15], weatherArray[16]};
-            System.out.println(array[0]);
-            System.out.println(array[1]);
-            System.out.println(array[2]);
-            System.out.println(array[3]);
-            System.out.println(array[4]);
-            System.out.println(weatherArray[9]);
+        location.setText(activeCity);
+        dw = (Day) weather.getHourlyWeather()[daysAhead][0];
+        if(currentTime != 0) {
+            hw = (HourWeather) weather.getHourlyWeather()[daysAhead][currentTime];
         }
         else{
-            array = new String[]{weatherArray[17], weatherArray[18], weatherArray[19], weatherArray[20], weatherArray[21], weatherArray[22], weatherArray[23], weatherArray[24]};
+            hw = (HourWeather) weather.getHourlyWeather()[daysAhead][24];
         }
 
-        location.setText(activeCity);
-        tempField.setText("" + array[3] + "°C");
-        currDate.setText(array[0] + " " + array[1] + ". " + array[2]);
-        feelsLike.setText("Feels like: " + array[4]  + "°C");
+        clouds.setImage(new Image(hw.getIconUrl()));
+        currDate.setText(dw.getName() + " " + dw.getDayNumber() + ". " + dw.getMonthName());
+        tempField.setText("" + hw.getTemp() + "°C");
+
+        feelsLike.setText("Feels like: " + hw.getFeelsLike()  + "°C");
         String conditions = "Good";
-        if(array[5].equals("Overcast") || array[5].equals("Chance of Rain")){
+        if(hw.getCondition().equals("Overcast") || hw.getCondition().equals("Chance of Rain")){
             conditions = "Poor";
         }
-        else if(array[5].equals("Clear")){
+        else if(hw.getCondition().equals("Clear")){
             conditions = "Good";
         }
         curCondition.setText("Stargazing Conditions: " + conditions);
     }
     public void updateCity(String city){
         weather = new WeatherForecast(activeCity);
+        info = weather.getHourlyWeather();
     }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -332,7 +340,7 @@ public class FXMLController implements Initializable {
             changeBackground();
         }
         String backgroundPath = backgrounds.get(n);
-        System.out.println(backgroundPath);
+        //System.out.println(backgroundPath);
         backgroundPane.setStyle("-fx-background-image: url('" + backgroundPath + "');");
     }
     // handle setup of the menu position and opacity and animation Objects
@@ -405,9 +413,9 @@ public class FXMLController implements Initializable {
     public void handleMenuButtonClick(ActionEvent e) throws IOException{
         String [] seg = e.getSource().toString().split(Pattern.quote("'"));
         activeCity = seg[seg.length-1];
-        System.out.println(activeCity);
+        //System.out.println(activeCity);
         updateCity(activeCity);
-        updateValues();
+        updateForecastValues();
         //call updateGUI method -- args weatherfore
     }
 
@@ -432,7 +440,7 @@ public class FXMLController implements Initializable {
             @Override
             public void run() {
                 double originalPos = labelPane.getLayoutX();
-                System.out.println(originalPos);
+                //System.out.println(originalPos);
                 int labelWidth = (int)labelPane.getWidth();
 
                 boolean atPos = false;
@@ -447,17 +455,17 @@ public class FXMLController implements Initializable {
 
                     if(originalPos + labelPane.getTranslateX() == originalPos){
                         atPos = true;
-                        System.out.println("Goes to if");
-                        System.out.println(labelPane.getTranslateX());
+                        //System.out.println("Goes to if");
+                        //System.out.println(labelPane.getTranslateX());
                         Platform.runLater(() -> changeBackground());
                     }
                     else if(originalPos + labelPane.getTranslateX() == 320){
                         daysAhead--;
                         translate = (originalPos + labelWidth) * -1;
-                        System.out.println(translate);
+                        //System.out.println(translate);
                         Platform.runLater(() -> labelPane.setTranslateX(translate));
-                        System.out.println("Goes to else if");
-                        Platform.runLater(() -> updateForecastValues(daysAhead));
+                        //System.out.println("Goes to else if");
+                        Platform.runLater(() -> updateForecastValues());
                     }
 
                 }
@@ -474,7 +482,7 @@ public class FXMLController implements Initializable {
             @Override
             public void run() {
                 double originalPos = labelPane.getLayoutX();
-                System.out.println(originalPos);
+                //System.out.println(originalPos);
                 int labelWidth = (int)labelPane.getWidth();
 
                 boolean atPos = false;
@@ -489,17 +497,17 @@ public class FXMLController implements Initializable {
 
                     if(originalPos + labelPane.getTranslateX() == originalPos){
                         atPos = true;
-                        System.out.println("Goes to if");
+                        //System.out.println("Goes to if");
                         Platform.runLater(() -> changeBackground());
 
                     }
                     else if(originalPos + labelPane.getTranslateX() == -labelWidth){
                         daysAhead++;
                         translate = backgroundPane.getWidth() - originalPos;
-                        System.out.println(translate);
+                        //System.out.println(translate);
                         Platform.runLater(() -> labelPane.setTranslateX(translate));
-                        System.out.println("Goes to else if");
-                        Platform.runLater(() -> updateForecastValues(daysAhead));
+                        //System.out.println("Goes to else if");
+                        Platform.runLater(() -> updateForecastValues());
                     }
 
                 }
