@@ -25,7 +25,7 @@ def write_weather( filename, start, end ):
 	target.write(parsed_json['hourly_forecast'][start]['FCTTIME']['month_name_abbrev'] + ',')
 	target.write(parsed_json['hourly_forecast'][start]['FCTTIME']['mday'] + "\n")
 
-	for x in range(0,24):
+	for x in range(start,end):
 		target.write(parsed_json['hourly_forecast'][x]['condition'] + ',')
 		target.write(parsed_json['hourly_forecast'][x]['icon_url'] + ',')
 		target.write(parsed_json['hourly_forecast'][x]['humidity'] + ',')
