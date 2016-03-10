@@ -38,18 +38,18 @@ filename = "hourlyWeatherInfo0.txt"
 write_weather(filename, 0, 24)
 
 filename = "hourlyWeatherInfo1.txt"
-write_weather(filename, 24, 48)
+write_weather(filename, 25, 48)
 
 filename = "hourlyWeatherInfo2.txt"
-write_weather(filename, 48, 72)
+write_weather(filename, 49, 72)
 
 filename = "hourlyWeatherInfo3.txt"
-write_weather(filename, 72, 96)
+write_weather(filename, 73, 96)
 
 filename = "hourlyWeatherInfo4.txt"
-write_weather(filename, 96, 120)
+write_weather(filename, 97, 120)
 
 filename = "hourlyWeatherInfo5.txt"
-write_weather(filename, 120, 144)
+write_weather(filename, 121, 144)
 
 infoStream.close()
