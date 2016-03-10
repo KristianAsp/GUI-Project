@@ -2,40 +2,43 @@ import urllib2
 import json
 from sys import argv
 
+site = ['hourly10day', 'astronomy', 'conditions', 'forecast10day']
+
+def getUrls(city, site):
+	url = []
+	for x in site:
+		ur = 'http://api.wunderground.com/api/57d979bd71526100/%s/q/%s.json' %(x ,city)
+		url.append(ur) 
+	return url;
+
 script, city = argv
 if city =="London":
-	url = 'http://api.wunderground.com/api/57d979bd71526100/hourly10day/q/England/London.json'
-	url2 = 'http://api.wunderground.com/api/57d979bd71526100/astronomy/q/England/London.json'
-	url3 = 'http://api.wunderground.com/api/57d979bd71526100/conditions/q/England/London.json'
+	urls = getUrls('England/London' , site)
 elif city =="Rome":
-	url = 'http://api.wunderground.com/api/57d979bd71526100/hourly10day/q/Italy/Rome.json'
-	url2 = 'http://api.wunderground.com/api/57d979bd71526100/astronomy/q/Italy/Rome.json'
-	url3 = 'http://api.wunderground.com/api/57d979bd71526100/conditions/q/Italy/Rome.json'
+	urls = getUrls('Italy/Rome' , site)
 elif city == "Madrid":
-	url = 'http://api.wunderground.com/api/57d979bd71526100/hourly10day/q/Spain/Madrid.json'
-	url2 = 'http://api.wunderground.com/api/57d979bd71526100/astronomy/q/Spain/Madrid.json'
-	url3 = 'http://api.wunderground.com/api/57d979bd71526100/conditions/q/Spain/Madrid.json'
+	urls = getUrls('Spain/Madrid' , site)
 elif city =="Paris":
-	url = 'http://api.wunderground.com/api/57d979bd71526100/hourly10day/q/France/Paris.json'
-	url2 = 'http://api.wunderground.com/api/57d979bd71526100/astronomy/q/France/Paris.json'
-	url3 = 'http://api.wunderground.com/api/57d979bd71526100/conditions/q/France/Paris.json'
+	urls = getUrls('France/Paris' , site)
 else:
-	url = 'http://api.wunderground.com/api/57d979bd71526100/hourly10day/q/Germany/Berlin.json'
-	url2 = 'http://api.wunderground.com/api/57d979bd71526100/astronomy/q/Germany/Berlin.json'
-	url3 = 'http://api.wunderground.com/api/57d979bd71526100/conditions/q/Germany/Berlin.json'
+	urls = getUrls('Germany/Berlin' , site)
 
-
-infoStream = urllib2.urlopen(url)
+infoStream = urllib2.urlopen(urls[0])
 json_string = infoStream.read()
 parsed_json = json.loads(json_string)
 
-infoStream2 = urllib2.urlopen(url2)
+infoStream2 = urllib2.urlopen(urls[1])
 json_string2 = infoStream2.read()
 parsed_json2 = json.loads(json_string2)
 
-infoStream3 = urllib2.urlopen(url3)
+infoStream3 = urllib2.urlopen(urls[2])
 json_string3 = infoStream3.read()
 parsed_json3 = json.loads(json_string3)
+
+infoStream4 = urllib2.urlopen(urls[3])
+json_string4 = infoStream4.read()
+parsed_json4 = json.loads(json_string4)
+
 
 def write_weather( filename, start, end ):
 	target = open(filename, 'w')
@@ -45,8 +48,10 @@ def write_weather( filename, start, end ):
 	target.write(parsed_json2['sun_phase']['sunrise']['hour'] + ',')
 	target.write(parsed_json2['sun_phase']['sunrise']['minute'] + ',')
 	target.write(parsed_json2['sun_phase']['sunset']['hour'] + ',')
-	target.write(parsed_json2['sun_phase']['sunset']['minute'] + ",")
-	target.write(parsed_json3['current_observation']['precip_today_metric'] + "\n")
+	target.write(parsed_json2['sun_phase']['sunset']['minute'] + ',')
+	target.write(parsed_json3['current_observation']['precip_today_metric'] + ',')
+	target.write(parsed_json4['forecast']['simpleforecast']['forecastday'][0]['high']['celsius'] + ",")
+	target.write(parsed_json4['forecast']['simpleforecast']['forecastday'][0]['low']['celsius'] + "\n")
 
 	for x in range(start,end):
 		target.write(parsed_json['hourly_forecast'][x]['condition'] + ',')

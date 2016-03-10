@@ -11,6 +11,8 @@ contains 3 strings;
  - sunrise
  - sunset
  - precipiration
+ - highTemp
+ - lowTemp
 
 The other 24 positions in the array contains HourWeather objects, which contains 5 strings:
  - condition
