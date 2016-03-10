@@ -57,7 +57,7 @@ public class WeatherForecast {
                 if(count==0){
                     String sunrise = temp[3]+":"+temp[4];
                     String sunset = temp[5]+":"+temp[5];
-                    data[count] = new Day(temp[0], temp[1], temp[2], sunrise,sunset, temp[7]);
+                    data[count] = new Day(temp[0], temp[1], temp[2], sunrise,sunset, temp[7], temp[8], temp[9]);
                 }
                 else{
                     data[count]= new HourWeather(temp[0], temp[1], temp[2], temp[3], temp[4]);
