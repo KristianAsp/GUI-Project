@@ -13,11 +13,17 @@ public class Day extends WeatherObject{
     private String name;
     private String monthName;
     private String dayNumber;
+    private String sunrise;
+    private String sunset;
+    private String precip;
     
-    public Day(String n, String mn, String dn){
+    public Day(String n, String mn, String dn, String sr, String sn, String pre){
         name = n;
         monthName = mn;
         dayNumber= dn;
+        sunrise = sr;
+        sunset = sn;
+        precip = pre;
     }           
 
 
@@ -31,6 +37,18 @@ public class Day extends WeatherObject{
     
     public String getDayNumber(){
         return dayNumber;
+    }
+    
+    public String getSunrise(){
+        return sunrise;
+    }
+    
+    public String getSunset(){
+        return sunset;
+    }
+    
+    public String getPrecip(){
+        return precip;
     }
 
 }

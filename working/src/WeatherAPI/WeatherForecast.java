@@ -9,23 +9,20 @@ import java.io.IOException;
  * @author Petter
  */
 public class WeatherForecast {
-    private WeatherObject[][] hourly = new WeatherObject[5][25]; 
+    private WeatherObject[][] hourly = new WeatherObject[6][25]; 
     private final String [] files = {"hourlyWeatherInfo0.txt", "hourlyWeatherInfo1.txt", 
                                      "hourlyWeatherInfo2.txt", "hourlyWeatherInfo3.txt", 
                                      "hourlyWeatherInfo3.txt", "hourlyWeatherInfo5.txt"};
 
     public static void main(String[] args){
         WeatherForecast wf = new WeatherForecast("London");
-        Day d = (Day) wf.getHourlyWeather()[0][0];
+        Day d = (Day) wf.getHourlyWeather()[3][0];
         System.out.println(d.getDayNumber());
         System.out.println(d.getMonthName());
         System.out.println(d.getName());
-        HourWeather hw = (HourWeather) wf.getHourlyWeather()[0][1];
-        System.out.println(hw.getCondition());
-        System.out.println(hw.getFeelsLike());
-        System.out.println(hw.getHumidity());
-        System.out.println(hw.getIconUrl());
-        
+        System.out.println(d.getSunrise());
+        System.out.println(d.getSunset());
+        System.out.println(d.getPrecip());
     }
     
     public WeatherForecast(String city){
@@ -40,14 +37,14 @@ public class WeatherForecast {
         catch (IOException e){
             System.exit(0);
         }
-        for(int i=0; i<5;i++)
+        for(int i=0; i<6;i++)
         {
             hourly[i] = readInfo(files[i]);
         }     
     }
     
     private WeatherObject[] readInfo(String filename){
-        WeatherObject [] data = new WeatherObject[25];
+        WeatherObject [] data = new WeatherObject[30];
         try{         
             String line;
             int count = 0;
@@ -58,7 +55,9 @@ public class WeatherForecast {
                 String[] temp = line.split(",");
                 
                 if(count==0){
-                    data[count] = new Day(temp[0], temp[1], temp[2]);
+                    String sunrise = temp[3]+":"+temp[4];
+                    String sunset = temp[5]+":"+temp[5];
+                    data[count] = new Day(temp[0], temp[1], temp[2], sunrise,sunset, temp[7]);
                 }
                 else{
                     data[count]= new HourWeather(temp[0], temp[1], temp[2], temp[3], temp[4]);

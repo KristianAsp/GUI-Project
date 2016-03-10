@@ -8,6 +8,9 @@ contains 3 strings;
  - name(name of day)
  - monthName 
  - dayNumber
+ - sunrise
+ - sunset
+ - precipiration
 
 The other 24 positions in the array contains HourWeather objects, which contains 5 strings:
  - condition
