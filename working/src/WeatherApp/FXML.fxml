@@ -19,6 +19,7 @@
 
 <AnchorPane id="background" fx:id="backgroundPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#handleKeys" onMouseClicked="#setxValue" prefHeight="480.0" prefWidth="320.0" styleClass="background" stylesheets="@stylesheet.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="WeatherApp.FXMLController">
    <children>
+      <Button id="dragMenu" fx:id="dragMenu1" layoutX="196.0" layoutY="18.0" mnemonicParsing="false" onAction="#dragInfoPane" prefHeight="25.0" prefWidth="40.0" rotate="90.0" scaleX="0.5" scaleY="0.5" stylesheets="@stylesheet.css" />
       <Pane fx:id="labelPane" prefHeight="258.0" prefWidth="320.0">
          <children>
             <Label fx:id="location" alignment="CENTER" layoutX="115.0" layoutY="2.0" prefHeight="17.0" prefWidth="90.0" text="London" textAlignment="RIGHT" textFill="WHITE" />
@@ -32,6 +33,7 @@
             <Pane fx:id="clouds" layoutX="174.0" layoutY="141.0" prefHeight="70.0" prefWidth="70.0" />
          </children>
       </Pane>
+      <Button id="dragMenu" fx:id="dragMenu11" layoutX="79.0" layoutY="18.0" mnemonicParsing="false" onAction="#dragInfoPane" prefHeight="25.0" prefWidth="40.0" rotate="-90.0" scaleX="0.5" scaleY="0.5" stylesheets="@stylesheet.css" />
       <Label layoutX="94.0" layoutY="384.0" text="Slide to adjust by hour" textFill="WHITE" />
       <Polygon fill="#ff1f1f" layoutX="160.0" layoutY="353.0" scaleX="0.1" scaleY="0.10000000000000009" stroke="BLACK" strokeType="INSIDE">
         <points>
