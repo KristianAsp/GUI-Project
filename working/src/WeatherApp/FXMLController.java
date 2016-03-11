@@ -181,10 +181,10 @@ public class FXMLController implements Initializable {
     public void handleKeysAgain(KeyEvent event) throws InterruptedException {
         if (event.getCode() == KeyCode.S && !th.isAlive() && !menuToggleOpen && !dragMenuOpen) {
             //System.out.println("left");
-            dragCircleLeft();
+            dragCircleLeftLarge();
         } else if (event.getCode() == KeyCode.A && !th.isAlive() && !menuToggleOpen && !dragMenuOpen) {
             //System.out.println("right");
-            dragCircleRight();
+            dragCircleRightLarge();
         } else if (event.getCode() == KeyCode.ENTER && !menuToggleOpen && !dragMenuOpen) {
             try {
                 storeBool.setfxmlActive(false);
@@ -197,9 +197,9 @@ public class FXMLController implements Initializable {
             } catch (IOException ex) {
                 Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } else if (event.getCode() == KeyCode.K && daysAhead != 0 && !th.isAlive() && !menuToggleOpen && !dragMenuOpen) {
+        } else if (event.getCode() == KeyCode.K && daysAhead != 0 && !hh.isAlive() && !menuToggleOpen && !dragMenuOpen) {
             dragLeftLarge();
-        } else if (event.getCode() == KeyCode.L && daysAhead != 5 && !th.isAlive() && !menuToggleOpen && !dragMenuOpen) {
+        } else if (event.getCode() == KeyCode.L && daysAhead != 5 && !hh.isAlive() && !menuToggleOpen && !dragMenuOpen) {
             dragRightLarge();
         }
     }
@@ -246,6 +246,7 @@ public class FXMLController implements Initializable {
         };
         th.start();
     }
+    
 
     public void dragCircleLeft() {
         th = new Thread() {
@@ -282,6 +283,93 @@ public class FXMLController implements Initializable {
                 if((currentTime == 0 || currentTime == 24) && !hh.isAlive()){
                         currentTime = 0;
                         dragRight();
+                }
+
+            }
+        };
+        th.start();
+
+    }
+    
+    public void dragCircleRightLarge() {
+        th = new Thread() {
+            @Override
+            public void run() {
+                if(daysAhead == 0 && currentTime == Integer.parseInt(currentHour)){
+                    System.out.println("returns");
+                    return;
+                }
+                
+                int innerRotation = 0;
+                while (innerRotation < 15) {
+                    try {
+                        Thread.sleep(10);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                    rotate += 1;
+                    Platform.runLater(() -> circle.setRotate(rotate));
+                    innerRotation += 1;
+
+                    if (rotate == 360 || rotate == -360) {
+                        rotate = 0;
+                    }
+                }
+
+                wheelTime();
+                //System.out.println(currentTime);
+                if((currentTime == 23) && !hh.isAlive()){
+                        Platform.runLater(() -> {
+                            try {
+                                dragLeftLarge();
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        });
+                    
+                }
+            }
+        };
+        th.start();
+    }
+    
+
+    public void dragCircleLeftLarge() {
+        th = new Thread() {
+            @Override
+            public void run() {
+                if(daysAhead == 5 && currentTime == 23){
+                    System.out.println("returns");
+                    return;
+                }
+                else if(daysAhead > 5){
+                    return;
+                }
+                int innerRotation = 0;
+                while (innerRotation < 15) {
+                    try {
+                        Thread.sleep(10);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                    rotate -= 1;
+                    Platform.runLater(() -> circle.setRotate(rotate));
+                    innerRotation += 1;
+
+                    if (rotate == 360 || rotate == -360) {
+                        rotate = 0;
+                        Platform.runLater(() -> circle.setRotate(0));
+                    }                    
+
+                }
+
+                wheelTime();
+
+                if((currentTime == 0 || currentTime == 24) && !hh.isAlive()){
+                        currentTime = 0;
+                        dragRightLarge();
                 }
 
             }
@@ -542,8 +630,23 @@ public class FXMLController implements Initializable {
         else {
             hw = (HourWeather) info[0][currentTime];
         }
-        clouds.setStyle("-fx-background-image: url(\"WeatherApp/resources/sun.png\");" +
-                "    -fx-background-size: cover;");
+        String cldSrc;
+        if(hw.getCondition().equals("Clear")){
+            cldSrc = "WeatherApp/resources/sun.png";
+        }
+        else if((hw.getCondition().equals("Partly Cloudy") || hw.getCondition().equals("Mostly Cloudy")) && (currentTime > 6 || currentTime < 21)){
+            cldSrc = "WeatherApp/resources/mooncloud.png";         
+
+        }
+        else if(hw.getCondition().equals("Overcast") || hw.getCondition().equals("Partly Cloudy") || hw.getCondition().equals("Mostly Cloudy") ){
+            cldSrc = "WeatherApp/resources/suncloud.png";         
+        }
+        else{
+            cldSrc = "WeatherApp/resources/sun.png";
+        }
+        
+        clouds.setStyle("-fx-background-image: url('" + cldSrc + "');" +
+                "    -fx-background-size: contain;" + "-fx-background-repeat: no-repeat");
         location.setText(activeCity);
         tempField.setText("" + hw.getTemp() + "°C");
         currDate.setText(dw.getName() + " " + dw.getDayNumber() + ". " + dw.getMonthName());
@@ -576,7 +679,23 @@ public class FXMLController implements Initializable {
         else{
             hw = (HourWeather) info[daysAhead][24];
         }
+        String cldSrc;
+        if(hw.getCondition().equals("Clear")){
+            cldSrc = "WeatherApp/resources/sun.png";
+        }
+        else if((hw.getCondition().equals("Partly Cloudy") || hw.getCondition().equals("Mostly Cloudy")) && (currentTime > 6 || currentTime < 21)){
+            cldSrc = "WeatherApp/resources/mooncloud.png";         
 
+        }
+        else if(hw.getCondition().equals("Overcast") || hw.getCondition().equals("Partly Cloudy") || hw.getCondition().equals("Mostly Cloudy") ){
+            cldSrc = "WeatherApp/resources/suncloud.png";         
+        }
+        else{
+            cldSrc = "WeatherApp/resources/sun.png";
+        }
+        
+        clouds.setStyle("-fx-background-image: url('" + cldSrc + "');" +
+                "    -fx-background-size: contain;" + "-fx-background-repeat: no-repeat");
         currDate.setText(dw.getName() + " " + dw.getDayNumber() + ". " + dw.getMonthName());
         tempField.setText("" + hw.getTemp() + "°C");
 
