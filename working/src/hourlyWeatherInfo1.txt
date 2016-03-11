@@ -1,0 +1,25 @@
+Sat,Mar,12,6,24,18,00,0.0,12,1
+Mostly Cloudy,http://icons.wxug.com/i/c/k/mostlycloudy.gif,62,9,9
+Partly Cloudy,http://icons.wxug.com/i/c/k/nt_partlycloudy.gif,66,8,8
+Partly Cloudy,http://icons.wxug.com/i/c/k/nt_partlycloudy.gif,70,6,7
+Partly Cloudy,http://icons.wxug.com/i/c/k/nt_partlycloudy.gif,76,6,7
+Partly Cloudy,http://icons.wxug.com/i/c/k/nt_partlycloudy.gif,80,5,6
+Partly Cloudy,http://icons.wxug.com/i/c/k/nt_partlycloudy.gif,84,4,5
+Partly Cloudy,http://icons.wxug.com/i/c/k/nt_partlycloudy.gif,88,4,4
+Partly Cloudy,http://icons.wxug.com/i/c/k/nt_partlycloudy.gif,90,3,3
+Partly Cloudy,http://icons.wxug.com/i/c/k/nt_partlycloudy.gif,92,3,3
+Fog,http://icons.wxug.com/i/c/k/nt_fog.gif,92,3,3
+Fog,http://icons.wxug.com/i/c/k/nt_fog.gif,91,2,2
+Fog,http://icons.wxug.com/i/c/k/nt_fog.gif,90,2,2
+Fog,http://icons.wxug.com/i/c/k/nt_fog.gif,90,0,2
+Mostly Cloudy,http://icons.wxug.com/i/c/k/mostlycloudy.gif,87,1,3
+Partly Cloudy,http://icons.wxug.com/i/c/k/partlycloudy.gif,89,2,4
+Partly Cloudy,http://icons.wxug.com/i/c/k/partlycloudy.gif,81,4,6
+Partly Cloudy,http://icons.wxug.com/i/c/k/partlycloudy.gif,75,5,7
+Clear,http://icons.wxug.com/i/c/k/clear.gif,67,9,9
+Clear,http://icons.wxug.com/i/c/k/clear.gif,62,10,10
+Clear,http://icons.wxug.com/i/c/k/clear.gif,57,11,11
+Clear,http://icons.wxug.com/i/c/k/clear.gif,55,11,11
+Clear,http://icons.wxug.com/i/c/k/clear.gif,55,11,11
+Clear,http://icons.wxug.com/i/c/k/clear.gif,59,10,10
+Clear,http://icons.wxug.com/i/c/k/clear.gif,62,9,9
