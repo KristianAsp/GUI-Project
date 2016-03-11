@@ -60,6 +60,22 @@ public class FXMLController implements Initializable {
     @FXML Label tempFieldLabel;
     @FXML Label lightPollution;
 
+    @FXML Label temp0;
+    @FXML Label temp1;
+    @FXML Label temp2;
+    @FXML Label temp3;
+    @FXML Label temp4;
+    @FXML Label temp5;
+    @FXML Label temp6;
+
+    @FXML Label precip0;
+    @FXML Label precip1;
+    @FXML Label precip2;
+    @FXML Label precip3;
+    @FXML Label precip4;
+    @FXML Label precip5;
+    @FXML Label precip6;
+
     @FXML Pane menu;
 
 
@@ -89,7 +105,7 @@ public class FXMLController implements Initializable {
     public double yValue;
     public String currentHour = new SimpleDateFormat("HH").format(Calendar.getInstance().getTime());
     public int currentTime = Integer.parseInt(currentHour);
-    @FXML private ImageView clouds;
+    @FXML private Pane clouds;
 
     private FadeTransition fadeTransition;
     private TranslateTransition translateTransition;
@@ -231,8 +247,29 @@ public class FXMLController implements Initializable {
             comet.setText("2%");
             cloudCover.setText("70%");
             tempHL.setText("" + dw.getHighTemo() + "°C/" + "" + dw.getLowTemp() + "°C");
-            rainfall.setText(dw.getPrecip());
-            humidity.setText(hw.getHumidity());
+            rainfall.setText((int)Double.parseDouble(dw.getPrecip()) + "mm");
+            humidity.setText(hw.getHumidity() + "%");
+
+            temp0.setText("" + hw.getTemp() + "°C");
+            hw = (HourWeather) info[1][currentTime];
+            temp1.setText("" + hw.getTemp() + "°C");
+            hw = (HourWeather) info[2][currentTime];
+            temp2.setText("" + hw.getTemp() + "°C");
+            hw = (HourWeather) info[3][currentTime];
+            temp3.setText("" + hw.getTemp() + "°C");
+            hw = (HourWeather) info[4][currentTime];
+            temp4.setText("" + hw.getTemp() + "°C");
+            hw = (HourWeather) info[5][currentTime];
+            temp5.setText("" + hw.getTemp() + "°C");
+            temp6.setText("" + hw.getTemp() + "°C");
+
+            precip0.setText((int)Double.parseDouble(dw.getPrecip()) + "mm");
+            precip1.setText((int)Double.parseDouble(dw.getPrecip()) + "mm");
+            precip2.setText((int)Double.parseDouble(dw.getPrecip()) + "mm");
+            precip3.setText((int)Double.parseDouble(dw.getPrecip()) + "mm");
+            precip4.setText((int)Double.parseDouble(dw.getPrecip()) + "mm");
+            precip5.setText((int)Double.parseDouble(dw.getPrecip()) + "mm");
+            precip6.setText((int)Double.parseDouble(dw.getPrecip()) + "mm");
         }
         else{
             hw = (HourWeather) info[daysAhead][currentTime];
@@ -243,8 +280,8 @@ public class FXMLController implements Initializable {
             comet.setText("2%");
             cloudCover.setText("70%");
             tempHL.setText("" + dw.getHighTemo() + "°C/" + "" + dw.getLowTemp() + "°C");
-            rainfall.setText(dw.getPrecip());
-            humidity.setText(hw.getHumidity());
+            rainfall.setText((int)Double.parseDouble(dw.getPrecip()) + "mm");
+            humidity.setText(hw.getHumidity() + "%");
         }
     }
     public void dragInfoPane() throws InterruptedException {
@@ -278,6 +315,36 @@ public class FXMLController implements Initializable {
         th.start();
     }
 
+    public void dragInfoPaneLarge() throws InterruptedException {
+        //System.out.println("dragging pane");
+        th = new Thread() {
+            @Override
+            public void run() {
+                if (translate == 0) {
+                    Platform.runLater(() -> updateInfoPane());
+                    System.out.println("updates infoPane");
+                    while (translate > -718) {
+                        translate -= 3.5;
+                        Platform.runLater(() -> movePanel());
+                        Platform.runLater(() -> infoPane.setTranslateY(translate));
+                        //System.out.println(translate);
+                        try {
+                            Thread.sleep(1);
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                    dragMenuOpen = true;
+
+                } else {
+                    Platform.runLater(() -> infoPane.setTranslateY(0));
+                    translate = 0;
+                    dragMenuOpen = false;
+                }
+            }
+        };
+        th.start();
+    }
     public void movePanel() {
         Platform.runLater(() -> infoPane.setTranslateY(translate));
     }
@@ -301,10 +368,8 @@ public class FXMLController implements Initializable {
         else {
             hw = (HourWeather) info[0][currentTime];
         }
-        clouds.setImage(new Image(hw.getIconUrl()));
-        clouds.setPreserveRatio(true);
-        clouds.setFitHeight(42);
-        clouds.setFitWidth(42);
+        clouds.setStyle("-fx-background-image: url(\"WeatherApp/resources/sun.png\");" +
+                "    -fx-background-size: cover;");
         //System.out.println("Updating values");
         location.setText(activeCity);
         tempField.setText("" + hw.getTemp() + "°C");
@@ -341,7 +406,6 @@ public class FXMLController implements Initializable {
             hw = (HourWeather) info[daysAhead][24];
         }
 
-        clouds.setImage(new Image(hw.getIconUrl()));
         currDate.setText(dw.getName() + " " + dw.getDayNumber() + ". " + dw.getMonthName());
         tempField.setText("" + hw.getTemp() + "°C");
 
