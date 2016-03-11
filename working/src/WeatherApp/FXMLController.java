@@ -630,8 +630,23 @@ public class FXMLController implements Initializable {
         else {
             hw = (HourWeather) info[0][currentTime];
         }
-        clouds.setStyle("-fx-background-image: url(\"WeatherApp/resources/sun.png\");" +
-                "    -fx-background-size: cover;");
+        String cldSrc;
+        if(hw.getCondition().equals("Clear")){
+            cldSrc = "WeatherApp/resources/sun.png";
+        }
+        else if((hw.getCondition().equals("Partly Cloudy") || hw.getCondition().equals("Mostly Cloudy")) && (currentTime > 6 || currentTime < 21)){
+            cldSrc = "WeatherApp/resources/mooncloud.png";         
+
+        }
+        else if(hw.getCondition().equals("Overcast") || hw.getCondition().equals("Partly Cloudy") || hw.getCondition().equals("Mostly Cloudy") ){
+            cldSrc = "WeatherApp/resources/suncloud.png";         
+        }
+        else{
+            cldSrc = "WeatherApp/resources/sun.png";
+        }
+        
+        clouds.setStyle("-fx-background-image: url('" + cldSrc + "');" +
+                "    -fx-background-size: contain;" + "-fx-background-repeat: no-repeat");
         location.setText(activeCity);
         tempField.setText("" + hw.getTemp() + "°C");
         currDate.setText(dw.getName() + " " + dw.getDayNumber() + ". " + dw.getMonthName());
@@ -664,7 +679,23 @@ public class FXMLController implements Initializable {
         else{
             hw = (HourWeather) info[daysAhead][24];
         }
+        String cldSrc;
+        if(hw.getCondition().equals("Clear")){
+            cldSrc = "WeatherApp/resources/sun.png";
+        }
+        else if((hw.getCondition().equals("Partly Cloudy") || hw.getCondition().equals("Mostly Cloudy")) && (currentTime > 6 || currentTime < 21)){
+            cldSrc = "WeatherApp/resources/mooncloud.png";         
 
+        }
+        else if(hw.getCondition().equals("Overcast") || hw.getCondition().equals("Partly Cloudy") || hw.getCondition().equals("Mostly Cloudy") ){
+            cldSrc = "WeatherApp/resources/suncloud.png";         
+        }
+        else{
+            cldSrc = "WeatherApp/resources/sun.png";
+        }
+        
+        clouds.setStyle("-fx-background-image: url('" + cldSrc + "');" +
+                "    -fx-background-size: contain;" + "-fx-background-repeat: no-repeat");
         currDate.setText(dw.getName() + " " + dw.getDayNumber() + ". " + dw.getMonthName());
         tempField.setText("" + hw.getTemp() + "°C");
 
