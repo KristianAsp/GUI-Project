@@ -104,7 +104,7 @@
                <panes>
                   <TitledPane animated="false" stylesheets="@stylesheet.css" text="Stargazing Conditions" textFill="WHITE">
                      <content>
-                        <AnchorPane>
+                        <AnchorPane prefWidth="790.0">
                            <children>
                               <Label fx:id="lightPollution" alignment="CENTER_RIGHT" layoutX="305.0" layoutY="15.0" prefHeight="13.0" prefWidth="50.0" text="20%" textFill="WHITE">
                                  <font>
@@ -206,37 +206,37 @@
                         <AnchorPane maxHeight="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="313.0" prefWidth="318.0">
                            <children>
                               <Line endY="55.0" layoutX="255.0" layoutY="11.0" stroke="WHITE" />
-                              <Label fx:id="day0" alignment="CENTER" layoutX="207.0" layoutY="9.0" prefHeight="20.0" prefWidth="41.0" text="Mon" textFill="WHITE">
+                              <Label fx:id="day0" alignment="CENTER" layoutX="201.0" layoutY="9.0" prefHeight="20.0" prefWidth="50.0" text="Mon" textFill="WHITE">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="day1" alignment="CENTER" layoutX="265.0" layoutY="9.0" prefHeight="0.0" prefWidth="32.0" text="Tue" textFill="WHITE">
+                              <Label fx:id="day1" alignment="CENTER" layoutX="257.0" layoutY="9.0" prefHeight="0.0" prefWidth="50.0" text="Tue" textFill="WHITE">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="day2" alignment="CENTER" layoutX="310.0" layoutY="9.0" prefHeight="20.0" prefWidth="42.0" text="Wed" textFill="WHITE">
+                              <Label fx:id="day2" alignment="CENTER" layoutX="310.0" layoutY="9.0" prefHeight="20.0" prefWidth="50.0" text="Wed" textFill="WHITE">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="day3" alignment="CENTER" layoutX="369.0" layoutY="9.0" prefHeight="0.0" prefWidth="32.0" text="Thu" textFill="WHITE">
+                              <Label fx:id="day3" alignment="CENTER" layoutX="361.0" layoutY="9.0" prefHeight="0.0" prefWidth="50.0" text="Thu" textFill="WHITE">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="day4" alignment="CENTER" layoutX="416.0" layoutY="9.0" prefHeight="0.0" prefWidth="32.0" text="Fri" textFill="WHITE">
+                              <Label fx:id="day4" alignment="CENTER" layoutX="408.0" layoutY="9.0" prefHeight="0.0" prefWidth="50.0" text="Fri" textFill="WHITE">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="day5" alignment="CENTER" layoutX="466.0" layoutY="9.0" prefHeight="0.0" prefWidth="32.0" text="Sat" textFill="WHITE">
+                              <Label fx:id="day5" alignment="CENTER" layoutX="458.0" layoutY="9.0" prefHeight="0.0" prefWidth="50.0" text="Sat" textFill="WHITE">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="day6" alignment="CENTER" layoutX="517.0" layoutY="9.0" prefHeight="0.0" prefWidth="32.0" text="Sun" textFill="WHITE">
+                              <Label fx:id="day6" alignment="CENTER" layoutX="511.0" layoutY="9.0" prefHeight="0.0" prefWidth="50.0" text="Sun" textFill="WHITE">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
@@ -246,31 +246,31 @@
                               <Line endY="55.0" layoutX="410.0" layoutY="11.0" stroke="WHITE" />
                               <Line endY="55.0" layoutX="457.0" layoutY="11.0" stroke="WHITE" />
                               <Line endY="55.0" layoutX="507.0" layoutY="11.0" stroke="WHITE" />
-                              <Label fx:id="temp0" alignment="CENTER" layoutX="212.0" layoutY="37.0" prefWidth="32.0" text="9°C" textFill="WHITE">
+                              <Label fx:id="temp0" alignment="CENTER" layoutX="202.0" layoutY="37.0" prefWidth="50.0" text="9°C" textFill="WHITE">
                                  <font>
                                     <Font size="14.0" />
                                  </font></Label>
-                              <Label fx:id="temp1" alignment="CENTER" layoutX="265.0" layoutY="37.0" prefWidth="32.0" text="9°C" textFill="WHITE">
+                              <Label fx:id="temp1" alignment="CENTER" layoutX="257.0" layoutY="37.0" prefWidth="50.0" text="9°C" textFill="WHITE">
                                  <font>
                                     <Font size="14.0" />
                                  </font></Label>
-                              <Label fx:id="temp2" alignment="CENTER" layoutX="315.0" layoutY="37.0" prefWidth="32.0" text="9°C" textFill="WHITE">
+                              <Label fx:id="temp2" alignment="CENTER" layoutX="308.0" layoutY="37.0" prefWidth="50.0" text="9°C" textFill="WHITE">
                                  <font>
                                     <Font size="14.0" />
                                  </font></Label>
-                              <Label fx:id="temp3" alignment="CENTER" layoutX="370.0" layoutY="37.0" prefWidth="32.0" text="9°C" textFill="WHITE">
+                              <Label fx:id="temp3" alignment="CENTER" layoutX="361.0" layoutY="37.0" prefWidth="50.0" text="9°C" textFill="WHITE">
                                  <font>
                                     <Font size="14.0" />
                                  </font></Label>
-                              <Label fx:id="temp4" alignment="CENTER" layoutX="418.0" layoutY="37.0" prefWidth="32.0" text="9°C" textFill="WHITE">
+                              <Label fx:id="temp4" alignment="CENTER" layoutX="409.0" layoutY="37.0" prefWidth="50.0" text="9°C" textFill="WHITE">
                                  <font>
                                     <Font size="14.0" />
                                  </font></Label>
-                              <Label fx:id="temp5" alignment="CENTER" layoutX="468.0" layoutY="37.0" prefWidth="32.0" text="9°C" textFill="WHITE">
+                              <Label fx:id="temp5" alignment="CENTER" layoutX="458.0" layoutY="37.0" prefWidth="50.0" text="9°C" textFill="WHITE">
                                  <font>
                                     <Font size="14.0" />
                                  </font></Label>
-                              <Label fx:id="temp6" alignment="CENTER" layoutX="517.0" layoutY="37.0" prefWidth="32.0" text="9°C" textFill="WHITE">
+                              <Label fx:id="temp6" alignment="CENTER" layoutX="511.0" layoutY="37.0" prefWidth="50.0" text="9°C" textFill="WHITE">
                                  <font>
                                     <Font size="14.0" />
                                  </font></Label>
@@ -286,37 +286,37 @@
                         <AnchorPane maxHeight="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="313.0" prefWidth="318.0">
                            <children>
                               <Line endY="55.0" layoutX="255.0" layoutY="11.0" stroke="WHITE" />
-                              <Label fx:id="day7" alignment="CENTER" layoutX="207.0" layoutY="9.0" prefHeight="20.0" prefWidth="40.0" text="Mon" textFill="WHITE">
+                              <Label fx:id="day7" alignment="CENTER" layoutX="205.0" layoutY="9.0" prefWidth="50.0" text="Mon" textFill="WHITE">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="day8" alignment="CENTER" layoutX="265.0" layoutY="9.0" prefHeight="0.0" prefWidth="32.0" text="Tue" textFill="WHITE">
+                              <Label fx:id="day8" alignment="CENTER" layoutX="256.0" layoutY="9.0" prefWidth="50.0" text="Tue" textFill="WHITE">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="day9" alignment="CENTER" layoutX="310.0" layoutY="9.0" prefHeight="20.0" prefWidth="40.0" text="Wed" textFill="WHITE">
+                              <Label fx:id="day9" alignment="CENTER" layoutX="308.0" layoutY="9.0" prefWidth="50.0" text="Wed" textFill="WHITE">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="day10" alignment="CENTER" layoutX="369.0" layoutY="9.0" prefHeight="0.0" prefWidth="32.0" text="Thu" textFill="WHITE">
+                              <Label fx:id="day10" alignment="CENTER" layoutX="362.0" layoutY="9.0" prefWidth="50.0" text="Thu" textFill="WHITE">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="day11" alignment="CENTER" layoutX="416.0" layoutY="9.0" prefHeight="0.0" prefWidth="32.0" text="Fri" textFill="WHITE">
+                              <Label fx:id="day11" alignment="CENTER" layoutX="410.0" layoutY="9.0" prefWidth="50.0" text="Fri" textFill="WHITE">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="day12" alignment="CENTER" layoutX="466.0" layoutY="9.0" prefHeight="0.0" prefWidth="32.0" text="Sat" textFill="WHITE">
+                              <Label fx:id="day12" alignment="CENTER" layoutX="459.0" layoutY="9.0" prefWidth="50.0" text="Sat" textFill="WHITE">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="day13" alignment="CENTER" layoutX="517.0" layoutY="9.0" prefHeight="0.0" prefWidth="32.0" text="Sun" textFill="WHITE">
+                              <Label fx:id="day13" alignment="CENTER" layoutX="509.0" layoutY="9.0" prefWidth="50.0" text="Sun" textFill="WHITE">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
@@ -326,13 +326,13 @@
                               <Line endY="55.0" layoutX="457.0" layoutY="11.0" stroke="WHITE" />
                               <Line endY="55.0" layoutX="410.0" layoutY="11.0" stroke="WHITE" />
                               <Line endY="55.0" layoutX="507.0" layoutY="11.0" stroke="WHITE" />
-                              <Label fx:id="precip0" alignment="CENTER" layoutX="212.0" layoutY="37.0" prefWidth="32.0" text="0mm" textFill="WHITE" />
-                              <Label fx:id="precip1" alignment="CENTER" layoutX="265.0" layoutY="37.0" prefWidth="32.0" text="0mm" textFill="WHITE" />
-                              <Label fx:id="precip2" alignment="CENTER" layoutX="315.0" layoutY="37.0" prefWidth="32.0" text="0mm" textFill="WHITE" />
-                              <Label fx:id="precip3" alignment="CENTER" layoutX="370.0" layoutY="37.0" prefWidth="32.0" text="0mm" textFill="WHITE" />
-                              <Label fx:id="precip4" alignment="CENTER" layoutX="418.0" layoutY="37.0" prefWidth="32.0" text="0mm" textFill="WHITE" />
-                              <Label fx:id="precip5" alignment="CENTER" layoutX="468.0" layoutY="37.0" prefWidth="32.0" text="0mm" textFill="WHITE" />
-                              <Label fx:id="precip6" alignment="CENTER" layoutX="517.0" layoutY="37.0" prefWidth="32.0" text="0mm" textFill="WHITE" />
+                              <Label fx:id="precip0" alignment="CENTER" layoutX="206.0" layoutY="37.0" prefWidth="50.0" text="0mm" textFill="WHITE" />
+                              <Label fx:id="precip1" alignment="CENTER" layoutX="257.0" layoutY="37.0" prefWidth="50.0" text="0mm" textFill="WHITE" />
+                              <Label fx:id="precip2" alignment="CENTER" layoutX="309.0" layoutY="37.0" prefWidth="50.0" text="0mm" textFill="WHITE" />
+                              <Label fx:id="precip3" alignment="CENTER" layoutX="361.0" layoutY="37.0" prefWidth="50.0" text="0mm" textFill="WHITE" />
+                              <Label fx:id="precip4" alignment="CENTER" layoutX="409.0" layoutY="37.0" prefWidth="50.0" text="0mm" textFill="WHITE" />
+                              <Label fx:id="precip5" alignment="CENTER" layoutX="457.0" layoutY="37.0" prefWidth="50.0" text="0mm" textFill="WHITE" />
+                              <Label fx:id="precip6" alignment="CENTER" layoutX="511.0" layoutY="37.0" prefWidth="50.0" text="0mm" textFill="WHITE" />
                            </children>
                         </AnchorPane>
                      </content>
