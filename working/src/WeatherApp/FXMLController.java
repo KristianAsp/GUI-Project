@@ -76,10 +76,27 @@ public class FXMLController implements Initializable {
     @FXML Label precip5;
     @FXML Label precip6;
 
+    @FXML Label day0;
+    @FXML Label day1;
+    @FXML Label day2;
+    @FXML Label day3;
+    @FXML Label day4;
+    @FXML Label day5;
+    @FXML Label day6;
+    @FXML Label day7;
+    @FXML Label day8;
+    @FXML Label day9;
+    @FXML Label day10;
+    @FXML Label day11;
+    @FXML Label day12;
+    @FXML Label day13;
+
     @FXML Pane menu;
 
 
     ArrayList<String> backgrounds = new ArrayList<>();
+    ArrayList<String> backgroundsLarge = new ArrayList<>();
+
     private boolean menuToggleOpen;
     private boolean dragMenuOpen = false;
     private String activeCity;
@@ -110,6 +127,7 @@ public class FXMLController implements Initializable {
     private FadeTransition fadeTransition;
     private TranslateTransition translateTransition;
     private ParallelTransition parallelTransition;
+
     WeatherForecast weather = new WeatherForecast("London");
     private WeatherObject[][] info = weather.getHourlyWeather();
     private WeatherObject[][] info2 = weather.getHourlyWeather();
@@ -129,13 +147,13 @@ public class FXMLController implements Initializable {
 
     public void handleKeys(KeyEvent event) throws InterruptedException {
         //System.out.println(th.isAlive());
-        if (event.getCode() == KeyCode.S && !th.isAlive()) {
+        if (event.getCode() == KeyCode.S && !th.isAlive() && !menuToggleOpen && !dragMenuOpen) {
             //System.out.println("left");
             dragCircleLeft();
-        } else if (event.getCode() == KeyCode.A && !th.isAlive()) {
+        } else if (event.getCode() == KeyCode.A && !th.isAlive() && !menuToggleOpen && !dragMenuOpen) {
             //System.out.println("right");
             dragCircleRight();
-        } else if (event.getCode() == KeyCode.ENTER) {
+        } else if (event.getCode() == KeyCode.ENTER && !menuToggleOpen && !dragMenuOpen) {
             try {
                 Parent root = FXMLLoader.load(getClass().getResource("FXML2.fxml"));
                 scene1 = new Scene(root);
@@ -173,14 +191,16 @@ public class FXMLController implements Initializable {
                 Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-
-        //System.out.println("it's working ");
     }
 
     public void dragCircleRight() {
         th = new Thread() {
             @Override
             public void run() {
+                if(daysAhead == 0 && currentTime == Integer.parseInt(currentHour)){
+                    System.out.println("returns");
+                    return;
+                }
                 int innerRotation = 0;
                 while (innerRotation < 15) {
                     try {
@@ -197,7 +217,16 @@ public class FXMLController implements Initializable {
                         rotate = 0;
                     }
                 }
-                Platform.runLater(() -> wheelTime());
+
+                wheelTime();
+                System.out.println(currentTime);
+                if(currentTime == 23){
+                    try {
+                        dragLeft();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         };
         th.start();
@@ -207,6 +236,10 @@ public class FXMLController implements Initializable {
         th = new Thread() {
             @Override
             public void run() {
+                if(daysAhead == 5 && currentTime == 23){
+                    System.out.println("returns");
+                    return;
+                }
                 int innerRotation = 0;
                 while (innerRotation < 15) {
                     try {
@@ -221,24 +254,25 @@ public class FXMLController implements Initializable {
 
                     if (rotate == 360 || rotate == -360) {
                         rotate = 0;
+                        circle.setRotate(0);
                     }
                 }
-                Platform.runLater(() -> wheelTime());
+
+                wheelTime();
+                System.out.println(currentTime);
+
+                if(currentTime == 0){
+                        dragRight();
+                }
+
             }
         };
         th.start();
-        /*System.out.println("left");
-         rotate -= 15;
-         circle.setRotate(rotate);
-         if(rotate == 360 || rotate == -360){
-         rotate = 0;
-         }*/
+
     }
     public void updateInfoPane(){
         if(daysAhead == 0){
-            //if(hw instanceof HourWeather){
-            //    System.out.println("true");
-            //}
+
             hw = (HourWeather) info[0][currentTime];
             dw = (Day) info2[0][0];
             lightPollution.setText("20%");
@@ -249,6 +283,118 @@ public class FXMLController implements Initializable {
             tempHL.setText("" + dw.getHighTemo() + "°C/" + "" + dw.getLowTemp() + "°C");
             rainfall.setText((int)Double.parseDouble(dw.getPrecip()) + "mm");
             humidity.setText(hw.getHumidity() + "%");
+            if(dw.getName().equals("Mon")){
+                day0.setText("Mon");
+                day1.setText("Tue");
+                day2.setText("Wed");
+                day3.setText("Thu");
+                day4.setText("Fri");
+                day5.setText("Sat");
+                day6.setText("Sun");
+                day7.setText("Mon");
+                day8.setText("Tue");
+                day9.setText("Wed");
+                day10.setText("Thu");
+                day11.setText("Fri");
+                day12.setText("Sat");
+                day13.setText("Sun");
+            }
+            else if(dw.getName().equals("Tue")){
+                day0.setText("Tue");
+                day1.setText("Wed");
+                day2.setText("Thu");
+                day3.setText("Fri");
+                day4.setText("Sat");
+                day5.setText("Sun");
+                day6.setText("Mon");
+                day7.setText("Tue");
+                day8.setText("Wed");
+                day9.setText("Thu");
+                day10.setText("Fri");
+                day11.setText("Sat");
+                day12.setText("Sun");
+                day13.setText("Mon");
+            }
+            else if(dw.getName().equals("Wed")){
+                day0.setText("Wed");
+                day1.setText("Thu");
+                day2.setText("Fri");
+                day3.setText("Sat");
+                day4.setText("Sun");
+                day5.setText("Mon");
+                day6.setText("Tue");
+                day7.setText("Wed");
+                day8.setText("Thu");
+                day9.setText("Fri");
+                day10.setText("Sat");
+                day11.setText("Sun");
+                day12.setText("Mon");
+                day13.setText("Tue");
+            }
+            else if(dw.getName().equals("Thu")){
+                day0.setText("Thu");
+                day1.setText("Fri");
+                day2.setText("Sat");
+                day3.setText("Sun");
+                day4.setText("Mon");
+                day5.setText("Tue");
+                day6.setText("Wed");
+                day7.setText("Thu");
+                day8.setText("Fri");
+                day9.setText("Sat");
+                day10.setText("Sun");
+                day11.setText("Mon");
+                day12.setText("Tue");
+                day13.setText("Wed");
+            }
+            else if(dw.getName().equals("Fri")){
+                day0.setText("Fri");
+                day1.setText("Sat");
+                day2.setText("Sun");
+                day3.setText("Mon");
+                day4.setText("Tue");
+                day5.setText("Wed");
+                day6.setText("Thu");
+                day7.setText("Fri");
+                day8.setText("Sat");
+                day9.setText("Sun");
+                day10.setText("Mon");
+                day11.setText("Tue");
+                day12.setText("Wed");
+                day13.setText("Thu");
+            }
+            else if(dw.getName().equals("Sat")){
+                day0.setText("Sat");
+                day1.setText("Sun");
+                day2.setText("Mon");
+                day3.setText("Tue");
+                day4.setText("Wed");
+                day5.setText("Thu");
+                day6.setText("Fri");
+                day7.setText("Sat");
+                day8.setText("Sun");
+                day9.setText("Mon");
+                day10.setText("Tue");
+                day11.setText("Wed");
+                day12.setText("Thu");
+                day13.setText("Fri");
+            }
+            else if(dw.getName().equals("Sun")){
+                day0.setText("Sun");
+                day1.setText("Mon");
+                day2.setText("Tue");
+                day3.setText("Wed");
+                day4.setText("Thu");
+                day5.setText("Fri");
+                day6.setText("Sat");
+                day7.setText("Sun");
+                day8.setText("Mon");
+                day9.setText("Tue");
+                day10.setText("Wed");
+                day11.setText("Thu");
+                day12.setText("Fri");
+                day13.setText("Sat");
+            }
 
             temp0.setText("" + hw.getTemp() + "°C");
             hw = (HourWeather) info[1][currentTime];
@@ -285,18 +431,17 @@ public class FXMLController implements Initializable {
         }
     }
     public void dragInfoPane() throws InterruptedException {
-        //System.out.println("dragging pane");
         th = new Thread() {
             @Override
             public void run() {
+                if(menuToggleOpen){
+                    return;
+                }
                 if (translate == 0) {
                     Platform.runLater(() -> updateInfoPane());
-                    System.out.println("updates infoPane");
                     while (translate > -430) {
                         translate -= 3.5;
-                        Platform.runLater(() -> movePanel());
                         Platform.runLater(() -> infoPane.setTranslateY(translate));
-                        //System.out.println(translate);
                         try {
                             Thread.sleep(1);
                         } catch (InterruptedException ex) {
@@ -304,11 +449,14 @@ public class FXMLController implements Initializable {
                         }
                     }
                     dragMenuOpen = true;
+                    Platform.runLater(() -> dragMenu.setRotate(180));
 
                 } else {
                     Platform.runLater(() -> infoPane.setTranslateY(0));
                     translate = 0;
                     dragMenuOpen = false;
+                    Platform.runLater(() -> dragMenu.setRotate(0));
+
                 }
             }
         };
@@ -316,7 +464,6 @@ public class FXMLController implements Initializable {
     }
 
     public void dragInfoPaneLarge() throws InterruptedException {
-        //System.out.println("dragging pane");
         th = new Thread() {
             @Override
             public void run() {
@@ -325,9 +472,8 @@ public class FXMLController implements Initializable {
                     System.out.println("updates infoPane");
                     while (translate > -718) {
                         translate -= 3.5;
-                        Platform.runLater(() -> movePanel());
                         Platform.runLater(() -> infoPane.setTranslateY(translate));
-                        //System.out.println(translate);
+
                         try {
                             Thread.sleep(1);
                         } catch (InterruptedException ex) {
@@ -335,18 +481,17 @@ public class FXMLController implements Initializable {
                         }
                     }
                     dragMenuOpen = true;
+                    Platform.runLater(() -> dragMenu.setRotate(180));
 
                 } else {
                     Platform.runLater(() -> infoPane.setTranslateY(0));
                     translate = 0;
                     dragMenuOpen = false;
+                    Platform.runLater(() -> dragMenu.setRotate(0));
                 }
             }
         };
         th.start();
-    }
-    public void movePanel() {
-        Platform.runLater(() -> infoPane.setTranslateY(translate));
     }
 
     public void wheelTime() {
@@ -356,8 +501,7 @@ public class FXMLController implements Initializable {
         } else {
             currentTime = (24 - (int) Math.round(circle.getRotate() / 15));
         }
-        //System.out.println(currentHour);
-        updateForecastValues();
+        Platform.runLater(() -> updateForecastValues());
     }
 
     public void updateValues() {
@@ -370,7 +514,6 @@ public class FXMLController implements Initializable {
         }
         clouds.setStyle("-fx-background-image: url(\"WeatherApp/resources/sun.png\");" +
                 "    -fx-background-size: cover;");
-        //System.out.println("Updating values");
         location.setText(activeCity);
         tempField.setText("" + hw.getTemp() + "°C");
         currDate.setText(dw.getName() + " " + dw.getDayNumber() + ". " + dw.getMonthName());
@@ -393,11 +536,9 @@ public class FXMLController implements Initializable {
         location.setText(activeCity);
         if(daysAhead == 4){
             dw = (Day) info2[4][0];
-            System.out.println(dw.getDayNumber());
         }
         else{
             dw = (Day) info2[daysAhead][0];
-            System.out.println(dw.getDayNumber());
         }
         if(currentTime != 0) {
             hw = (HourWeather) info[daysAhead][currentTime];
@@ -427,7 +568,7 @@ public class FXMLController implements Initializable {
 
     public void updateWheelPos(String currentHour){
         if(!activeCity.equals("London")) {
-            circle.setRotate(-15 * (Double.parseDouble(currentHour) + 1));
+            circle.setRotate(-15 * (Double.parseDouble(currentHour)));
         }
         else{
             circle.setRotate(-15 * Double.parseDouble(currentHour));
@@ -532,7 +673,7 @@ public class FXMLController implements Initializable {
     public void handleMenuButtonClick(ActionEvent e) throws IOException{
         String [] seg = e.getSource().toString().split(Pattern.quote("'"));
         activeCity = seg[seg.length-1];
-        //System.out.println(activeCity);
+        location.setText(activeCity);
         updateCity();
         updateForecastValues();
     }
@@ -610,16 +751,12 @@ public class FXMLController implements Initializable {
 
                     if(originalPos + labelPane.getTranslateX() == originalPos){
                         atPos = true;
-                        //System.out.println("Goes to if");
                         Platform.runLater(() -> changeBackground());
-
                     }
                     else if(originalPos + labelPane.getTranslateX() == -labelWidth){
                         daysAhead++;
                         translate = backgroundPane.getWidth() - originalPos;
-                        //System.out.println(translate);
                         Platform.runLater(() -> labelPane.setTranslateX(translate));
-                        //System.out.println("Goes to else if");
                         Platform.runLater(() -> updateForecastValues());
                     }
 
