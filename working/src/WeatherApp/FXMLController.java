@@ -117,6 +117,7 @@ public class FXMLController implements Initializable {
     private double translate = 0;
     private int daysAhead = 0;
     Thread th = new Thread();
+    Thread hh = new Thread();
     Random rand = new Random();
     Random a2 = new Random();
     private int a = 10;
@@ -170,9 +171,9 @@ public class FXMLController implements Initializable {
             } catch (IOException ex) {
                 Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } else if (event.getCode() == KeyCode.K && daysAhead != 0 && !th.isAlive() && !menuToggleOpen && !dragMenuOpen) {
+        } else if (event.getCode() == KeyCode.K && daysAhead != 0 && !hh.isAlive() && !menuToggleOpen && !dragMenuOpen) {
             dragLeft();
-        } else if (event.getCode() == KeyCode.L && daysAhead != 5 && !th.isAlive() && !menuToggleOpen && !dragMenuOpen) {
+        } else if (event.getCode() == KeyCode.L && daysAhead != 5 && !hh.isAlive() && !menuToggleOpen && !dragMenuOpen) {
             dragRight();
         }
     }
@@ -197,9 +198,9 @@ public class FXMLController implements Initializable {
                 Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if (event.getCode() == KeyCode.K && daysAhead != 0 && !th.isAlive() && !menuToggleOpen && !dragMenuOpen) {
-            dragLeft();
+            dragLeftLarge();
         } else if (event.getCode() == KeyCode.L && daysAhead != 5 && !th.isAlive() && !menuToggleOpen && !dragMenuOpen) {
-            dragRight();
+            dragRightLarge();
         }
     }
 
@@ -211,6 +212,7 @@ public class FXMLController implements Initializable {
                     System.out.println("returns");
                     return;
                 }
+                
                 int innerRotation = 0;
                 while (innerRotation < 15) {
                     try {
@@ -229,13 +231,16 @@ public class FXMLController implements Initializable {
                 }
 
                 wheelTime();
-                System.out.println(currentTime);
-                if(currentTime == 23){
-                    try {
-                        dragLeft();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                //System.out.println(currentTime);
+                if((currentTime == 23) && !hh.isAlive()){
+                        Platform.runLater(() -> {
+                            try {
+                                dragLeft();
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        });
+                    
                 }
             }
         };
@@ -248,6 +253,9 @@ public class FXMLController implements Initializable {
             public void run() {
                 if(daysAhead == 5 && currentTime == 23){
                     System.out.println("returns");
+                    return;
+                }
+                else if(daysAhead > 5){
                     return;
                 }
                 int innerRotation = 0;
@@ -264,14 +272,15 @@ public class FXMLController implements Initializable {
 
                     if (rotate == 360 || rotate == -360) {
                         rotate = 0;
-                        circle.setRotate(0);
-                    }
+                        Platform.runLater(() -> circle.setRotate(0));
+                    }                    
+
                 }
 
                 wheelTime();
-                System.out.println(currentTime);
 
-                if(currentTime == 0){
+                if((currentTime == 0 || currentTime == 24) && !hh.isAlive()){
+                        currentTime = 0;
                         dragRight();
                 }
 
@@ -283,7 +292,13 @@ public class FXMLController implements Initializable {
     public void updateInfoPane(){
         if(daysAhead == 0){
 
-            hw = (HourWeather) info[0][currentTime];
+            if(info[0][currentTime] instanceof HourWeather){
+                hw = (HourWeather) info[0][currentTime];
+            }
+            else if(currentTime == 0){
+                hw = (HourWeather) info[0][1];
+            }
+            
             dw = (Day) info2[0][0];
             lightPollution.setText("20%");
             tempFieldLabel.setText("" + hw.getTemp() + "°C");
@@ -427,8 +442,15 @@ public class FXMLController implements Initializable {
             precip5.setText((int)Double.parseDouble(dw.getPrecip()) + "mm");
             precip6.setText((int)Double.parseDouble(dw.getPrecip()) + "mm");
         }
-        else{
-            hw = (HourWeather) info[daysAhead][currentTime];
+        else{ 
+            
+            if(info[daysAhead][currentTime] instanceof HourWeather){
+                hw = (HourWeather) info[daysAhead][currentTime];
+            }
+            else if(currentTime == 0){
+                hw = (HourWeather) info[daysAhead][1];
+            }
+           
             dw = (Day) info2[daysAhead][0];
             lightPollution.setText("20%");
             tempFieldLabel.setText("" + hw.getTemp() + "°C");
@@ -479,7 +501,6 @@ public class FXMLController implements Initializable {
             public void run() {
                 if (translate == 0) {
                     Platform.runLater(() -> updateInfoPane());
-                    System.out.println("updates infoPane");
                     while (translate > -718) {
                         translate -= 3.5;
                         Platform.runLater(() -> infoPane.setTranslateY(translate));
@@ -619,7 +640,6 @@ public class FXMLController implements Initializable {
         }
         //System.out.println(backgroundPath);
         backgroundPane.setStyle("-fx-background-image: url('" + backgroundPath + "');");
-        System.out.println(backgroundPath);
     }
     // handle setup of the menu position and opacity and animation Objects
     public void setUpMenu() {
@@ -726,12 +746,12 @@ public class FXMLController implements Initializable {
     Method when clicking the K key. Previous day
      */
     public void dragLeft() throws InterruptedException {
-        th = new Thread() {
+        hh = new Thread() {
             @Override
             public void run() {
                 double originalPos = labelPane.getLayoutX();
                 int labelWidth = (int)labelPane.getWidth();
-
+                int counter = 1;
                 boolean atPos = false;
                 while (!atPos) {
                     translate += 1;
@@ -741,37 +761,39 @@ public class FXMLController implements Initializable {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-
-                    if(originalPos + labelPane.getTranslateX() == originalPos){
+                    if(counter == 640){
+                        daysAhead--;
+                        System.out.println("daysAhead is " + daysAhead);
                         atPos = true;
                         Platform.runLater(() -> changeBackground());
                     }
-                    else if(originalPos + labelPane.getTranslateX() == 320){
-                        daysAhead--;
+                    else if(originalPos + labelPane.getTranslateX() >= labelWidth){
                         translate = (originalPos + labelWidth) * -1;
                         Platform.runLater(() -> labelPane.setTranslateX(translate));
                         Platform.runLater(() -> updateForecastValues());
                     }
+                    counter++;
 
                 }
+                
             }
         };
-        th.start();
+        hh.start();
     }
 
     /*
     Method when clicking the L key. Next day
      */
     public void dragRight(){
-        th = new Thread() {
+        hh = new Thread() {
             @Override
             public void run() {
                 double originalPos = labelPane.getLayoutX();
-                //System.out.println(originalPos);
                 int labelWidth = (int)labelPane.getWidth();
-
+                int counter = 1;
                 boolean atPos = false;
                 while (!atPos) {
+                    
                     translate -= 1;
                     Platform.runLater(() -> labelPane.setTranslateX(translate));
                     try {
@@ -780,21 +802,112 @@ public class FXMLController implements Initializable {
                         e.printStackTrace();
                     }
 
-                    if(originalPos + labelPane.getTranslateX() == originalPos){
+                    if(originalPos + labelPane.getTranslateX() <= -labelWidth){                  
+
+                        translate = backgroundPane.getWidth() - originalPos;
+                        Platform.runLater(() -> labelPane.setTranslateX(translate));
+                    }
+                    if(counter == 640){    
+                        daysAhead++;
+                        atPos = true;
+                        System.out.println("DaysAhead being incremented " + daysAhead);
+                        Platform.runLater(() -> labelPane.setTranslateX(0));
+                        Platform.runLater(() -> updateForecastValues());
+                        Platform.runLater(() -> changeBackground());
+                    }
+                    counter++;
+                    
+                    
+                }
+            }
+            
+        };
+        hh.start();
+
+    }
+    
+    /*
+    Method when clicking the L key. Next day
+     */
+    public void dragRightLarge(){
+        hh = new Thread() {
+            @Override
+            public void run() {
+                double originalPos = labelPane.getLayoutX();
+                int labelWidth = (int)labelPane.getWidth();
+                int counter = 1;
+                boolean atPos = false;
+                while (!atPos) {
+                    
+                    translate -= 2;
+                    Platform.runLater(() -> labelPane.setTranslateX(translate));
+                    try {
+                        Thread.sleep(1);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    System.out.println("Counter is: " + counter);
+                    if(originalPos + labelPane.getTranslateX() <= -labelWidth){                  
+
+                        translate = backgroundPane.getWidth() - originalPos;
+                        Platform.runLater(() -> labelPane.setTranslateX(translate));
+                    }
+                    if(counter == 1024){    
+                        daysAhead++;
+                        atPos = true;
+                        System.out.println("DaysAhead being incremented " + daysAhead);
+                        Platform.runLater(() -> labelPane.setTranslateX(0));
+                        Platform.runLater(() -> updateForecastValues());
+                        Platform.runLater(() -> changeBackground());
+                    }
+                    counter++;
+                    
+                    
+                    
+                }
+            }
+            
+        };
+        hh.start();
+
+    }
+    
+    /*
+    Method when clicking the K key. Previous day
+     */
+    public void dragLeftLarge() throws InterruptedException {
+        hh = new Thread() {
+            @Override
+            public void run() {
+                double originalPos = labelPane.getLayoutX();
+                int labelWidth = (int)labelPane.getWidth();
+                int counter = 1;
+                boolean atPos = false;
+                while (!atPos) {
+                    translate += 2;
+                    Platform.runLater(() -> labelPane.setTranslateX(translate));
+                    try {
+                        Thread.sleep(1);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    if(counter == 1024){
+                        daysAhead--;
+                        System.out.println("daysAhead is " + daysAhead);
                         atPos = true;
                         Platform.runLater(() -> changeBackground());
                     }
-                    else if(originalPos + labelPane.getTranslateX() == -labelWidth){
-                        daysAhead++;
-                        translate = backgroundPane.getWidth() - originalPos;
+                    else if(originalPos + labelPane.getTranslateX() >= labelWidth){
+                        translate = (originalPos + labelWidth) * -1;
                         Platform.runLater(() -> labelPane.setTranslateX(translate));
                         Platform.runLater(() -> updateForecastValues());
                     }
+                    counter++;
 
                 }
+                
             }
         };
-        th.start();
-
+        hh.start();
     }
 }

@@ -46,7 +46,6 @@
 }
 
 #menuPane, #subMenu{
-    //-fx-background-color:transparent;
     -fx-background-color:black;
     -fx-opacity:0.8;    
 }
