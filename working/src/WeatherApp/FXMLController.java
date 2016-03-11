@@ -643,8 +643,8 @@ public class FXMLController implements Initializable {
     }
     // handle setup of the menu position and opacity and animation Objects
     public void setUpMenu() {
-        menu.setLayoutX(-menu.getPrefWidth() + 70);
-        menu.setLayoutY(-menu.getPrefHeight() + 50);
+        menu.setLayoutX(-menu.getPrefWidth() + (menu.getPrefWidth()*0.5));
+        menu.setLayoutY(-menu.getPrefHeight() + (menu.getPrefHeight()/6.12));
         menu.setOpacity(0.0f);
         menu.setVisible(false);
         fadeTransition = new FadeTransition(Duration.millis(300), menu);

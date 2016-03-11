@@ -29,21 +29,22 @@
                <font>
                   <Font size="30.0" />
                </font></Label>
-            <Label fx:id="tempField" layoutX="387.0" layoutY="258.0" prefHeight="63.0" prefWidth="200.0" text="9°C" textAlignment="RIGHT" textFill="WHITE">
+            <Label fx:id="tempField" layoutX="300.0" layoutY="258.0" prefHeight="63.0" prefWidth="200.0" text="9°C" textAlignment="RIGHT" textFill="WHITE">
                <font>
                   <Font size="50.0" />
                </font>
             </Label>
-            <Label fx:id="feelsLike" layoutX="387.0" layoutY="304.0" prefHeight="42.0" prefWidth="363.0" text="Feels Like 7°C" textAlignment="RIGHT" textFill="WHITE">
+            <Label fx:id="feelsLike" layoutX="300.0" layoutY="304.0" prefHeight="42.0" prefWidth="363.0" text="Feels Like 7°C" textAlignment="RIGHT" textFill="WHITE">
                <font>
                   <Font size="34.0" />
                </font></Label>
-            <Label fx:id="curCondition" layoutX="387.0" layoutY="342.0" prefHeight="42.0" prefWidth="594.0" text="Cloud Coverage: Quite Cloudy" textAlignment="RIGHT" textFill="WHITE">
+            <Label fx:id="curCondition" layoutX="300.0" layoutY="342.0" prefHeight="42.0" prefWidth="594.0" text="Cloud Coverage: Quite Cloudy" textAlignment="RIGHT" textFill="WHITE">
                <font>
                   <Font size="34.0" />
                </font></Label>
             <Pane fx:id="clouds" layoutX="655.0" layoutY="203.0" prefHeight="120.0" prefWidth="120.0" />
-            <Button id="dragMenu" fx:id="dragMenu1" layoutX="610.0" layoutY="68.0" mnemonicParsing="false" onAction="#dragInfoPane" prefHeight="25.0" prefWidth="60.0" rotate="90.0" stylesheets="@stylesheet.css" />
+            <Button id="dragMenu" fx:id="dragMenu1" layoutX="612.0" layoutY="71.0" mnemonicParsing="false" onAction="#dragInfoPane" prefHeight="25.0" prefWidth="60.0" rotate="90.0" stylesheets="@stylesheet.css" />
+            <Button id="dragMenu" fx:id="dragMenu2" layoutX="352.0" layoutY="71.0" mnemonicParsing="false" onAction="#dragInfoPane" prefHeight="25.0" prefWidth="60.0" rotate="-90.0" stylesheets="@stylesheet.css" />
          </children>
       </Pane>
       <Label alignment="CENTER" layoutX="362.0" layoutY="585.0" prefHeight="31.0" prefWidth="300.0" text="Slide to adjust by hour" textFill="WHITE">
@@ -343,6 +344,5 @@
             </Accordion>
          </children>
       </Pane>
-      <Button id="dragMenu" fx:id="dragMenu2" layoutX="353.0" layoutY="68.0" mnemonicParsing="false" onAction="#dragInfoPane" prefHeight="25.0" prefWidth="60.0" rotate="-90.0" stylesheets="@stylesheet.css" />
    </children>
 </AnchorPane>
