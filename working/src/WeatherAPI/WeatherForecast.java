@@ -12,7 +12,7 @@ public class WeatherForecast {
     private WeatherObject[][] hourly = new WeatherObject[6][25]; 
     private final String [] files = {"hourlyWeatherInfo0.txt", "hourlyWeatherInfo1.txt", 
                                      "hourlyWeatherInfo2.txt", "hourlyWeatherInfo3.txt", 
-                                     "hourlyWeatherInfo3.txt", "hourlyWeatherInfo5.txt"};
+                                     "hourlyWeatherInfo4.txt", "hourlyWeatherInfo5.txt"};
 
     public static void main(String[] args){
         WeatherForecast wf = new WeatherForecast("London");
