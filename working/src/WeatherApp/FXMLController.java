@@ -118,6 +118,8 @@ public class FXMLController implements Initializable {
     private int daysAhead = 0;
     Thread th = new Thread();
     Random rand = new Random();
+    Random a2 = new Random();
+    private int a = 10;
     private int n = 9;
 
     public double xValue;
@@ -163,6 +165,7 @@ public class FXMLController implements Initializable {
                 scene1 = new Scene(root);
                 theStage.setScene(scene1);
                 theStage.show();
+                theStage.centerOnScreen();
                 scene1.getRoot().requestFocus();
             } catch (IOException ex) {
                 Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
@@ -174,26 +177,29 @@ public class FXMLController implements Initializable {
         }
     }
 
-    public void handleKeysAgain(KeyEvent event) {
-
-        if (event.getCode() == KeyCode.S) {
+    public void handleKeysAgain(KeyEvent event) throws InterruptedException {
+        if (event.getCode() == KeyCode.S && !th.isAlive() && !menuToggleOpen && !dragMenuOpen) {
             //System.out.println("left");
             dragCircleLeft();
-            wheelTime();
-        } else if (event.getCode() == KeyCode.A) {
+        } else if (event.getCode() == KeyCode.A && !th.isAlive() && !menuToggleOpen && !dragMenuOpen) {
             //System.out.println("right");
             dragCircleRight();
-            wheelTime();
-        } else if (event.getCode() == KeyCode.ENTER) {
+        } else if (event.getCode() == KeyCode.ENTER && !menuToggleOpen && !dragMenuOpen) {
             try {
+                storeBool.setfxmlActive(false);
                 Parent root = FXMLLoader.load(getClass().getResource("FXML.fxml"));
                 scene1 = new Scene(root);
                 theStage.setScene(scene1);
                 theStage.show();
+                theStage.centerOnScreen();
                 scene1.getRoot().requestFocus();
             } catch (IOException ex) {
                 Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
             }
+        } else if (event.getCode() == KeyCode.K && daysAhead != 0 && !th.isAlive() && !menuToggleOpen && !dragMenuOpen) {
+            dragLeft();
+        } else if (event.getCode() == KeyCode.L && daysAhead != 5 && !th.isAlive() && !menuToggleOpen && !dragMenuOpen) {
+            dragRight();
         }
     }
 
@@ -443,7 +449,7 @@ public class FXMLController implements Initializable {
                 }
                 if (translate == 0) {
                     Platform.runLater(() -> updateInfoPane());
-                    while (translate > -430) {
+                    while (translate > -(scene1.getHeight() - 50)) {
                         translate -= 3.5;
                         Platform.runLater(() -> infoPane.setTranslateY(translate));
                         try {
@@ -499,7 +505,6 @@ public class FXMLController implements Initializable {
     }
 
     public void wheelTime() {
-
         if ((int) Math.round(circle.getRotate() / -15) >= 0) {
             currentTime = ((int) Math.round(circle.getRotate() / -15));
         } else {
@@ -600,9 +605,11 @@ public class FXMLController implements Initializable {
     public void changeBackground(){
         int previousN = n;
         n = rand.nextInt(8);
+
         if(n == previousN){
             changeBackground();
         }
+
         String backgroundPath;
         if(storeBool.getfxmlActive()) {
             backgroundPath = backgrounds.get(n);
@@ -656,14 +663,14 @@ public class FXMLController implements Initializable {
         if(menuToggleOpen){
             fadeTransition.setFromValue(0.9f);
             fadeTransition.setToValue(0.0f);
-            translateTransition.setFromX(menu.getPrefWidth() - 70);
-            translateTransition.setFromY(menu.getPrefHeight() - 50);
-            translateTransition.setToX(-menu.getPrefWidth() + 70); 
-            translateTransition.setToY( -menu.getPrefWidth() + 50);
+            translateTransition.setFromX(menu.getPrefWidth() - (menu.getPrefWidth()*0.5));
+            translateTransition.setFromY(menu.getPrefHeight() - (menu.getPrefHeight()/6.12));
+            translateTransition.setToX(-menu.getPrefWidth() + (menu.getPrefWidth()*0.5));
+            translateTransition.setToY( -menu.getPrefWidth() + (menu.getPrefHeight()/6.12));
             translateTransition.setDelay(Duration.millis(100));
             parallelTransition.getChildren().addAll(
-                fadeTransition,
-                translateTransition
+                    fadeTransition,
+                    translateTransition
             );
             parallelTransition.play();
             menuToggleOpen = false;
@@ -675,13 +682,13 @@ public class FXMLController implements Initializable {
             fadeTransition.setFromValue(0.0f);
             fadeTransition.setToValue(0.9f);
             fadeTransition.setDelay(Duration.millis(150));
-            translateTransition.setFromX(-menu.getPrefWidth() + 70);
-            translateTransition.setFromY(-menu.getPrefWidth() + 50);
-            translateTransition.setToX(menu.getPrefWidth() - 70);
-            translateTransition.setToY(menu.getPrefHeight() - 50);
+            translateTransition.setFromX(-menu.getPrefWidth() + (menu.getPrefWidth()*0.5));
+            translateTransition.setFromY(-menu.getPrefWidth() + (menu.getPrefHeight()/6.12));
+            translateTransition.setToX(menu.getPrefWidth() - (menu.getPrefWidth()*0.5));
+            translateTransition.setToY(menu.getPrefHeight() - (menu.getPrefHeight()/6.12));
             parallelTransition.getChildren().addAll(
-                fadeTransition,
-                translateTransition
+                    fadeTransition,
+                    translateTransition
             );
             parallelTransition.play();
             menuToggleOpen = true;
@@ -691,6 +698,7 @@ public class FXMLController implements Initializable {
             button.setVisible(false);
         }
     }
+
 
     //Handle menu button click
     public void handleMenuButtonClick(ActionEvent e) throws IOException{

@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.Double?>
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Polygon?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="background" fx:id="backgroundPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#handleKeysAgain" onMouseClicked="#setxValue" prefHeight="768.0" prefWidth="1024.0" styleClass="background" stylesheets="@stylesheet.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="WeatherApp.FXMLController">
+   <children>
+      <Pane fx:id="labelPane" prefHeight="436.0" prefWidth="1024.0">
+         <children>
+            <Label fx:id="location" alignment="CENTER" layoutX="422.0" layoutY="6.0" prefHeight="54.0" prefWidth="180.0" text="London" textAlignment="RIGHT" textFill="WHITE">
+               <font>
+                  <Font size="40.0" />
+               </font></Label>
+            <Label fx:id="currDate" alignment="CENTER" layoutX="362.0" layoutY="63.0" prefHeight="37.0" prefWidth="300.0" text="7th of February" textAlignment="RIGHT" textFill="WHITE">
+               <font>
+                  <Font size="30.0" />
+               </font></Label>
+            <Label fx:id="tempField" layoutX="387.0" layoutY="258.0" prefHeight="63.0" prefWidth="200.0" text="9°C" textAlignment="RIGHT" textFill="WHITE">
+               <font>
+                  <Font size="50.0" />
+               </font>
+            </Label>
+            <Label fx:id="feelsLike" layoutX="387.0" layoutY="304.0" prefHeight="42.0" prefWidth="363.0" text="Feels Like 7°C" textAlignment="RIGHT" textFill="WHITE">
+               <font>
+                  <Font size="34.0" />
+               </font></Label>
+            <Label fx:id="curCondition" layoutX="387.0" layoutY="342.0" prefHeight="42.0" prefWidth="594.0" text="Cloud Coverage: Quite Cloudy" textAlignment="RIGHT" textFill="WHITE">
+               <font>
+                  <Font size="34.0" />
+               </font></Label>
+            <Pane fx:id="clouds" layoutX="655.0" layoutY="203.0" prefHeight="120.0" prefWidth="120.0" />
+         </children>
+      </Pane>
+      <Label alignment="CENTER" layoutX="362.0" layoutY="585.0" prefHeight="31.0" prefWidth="300.0" text="Slide to adjust by hour" textFill="WHITE">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
+      <Polygon fill="#ff1f1f" layoutX="515.0" layoutY="560.0" scaleX="0.3" scaleY="0.3" stroke="BLACK" strokeType="INSIDE">
+         <points>
+            <Double fx:value="-50.0" />
+            <Double fx:value="40.0" />
+            <Double fx:value="50.0" />
+            <Double fx:value="40.0" />
+            <Double fx:value="0.0" />
+            <Double fx:value="-60.0" />
+         </points>
+      </Polygon>
+      <Button id="button" fx:id="button" layoutX="9.0" layoutY="8.0" mnemonicParsing="false" onAction="#toggleMenu" prefHeight="25.0" prefWidth="40.0" stylesheets="@stylesheet.css" text="" />
+      <ImageView fx:id="circle" fitHeight="1005.0" fitWidth="1167.0" layoutX="16.0" layoutY="357.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@resources/wheelOfHours.png" />
+         </image>
+      </ImageView>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="187.0" layoutY="581.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1024.0">
+         <fill>
+            <LinearGradient endX="1.0" endY="0.0625" startX="1.0" startY="0.6298076923076923">
+               <stops>
+                  <Stop color="BLACK" />
+                  <Stop color="#ffffff00" offset="1.0" />
+               </stops>
+            </LinearGradient>
+         </fill>
+      </Rectangle>
+      <Pane id="menuPane" fx:id="menu" layoutX="-1.0" prefHeight="306.0" prefWidth="140.0" stylesheets="@stylesheet.css">
+         <children>
+            <Button id="closeMenuButton" fx:id="closeMenuButton" layoutX="95.0" layoutY="15.0" mnemonicParsing="false" onAction="#toggleMenu" prefHeight="25.0" prefWidth="40.0" stylesheets="@stylesheet.css" text="" />
+            <Pane id="subMenu" layoutX="5.0" layoutY="49.0" prefHeight="257.0" prefWidth="130.0" stylesheets="@stylesheet.css">
+               <children>
+                  <Button layoutX="4.0" layoutY="-1.0" mnemonicParsing="false" onAction="#handleMenuButtonClick" prefHeight="28.0" prefWidth="120.0" styleClass="menuButton" stylesheets="@stylesheet.css" text="London" />
+                  <Button layoutX="3.0" layoutY="49.0" mnemonicParsing="false" onAction="#handleMenuButtonClick" prefHeight="34.0" prefWidth="120.0" styleClass="menuButton" stylesheets="@stylesheet.css" text="Paris" />
+                  <Button layoutX="5.0" layoutY="99.0" mnemonicParsing="false" onAction="#handleMenuButtonClick" prefHeight="34.0" prefWidth="120.0" styleClass="menuButton" stylesheets="@stylesheet.css" text="Berlin" />
+                  <Button layoutX="4.0" layoutY="153.0" mnemonicParsing="false" onAction="#handleMenuButtonClick" prefHeight="34.0" prefWidth="120.0" styleClass="menuButton" stylesheets="@stylesheet.css" text="Madrid" />
+                  <Button layoutX="5.0" layoutY="202.0" mnemonicParsing="false" onAction="#handleMenuButtonClick" prefHeight="34.0" prefWidth="120.0" styleClass="menuButton" stylesheets="@stylesheet.css" text="Rome" />
+                  <Separator layoutX="-1.0" layoutY="48.0" prefHeight="3.0" prefWidth="130.0" styleClass="sep" stylesheets="@stylesheet.css" />
+                  <Separator layoutY="94.0" prefHeight="2.0" prefWidth="130.0" styleClass="sep" />
+                  <Separator layoutY="145.0" prefHeight="3.0" prefWidth="130.0" styleClass="sep" />
+                  <Separator layoutY="196.0" prefHeight="3.0" prefWidth="130.0" styleClass="sep" />
+                  <Separator layoutY="245.0" prefHeight="3.0" prefWidth="130.0" styleClass="sep" />
+               </children>
+            </Pane>
+         </children>
+      </Pane>
+      <Pane id="infoPane" fx:id="infoPane" layoutY="700.0" prefHeight="768.0" prefWidth="1024.0" stylesheets="@stylesheet.css">
+         <children>
+            <Button id="dragMenu" fx:id="dragMenu" layoutX="482.0" layoutY="18.0" mnemonicParsing="false" onAction="#dragInfoPane" prefHeight="25.0" prefWidth="60.0" scaleX="1.3" scaleY="1.3" scaleZ="1.3" stylesheets="@stylesheet.css" />
+            <Accordion layoutX="-1.0" layoutY="59.0" prefWidth="320.0">
+               <panes>
+                  <TitledPane animated="false" stylesheets="@stylesheet.css" text="Stargazing Conditions" textFill="WHITE">
+                     <content>
+                        <AnchorPane>
+                           <children>
+                              <Label fx:id="lightPollution" alignment="CENTER_RIGHT" layoutX="100.0" layoutY="14.0" prefHeight="13.0" prefWidth="50.0" text="20%" textFill="WHITE">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="13.0" layoutY="14.0" text="Light Pollution" textFill="WHITE">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="13.0" layoutY="35.0" prefHeight="0.0" prefWidth="61.0" text="Temperature" textFill="WHITE">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="13.0" layoutY="56.0" prefHeight="13.0" prefWidth="72.0" text="Sunrise/Sunset" textFill="WHITE">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="13.0" layoutY="77.0" prefHeight="7.0" prefWidth="120.0" text="Chance of comet" textFill="WHITE">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="169.0" layoutY="14.0" text="Cloud Coverage" textFill="WHITE">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="169.0" layoutY="35.0" text="Temperature H/L" textFill="WHITE">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="169.0" layoutY="56.0" text="Rainfall" textFill="WHITE">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="169.0" layoutY="77.0" text="Humidity" textFill="WHITE">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="tempFieldLabel" alignment="CENTER_RIGHT" layoutX="117.0" layoutY="35.0" prefHeight="13.0" prefWidth="31.0" text="9°C" textFill="WHITE">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                              </Label>
+                              <Line endX="135.0" layoutX="13.0" layoutY="29.0" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="0.3" />
+                              <Line endX="135.0" layoutX="13.0" layoutY="50.0" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="0.3" />
+                              <Line endX="135.0" layoutX="13.0" layoutY="71.0" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="0.3" />
+                              <Line endX="135.0" layoutX="13.0" layoutY="92.0" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="0.3" />
+                              <Line endX="135.0" layoutX="169.0" layoutY="29.0" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="0.3" />
+                              <Line endX="135.0" layoutX="169.0" layoutY="50.0" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="0.3" />
+                              <Line endX="135.0" layoutX="169.0" layoutY="71.0" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="0.3" />
+                              <Line endX="135.0" layoutX="169.0" layoutY="92.0" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="0.3" />
+                              <Label fx:id="sunsetSunrise" alignment="CENTER_RIGHT" layoutX="75.0" layoutY="56.0" prefHeight="13.0" prefWidth="74.0" text="06:13/18:02" textFill="WHITE">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="comet" alignment="CENTER_RIGHT" layoutX="100.0" layoutY="77.0" prefHeight="13.0" prefWidth="48.0" text="2%" textFill="WHITE">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="cloudCover" alignment="CENTER_RIGHT" layoutX="258.0" layoutY="14.0" prefHeight="13.0" prefWidth="47.0" text="72%" textFill="WHITE">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="tempHL" alignment="CENTER_RIGHT" layoutX="243.0" layoutY="35.0" prefHeight="13.0" prefWidth="62.0" text="6°C/2°C" textFill="WHITE">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="rainfall" alignment="CENTER_RIGHT" layoutX="252.0" layoutY="56.0" prefHeight="13.0" prefWidth="53.0" text="72mm" textFill="WHITE">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="humidity" alignment="CENTER_RIGHT" layoutX="253.0" layoutY="77.0" prefHeight="13.0" prefWidth="52.0" text="72%" textFill="WHITE">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </TitledPane>
+                  <TitledPane animated="false" prefHeight="100.0" prefWidth="328.0" stylesheets="@stylesheet.css" text="Temperatures" textFill="WHITE">
+                     <content>
+                        <AnchorPane maxHeight="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="313.0" prefWidth="318.0">
+                           <children>
+                              <Line endY="55.0" layoutX="48.0" layoutY="11.0" stroke="WHITE" />
+                              <Label fx:id="day0" alignment="CENTER" layoutX="8.0" layoutY="9.0" prefHeight="0.0" prefWidth="32.0" text="Mon" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="day1" alignment="CENTER" layoutX="53.0" layoutY="9.0" prefHeight="0.0" prefWidth="32.0" text="Tue" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="day2" alignment="CENTER" layoutX="98.0" layoutY="9.0" prefHeight="0.0" prefWidth="32.0" text="Wed" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="day3" alignment="CENTER" layoutX="144.0" layoutY="9.0" prefHeight="0.0" prefWidth="32.0" text="Thu" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="day4" alignment="CENTER" layoutX="188.0" layoutY="9.0" prefHeight="0.0" prefWidth="32.0" text="Fri" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="day5" alignment="CENTER" layoutX="232.0" layoutY="9.0" prefHeight="0.0" prefWidth="32.0" text="Sat" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="day6" alignment="CENTER" layoutX="278.0" layoutY="9.0" prefHeight="0.0" prefWidth="32.0" text="Sun" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Line endY="55.0" layoutX="90.0" layoutY="11.0" stroke="WHITE" />
+                              <Line endY="55.0" layoutX="139.0" layoutY="11.0" stroke="WHITE" />
+                              <Line endY="55.0" layoutX="184.0" layoutY="11.0" stroke="WHITE" />
+                              <Line endY="55.0" layoutX="225.0" layoutY="11.0" stroke="WHITE" />
+                              <Line endY="55.0" layoutX="270.0" layoutY="11.0" stroke="WHITE" />
+                              <Label fx:id="temp0" alignment="CENTER" layoutX="8.0" layoutY="34.0" prefWidth="32.0" text="9°C" textFill="WHITE" />
+                              <Label fx:id="temp1" alignment="CENTER" layoutX="53.0" layoutY="34.0" prefWidth="32.0" text="9°C" textFill="WHITE" />
+                              <Label fx:id="temp2" alignment="CENTER" layoutX="98.0" layoutY="34.0" prefWidth="32.0" text="9°C" textFill="WHITE" />
+                              <Label fx:id="temp3" alignment="CENTER" layoutX="144.0" layoutY="34.0" prefWidth="32.0" text="9°C" textFill="WHITE" />
+                              <Label fx:id="temp4" alignment="CENTER" layoutX="188.0" layoutY="34.0" prefWidth="32.0" text="9°C" textFill="WHITE" />
+                              <Label fx:id="temp5" alignment="CENTER" layoutX="232.0" layoutY="34.0" prefWidth="32.0" text="9°C" textFill="WHITE" />
+                              <Label fx:id="temp6" alignment="CENTER" layoutX="278.0" layoutY="34.0" prefWidth="32.0" text="9°C" textFill="WHITE" />
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </TitledPane>
+                  <TitledPane animated="false" stylesheets="@stylesheet.css" text="Precipitation" textFill="WHITE">
+                     <content>
+                        <AnchorPane maxHeight="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="313.0" prefWidth="318.0">
+                           <children>
+                              <Line endY="55.0" layoutX="48.0" layoutY="11.0" stroke="WHITE" />
+                              <Label fx:id="day7" alignment="CENTER" layoutX="8.0" layoutY="9.0" prefHeight="0.0" prefWidth="32.0" text="Mon" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="day8" alignment="CENTER" layoutX="53.0" layoutY="9.0" prefHeight="0.0" prefWidth="32.0" text="Tue" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="day9" alignment="CENTER" layoutX="98.0" layoutY="9.0" prefHeight="0.0" prefWidth="32.0" text="Wed" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="day10" alignment="CENTER" layoutX="144.0" layoutY="9.0" prefHeight="0.0" prefWidth="32.0" text="Thu" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="day11" alignment="CENTER" layoutX="188.0" layoutY="9.0" prefHeight="0.0" prefWidth="32.0" text="Fri" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="day12" alignment="CENTER" layoutX="232.0" layoutY="9.0" prefHeight="0.0" prefWidth="32.0" text="Sat" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="day13" alignment="CENTER" layoutX="278.0" layoutY="9.0" prefHeight="0.0" prefWidth="32.0" text="Sun" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Line endY="55.0" layoutX="90.0" layoutY="11.0" stroke="WHITE" />
+                              <Line endY="55.0" layoutX="139.0" layoutY="11.0" stroke="WHITE" />
+                              <Line endY="55.0" layoutX="184.0" layoutY="11.0" stroke="WHITE" />
+                              <Line endY="55.0" layoutX="225.0" layoutY="11.0" stroke="WHITE" />
+                              <Line endY="55.0" layoutX="270.0" layoutY="11.0" stroke="WHITE" />
+                              <Label fx:id="precip0" alignment="CENTER" layoutX="8.0" layoutY="34.0" prefWidth="32.0" text="0mm" textFill="WHITE" />
+                              <Label fx:id="precip1" alignment="CENTER" layoutX="53.0" layoutY="34.0" prefWidth="32.0" text="0mm" textFill="WHITE" />
+                              <Label fx:id="precip2" alignment="CENTER" layoutX="98.0" layoutY="34.0" prefWidth="32.0" text="0mm" textFill="WHITE" />
+                              <Label fx:id="precip3" alignment="CENTER" layoutX="144.0" layoutY="34.0" prefWidth="32.0" text="0mm" textFill="WHITE" />
+                              <Label fx:id="precip4" alignment="CENTER" layoutX="188.0" layoutY="34.0" prefWidth="32.0" text="0mm" textFill="WHITE" />
+                              <Label fx:id="precip5" alignment="CENTER" layoutX="232.0" layoutY="34.0" prefWidth="32.0" text="0mm" textFill="WHITE" />
+                              <Label fx:id="precip6" alignment="CENTER" layoutX="278.0" layoutY="34.0" prefWidth="32.0" text="0mm" textFill="WHITE" />
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </TitledPane>
+               </panes>
+            </Accordion>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
