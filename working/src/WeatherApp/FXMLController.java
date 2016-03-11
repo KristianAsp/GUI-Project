@@ -99,7 +99,9 @@ public class FXMLController implements Initializable {
 
     private boolean menuToggleOpen;
     private boolean dragMenuOpen = false;
+
     private String activeCity;
+    private booleanStorage storeBool = booleanStorage.getInstance();
 
     @FXML Button button;
     @FXML Button menuButton;
@@ -116,7 +118,7 @@ public class FXMLController implements Initializable {
     private int daysAhead = 0;
     Thread th = new Thread();
     Random rand = new Random();
-    private int n = 7;
+    private int n = 9;
 
     public double xValue;
     public double yValue;
@@ -135,6 +137,7 @@ public class FXMLController implements Initializable {
     HourWeather hw;
 
     public void setxValue(MouseEvent event) {
+
         //System.out.println(event.getX());
         xValue = event.getX();
         yValue = event.getY();
@@ -155,6 +158,7 @@ public class FXMLController implements Initializable {
             dragCircleRight();
         } else if (event.getCode() == KeyCode.ENTER && !menuToggleOpen && !dragMenuOpen) {
             try {
+                storeBool.setfxmlActive(false);
                 Parent root = FXMLLoader.load(getClass().getResource("FXML2.fxml"));
                 scene1 = new Scene(root);
                 theStage.setScene(scene1);
@@ -595,13 +599,20 @@ public class FXMLController implements Initializable {
 
     public void changeBackground(){
         int previousN = n;
-        n = rand.nextInt(5);
+        n = rand.nextInt(8);
         if(n == previousN){
             changeBackground();
         }
-        String backgroundPath = backgrounds.get(n);
+        String backgroundPath;
+        if(storeBool.getfxmlActive()) {
+            backgroundPath = backgrounds.get(n);
+        }
+        else{
+            backgroundPath = backgroundsLarge.get(n);
+        }
         //System.out.println(backgroundPath);
         backgroundPane.setStyle("-fx-background-image: url('" + backgroundPath + "');");
+        System.out.println(backgroundPath);
     }
     // handle setup of the menu position and opacity and animation Objects
     public void setUpMenu() {
@@ -621,6 +632,18 @@ public class FXMLController implements Initializable {
         backgrounds.add("WeatherApp/resources/4.png");
         backgrounds.add("WeatherApp/resources/5.png");
         backgrounds.add("WeatherApp/resources/6.png");
+        backgrounds.add("WeatherApp/resources/7.png");
+        backgrounds.add("WeatherApp/resources/8.png");
+
+        backgroundsLarge.add("WeatherApp/resources/backgroundsLarge/1.png");
+        backgroundsLarge.add("WeatherApp/resources/backgroundsLarge/2.png");
+        backgroundsLarge.add("WeatherApp/resources/backgroundsLarge/3.png");
+        backgroundsLarge.add("WeatherApp/resources/backgroundsLarge/4.png");
+        backgroundsLarge.add("WeatherApp/resources/backgroundsLarge/5.png");
+        backgroundsLarge.add("WeatherApp/resources/backgroundsLarge/6.png");
+        backgroundsLarge.add("WeatherApp/resources/backgroundsLarge/7.png");
+        backgroundsLarge.add("WeatherApp/resources/backgroundsLarge/8.png");
+        backgroundsLarge.add("WeatherApp/resources/backgroundsLarge/9.png");
     }
 
     //Method to toggle the side menu open/close
