@@ -14,16 +14,6 @@ public class WeatherForecast {
                                      "hourlyWeatherInfo2.txt", "hourlyWeatherInfo3.txt", 
                                      "hourlyWeatherInfo4.txt", "hourlyWeatherInfo5.txt"};
 
-    public static void main(String[] args){
-        WeatherForecast wf = new WeatherForecast("London");
-        Day d = (Day) wf.getHourlyWeather()[3][0];
-        System.out.println(d.getDayNumber());
-        System.out.println(d.getMonthName());
-        System.out.println(d.getName());
-        System.out.println(d.getSunrise());
-        System.out.println(d.getSunset());
-        System.out.println(d.getPrecip());
-    }
     
     public WeatherForecast(String city){
         try{
