@@ -35,7 +35,8 @@ public class Main extends Application{
         scene1 = new Scene(root);
         primaryStage.setScene(scene1);
         primaryStage.show();
-        
+        scene1.getRoot().requestFocus();
+
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent e) {
