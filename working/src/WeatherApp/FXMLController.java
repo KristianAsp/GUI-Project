@@ -642,15 +642,15 @@ public class FXMLController implements Initializable {
         backgrounds.add("WeatherApp/resources/7.png");
         backgrounds.add("WeatherApp/resources/8.png");
 
-        backgroundsLarge.add("WeatherApp/resources/backgroundsLarge/1.png");
-        backgroundsLarge.add("WeatherApp/resources/backgroundsLarge/2.png");
-        backgroundsLarge.add("WeatherApp/resources/backgroundsLarge/3.png");
-        backgroundsLarge.add("WeatherApp/resources/backgroundsLarge/4.png");
-        backgroundsLarge.add("WeatherApp/resources/backgroundsLarge/5.png");
-        backgroundsLarge.add("WeatherApp/resources/backgroundsLarge/6.png");
-        backgroundsLarge.add("WeatherApp/resources/backgroundsLarge/7.png");
-        backgroundsLarge.add("WeatherApp/resources/backgroundsLarge/8.png");
-        backgroundsLarge.add("WeatherApp/resources/backgroundsLarge/9.png");
+        backgroundsLarge.add("WeatherApp/resources/9.png");
+        backgroundsLarge.add("WeatherApp/resources/10.png");
+        backgroundsLarge.add("WeatherApp/resources/11.png");
+        backgroundsLarge.add("WeatherApp/resources/12.png");
+        backgroundsLarge.add("WeatherApp/resources/13.png");
+        backgroundsLarge.add("WeatherApp/resources/14.png");
+        backgroundsLarge.add("WeatherApp/resources/15.png");
+        backgroundsLarge.add("WeatherApp/resources/16.png");
+        backgroundsLarge.add("WeatherApp/resources/17.png");
     }
 
     //Method to toggle the side menu open/close
